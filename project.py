@@ -285,7 +285,8 @@ def gdisconnect():
 def showCategories():
     rows = session.query(Category).count()
     categories = session.query(Category).order_by(asc(Category.name)).all()
-    recentItems = session.query(Category).order_by(desc(Category.id)).limit(rows).all()
+    # recentItems = session.query(Category).order_by(desc(Category.id)).limit(rows).all()
+    recentItems = session.query(CatalogItem.name, Category.name).filter(CatalogItem.category_id == Category.id).order_by(desc(CatalogItem.id)).limit(rows).all()
     if 'username' not in login_session:
         return render_template('publiccategories.html', categories=categories, recentItems=recentItems)
     else:
