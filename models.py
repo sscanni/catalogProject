@@ -26,8 +26,8 @@ class User(Base):
            'id'           : self.id,
        }
 
-class Catagory(Base):
-    __tablename__ = 'catagories'
+class Category(Base):
+    __tablename__ = 'category'
 
     name = Column(String(250), nullable=False)
     id = Column(Integer, primary_key=True)
@@ -40,17 +40,17 @@ class Catagory(Base):
            'id'           : self.id,
        }
 
-class CatelogItem(Base):
-    __tablename__ = 'items'
+class CatalogItem(Base):
+    __tablename__ = 'catalogitem'
     __table_args__ = (
-        Index('itemIndex', 'name', 'catagory_id', unique=True),
+        Index('itemIndex', 'name', 'category_id', unique=True),
     )
 
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
     desc = Column(String(250), nullable=False)
-    catagory_id = Column(ForeignKey('catagories.id'))
-    catagory = relationship('Catagory')
+    category_id = Column(ForeignKey('category.id'))
+    category = relationship('Category')
 
     @property
     def serialize(self):

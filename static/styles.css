@@ -93,14 +93,14 @@ h3 {
 	height: 15px;
 }
 .divider.blue {
-	background-color: #42C3C9;
+	background-color: #42C3C9; 
 }
 .divider.green {
 	background-color: #9FB80A;
 }
 .banner.main {
 	height: 150px;
-	background: url("/static/top-banner.jpg");
+	background: url("/static/top-banner.png");
 	background-position: right;
 	background-repeat: no-repeat;
 	background-size: cover;
