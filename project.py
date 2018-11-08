@@ -285,12 +285,37 @@ def gdisconnect():
 def showCategories():
     rows = session.query(Category).count()
     categories = session.query(Category).order_by(asc(Category.name)).all()
-    # recentItems = session.query(Category).order_by(desc(Category.id)).limit(rows).all()
-    recentItems = session.query(CatalogItem.name, Category.name).filter(CatalogItem.category_id == Category.id).order_by(desc(CatalogItem.id)).limit(rows).all()
+    items = session.query(CatalogItem.name, Category.name).filter(CatalogItem.category_id == Category.id).order_by(desc(CatalogItem.id)).limit(rows).all()
     if 'username' not in login_session:
-        return render_template('publiccategories.html', categories=categories, recentItems=recentItems)
+        return render_template('publiccategories.html', categories=categories, items=items, displayRecent=True)
     else:
-        return render_template('categories.html', categories=categories, recentItems=recentItems)
+        return render_template('categories.html', categories=categories, items=items, displayRecent=True)
+
+# Display all items for a Category
+# Example: localhost:8000/catalog/Snowboarding/items
+@app.route('/catalog/<string:name>/items')
+def showCategoryItems(name):
+    category = session.query(Category).filter_by(name=name).one()
+    items = session.query(CatalogItem).filter(CatalogItem.category_id == category.id).order_by(asc(CatalogItem.name)).all()
+    itemcount = session.query(CatalogItem).filter(CatalogItem.category_id == category.id).count()
+    itemtitle = category.name + " (" + str(itemcount) + " item"
+    if itemcount != 1:
+        itemtitle += "s"
+    itemtitle += ")"
+    categories = session.query(Category).order_by(asc(Category.name)).all()
+    if 'username' not in login_session:
+        return render_template('publiccategories.html', category=category, categories=categories, items=items, itemtitle=itemtitle, displayRecent=False)
+    else:
+        return render_template('categories.html', category=category, categories=categories, items=items, itemtitle=itemtitle, displayRecent=False)
+
+# Display a specific item
+# Example: localhost:8000/catalog/Snowboarding/Snowboard
+@app.route('/catalog/<string:category_name>/<string:item_name>')
+def showItem(category_name, item_name):
+    pass
+
+
+
 
 # Create a new restaurant
 
@@ -348,22 +373,6 @@ def showCategories():
 #         return render_template('deleteRestaurant.html', restaurant=restaurantToDelete)
 
 # # Show a restaurant menu
-
-# Display all items for a Category
-# Example: localhost:8000/catalog/Snowboarding/items
-@app.route('/catalog/<string:name>/items')
-def showCategoryItems(name):
-      print (name)  
-      showCategories()
-#     restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
-#     creator = getUserInfo(restaurant.user_id)
-#     items = session.query(MenuItem).filter_by(
-#         restaurant_id=restaurant_id).all()
-#     if 'username' not in login_session or creator.id != login_session['user_id']:
-#         return render_template('publicmenu.html', items=items, restaurant=restaurant, creator=creator)
-#     else:
-#         return render_template('menu.html', items=items, restaurant=restaurant, creator=creator)
-
 
 # # Create a new menu item
 # @app.route('/restaurant/<int:restaurant_id>/menu/new/', methods=['GET', 'POST'])

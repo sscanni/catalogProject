@@ -41,6 +41,7 @@
 	</div>
 
 	<div class="row grid-divider">
+
 			<div class="col-sm-3">
 				<div class="col-padding">
 				<h2 class="rc">Categories</h2>
@@ -49,12 +50,20 @@
 				{% endfor %}
 				</div>
 			</div>
+			
 			<div class="col-sm-8">
 					<div class="col-padding">
-					  <h2 class="rc">Recent Items</h2>
-					  {% for recentItem in recentItems %}
-					  <a href = "{{url_for('showCategoryItems', name=recentItem.name)}}"><h3>{{recentItem[0]}} <i>({{recentItem[1]}})</i></h3></a>
-					  {% endfor %}
+					{% if displayRecent %}
+						<h2 class="rc">Recent Items</h2>
+						{% for item in items %}
+							<a href = "{{url_for('showItem', category_name=item[0], item_name=item[1])}}"><h3>{{item[0]}} <i>({{item[1]}})</i></h3></a>
+						{% endfor %}
+					{%else%}
+						<h2 class="rc">{{itemtitle}}</h2>
+						{% for item in items %}
+							<a href = "{{url_for('showCategoryItems', name=item.name)}}"><h3>{{item.name}}</h3></a>
+						{% endfor %}
+					{% endif %}
 					</div>
 			 </div>
 	</div>
