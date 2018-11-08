@@ -285,7 +285,7 @@ def gdisconnect():
 def showCategories():
     rows = session.query(Category).count()
     categories = session.query(Category).order_by(asc(Category.name)).all()
-    items = session.query(CatalogItem.name, Category.name).filter(CatalogItem.category_id == Category.id).order_by(desc(CatalogItem.id)).limit(rows).all()
+    items = session.query(CatalogItem.name, Category.name).filter(CatalogItem.category_id==Category.id).order_by(desc(CatalogItem.id)).limit(rows).all()
     if 'username' not in login_session:
         return render_template('publiccategories.html', categories=categories, items=items, displayRecent=True)
     else:
@@ -296,12 +296,12 @@ def showCategories():
 @app.route('/catalog/<string:name>/items')
 def showCategoryItems(name):
     category = session.query(Category).filter_by(name=name).one()
-    items = session.query(CatalogItem).filter(CatalogItem.category_id == category.id).order_by(asc(CatalogItem.name)).all()
-    itemcount = session.query(CatalogItem).filter(CatalogItem.category_id == category.id).count()
-    itemtitle = category.name + " (" + str(itemcount) + " item"
-    if itemcount != 1:
-        itemtitle += "s"
-    itemtitle += ")"
+    items = session.query(CatalogItem).filter_by(category_id=category.id).order_by(asc(CatalogItem.name)).all()
+    itemcount = session.query(CatalogItem).filter_by(category_id=category.id).count()   ###
+    if itemcount == 1:
+       itemtitle = "%s (%s item)" % (category.name, str(itemcount))
+    else:
+       itemtitle = "%s (%s items)" % (category.name, str(itemcount)) 
     categories = session.query(Category).order_by(asc(Category.name)).all()
     if 'username' not in login_session:
         return render_template('publiccategories.html', category=category, categories=categories, items=items, itemtitle=itemtitle, displayRecent=False)
@@ -312,7 +312,14 @@ def showCategoryItems(name):
 # Example: localhost:8000/catalog/Snowboarding/Snowboard
 @app.route('/catalog/<string:category_name>/<string:item_name>')
 def showItem(category_name, item_name):
-    pass
+    print (category_name)
+    print (item_name)
+    category = session.query(Category).filter_by(name=category_name).one()
+    item = session.query(CatalogItem).filter_by(name=item_name, category_id=category.id).one()
+    if 'username' not in login_session:
+        return render_template('item.html', category_name=category_name, item_name=item_name, itemDesc=item.desc)
+    else:
+        return render_template('item.html', category_name=category_name, item_name=item_name, itemDesc=item.desc)
 
 
 

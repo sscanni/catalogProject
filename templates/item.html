@@ -1,0 +1,49 @@
+{% extends "main.html" %}
+{% block content %}
+	<div class="row top-menu">
+		<div class="col-md-10"></div>
+		<div class="col-md-2 text-right">
+			<a href="{{url_for('showLogin')}}">Click Here to Log in </a>
+		</div>
+	</div>
+	<div class="row divider blue">
+		<div class="col-md-12"></div>
+	</div>
+	<div class="row banner main">
+		<div class="col-md-1"></div>
+		<div class="col-md-11 padding-none">
+			<h1>Catalog App</h1>
+		</div>
+	</div>
+
+	<div class = 'flash'>
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+        {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+      {% endwith %}
+
+	</div>
+<div class="container">
+<!--     <div class="page-header">
+        <h3 class="heading">Catalog App</h3>
+    </div>
+ -->
+    <div class="row grid-divider">
+    <div class="col-sm-12 backshade">
+      <div class="col-padding">
+        <h3>{{item_name}}</h3>
+        <p>Description: {{itemDesc}}</p>
+     </div>
+     <p><a href="{{url_for('showCategories')}}">Home</a> | <a href="edit.html">Edit</a> | <a href="delete.html">Delete</a></p>
+    </div>
+
+
+</div>
+</div>
+{% endblock %}
+
