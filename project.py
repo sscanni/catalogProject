@@ -297,7 +297,7 @@ def showCategories():
 def showCategoryItems(name):
     category = session.query(Category).filter_by(name=name).one()
     items = session.query(CatalogItem).filter_by(category_id=category.id).order_by(asc(CatalogItem.name)).all()
-    itemcount = session.query(CatalogItem).filter_by(category_id=category.id).count()   ###
+    itemcount = session.query(CatalogItem).filter_by(category_id=category.id).count()   
     if itemcount == 1:
        itemtitle = "%s (%s item)" % (category.name, str(itemcount))
     else:
@@ -312,8 +312,6 @@ def showCategoryItems(name):
 # Example: localhost:8000/catalog/Snowboarding/Snowboard
 @app.route('/catalog/<string:category_name>/<string:item_name>')
 def showItem(category_name, item_name):
-    print (category_name)
-    print (item_name)
     category = session.query(Category).filter_by(name=category_name).one()
     item = session.query(CatalogItem).filter_by(name=item_name, category_id=category.id).one()
     if 'username' not in login_session:
@@ -321,6 +319,33 @@ def showItem(category_name, item_name):
     else:
         return render_template('item.html', category_name=category_name, item_name=item_name, itemDesc=item.desc)
 
+
+# Edit a specific item
+# Example: localhost:8000/catalog/Snowboarding/Snowboard/edit
+@app.route('/catalog/<string:category_name>/<string:item_name>/edit', methods=['GET', 'POST'])
+def editItem(category_name, item_name):
+    #   if 'username' not in login_session:
+    #       return redirect('/login')
+      category = session.query(Category).filter_by(name=category_name).one()
+      item = session.query(CatalogItem).filter_by(name=item_name, category_id=category.id).one()
+      categories = session.query(Category).order_by(asc(Category.name)).all()
+      print (item.desc)
+      if request.method == 'POST':
+         return redirect(url_for('showCategories'))   
+      else: 
+         return render_template('edititem.html', category_name=category_name, item=item, categories=categories)
+#     if 'username' not in login_session:
+#         return redirect('/login')
+#     if editedRestaurant.user_id != login_session['user_id']:
+#         return "<script>function myFunction() {alert('You are not authorized to edit this restaurant. Please create your own restaurant in order to edit.');}</script><body onload='myFunction()'>"
+#      if request.method == 'POST': 
+#         if request.form['name']:
+#             editedRestaurant.name = request.form['name']
+#             session.add(editedRestaurant)
+#             session.commit()
+#             flash('Restaurant Successfully Edited %s' % editedRestaurant.name)
+#             return redirect(url_for('showRestaurants'))
+#     else:
 
 
 
@@ -472,4 +497,4 @@ def disconnect():
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
     app.debug = True
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=8000)

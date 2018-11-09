@@ -29,17 +29,14 @@
 
 	</div>
 <div class="container">
-<!--     <div class="page-header">
-        <h3 class="heading">Catalog App</h3>
-    </div>
- -->
     <div class="row grid-divider">
     <div class="col-sm-12 backshade">
       <div class="col-padding">
         <h3>{{item_name}}</h3>
         <p>Description: {{itemDesc}}</p>
      </div>
-     <p><a href="{{url_for('showCategories')}}">Home</a> | <a href="edit.html">Edit</a> | <a href="delete.html">Delete</a></p>
+     <p><a href="{{url_for('showCategories')}}">Home</a> | <a href="{{url_for('editItem', category_name=category_name, item_name=item_name)}}">Edit</a> | <a href="delete.html">Delete</a></p>
+     <!-- <p><a href="{{url_for('showCategories')}}">Home</a></p> -->
     </div>
 
 
