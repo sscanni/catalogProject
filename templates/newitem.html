@@ -21,25 +21,21 @@
     <div class="row grid-divider">
     <div class="col-sm-12 backshade">
       <div class="col-padding">
-        <h3>Edit Item: {{item.name}}</h3>
+        <h3>New Catalog Item</h3>
         <form action="#" method = "post">
           <div class="form-group">
             <label for="formGroupExampleInput">Name</label>
-            <input type="text" name="name" class="form-control" id="formGroupExampleInput" value="{{item.name}}">
+            <input type="text" name="name" class="form-control" id="formGroupExampleInput" value="">
           </div>
           <div class="form-group">
             <label for="exampleFormControlTextarea1">Description</label>
-            <textarea class="form-control" name="desc" id="exampleFormControlTextarea1" rows="3">{{item.desc}}</textarea>
+            <textarea class="form-control" name="desc" id="exampleFormControlTextarea1" rows="3"></textarea>
           </div>
           <div class="form-group">
             <label for="exampleFormControlSelect1">Catagory</label>
             <select class="form-control" id="exampleFormControlSelect1" name="category">
             {% for c in categories %}
-              {% if c.id == item.category_id %}
-                <option value="{{c.id}}" selected>{{c.name}}</option>
-              {% else %}
-                <option value="{{c.id}}">{{c.name}}</option>
-              {% endif %}
+               <option value="{{c.id}}">{{c.name}}</option>
             {% endfor %}
             </select>
         </div>

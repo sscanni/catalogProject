@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, jsonify, url_for, flash
 from sqlalchemy import create_engine, asc, desc
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.exc import IntegrityError
 from models import Base, Category, CatalogItem, User
 from flask import session as login_session
 import random
@@ -280,6 +281,7 @@ def gdisconnect():
 
 
 # Show all categories
+
 @app.route('/')
 @app.route('/catalog/categories')
 def showCategories():
@@ -287,7 +289,8 @@ def showCategories():
     categories = session.query(Category).order_by(asc(Category.name)).all()
     items = session.query(CatalogItem.name, Category.name).filter(CatalogItem.category_id==Category.id).order_by(desc(CatalogItem.id)).limit(rows).all()
     if 'username' not in login_session:
-        return render_template('publiccategories.html', categories=categories, items=items, displayRecent=True)
+        # return render_template('publiccategories.html', categories=categories, items=items, displayRecent=True)
+        return render_template('categories.html', categories=categories, items=items, displayRecent=True)
     else:
         return render_template('categories.html', categories=categories, items=items, displayRecent=True)
 
@@ -319,6 +322,32 @@ def showItem(category_name, item_name):
     else:
         return render_template('item.html', category_name=category_name, item_name=item_name, itemDesc=item.desc)
 
+# Add new item
+# Example: localhost:8000/catalog/item/new
+@app.route('/catalog/item/new', methods=['GET', 'POST'])
+def newItem():
+#     if 'username' not in login_session:
+#         return redirect('/login')
+    if request.method == 'POST':
+        if request.form.get('save') == 'save':
+           try:
+              item = CatalogItem(name=request.form['name'], desc=request.form['desc'], 
+                        category_id=request.form['category'])
+                        #category_id=request.form['category'], user_id="sscanni")
+                        # category_id=request.form['category'], user_id=login_session.user_id)
+              session.add(item)
+              session.commit()
+              flash('New Catalog Item %s Successfully Created' % (item.name))
+              return redirect(url_for('showCategories'))  
+           except IntegrityError: 
+              session.rollback()
+              flash('"%s" Already Exists...Catalog Item not added.' % request.form['name'])
+              return redirect(url_for('showCategories')) 
+        else:
+           return redirect(url_for('showCategories'))   
+    else:
+        categories = session.query(Category).order_by(asc(Category.name)).all()
+        return render_template('newitem.html', categories=categories)
 
 # Edit a specific item
 # Example: localhost:8000/catalog/Snowboarding/Snowboard/edit
@@ -329,11 +358,31 @@ def editItem(category_name, item_name):
       category = session.query(Category).filter_by(name=category_name).one()
       item = session.query(CatalogItem).filter_by(name=item_name, category_id=category.id).one()
       categories = session.query(Category).order_by(asc(Category.name)).all()
-      print (item.desc)
       if request.method == 'POST':
-         return redirect(url_for('showCategories'))   
+         if request.form.get('save') == 'save':
+            try: 
+                print ("current category_name=" + category_name) 
+                print ("current item_name=" + item_name) 
+                print ("current item.category_id on db table=" + str(item.category.id)) 
+                print ("name=" + request.form['name'])
+                print ("desc=" + request.form['desc'])
+                print ("category=" + request.form['category'])
+                item.name = request.form['name']
+                item.desc = request.form['desc']
+                item.category_id = request.form['category']
+                session.add(item)
+                session.commit()
+                flash('Catalog Item Successfully Edited %s' % item.name)
+                return redirect(url_for('showCategories'))   
+            except IntegrityError: 
+                session.rollback()
+                flash('"%s" Already Exists...Catalog Item not changed.' % request.form['name'])
+                return redirect(url_for('showCategories')) 
+         else: 
+            return redirect(url_for('showCategories'))   
       else: 
          return render_template('edititem.html', category_name=category_name, item=item, categories=categories)
+
 #     if 'username' not in login_session:
 #         return redirect('/login')
 #     if editedRestaurant.user_id != login_session['user_id']:
@@ -347,7 +396,24 @@ def editItem(category_name, item_name):
 #             return redirect(url_for('showRestaurants'))
 #     else:
 
-
+# Delete a specific item
+# Example: localhost:8000/catalog/Snowboarding/Snowboard/delete
+@app.route('/catalog/<string:category_name>/<string:item_name>/delete', methods=['GET', 'POST'])
+def deleteItem(category_name, item_name):
+#   if 'username' not in login_session:
+#       return redirect('/login')
+    if request.method == 'POST':
+       if request.form.get('delete') == 'delete':
+#         category = session.query(Category).filter_by(name=category_name).one()
+#         item = session.query(CatalogItem).filter_by(name=item_name, category_id=category.id).one()        
+#         session.delete(item)
+#         session.commit()
+          flash('Catalog Item Successfully Deleted')
+          return redirect(url_for('showCategories'))  
+       else:
+          return redirect(url_for('showCategories'))
+    else:
+        return render_template('deleteitem.html', category_name=category_name, item_name=item_name)
 
 # Create a new restaurant
 
@@ -470,7 +536,21 @@ def editItem(category_name, item_name):
 #     else:
 #         return render_template('deleteMenuItem.html', item=itemToDelete)
 
-
+# Save new item information on add
+# Save old item information on an update or delete
+# def logTrans(trans, item):
+#         log.timestamp = timestamp
+#         log.trans = trans
+#         log.username = login_session['username']
+#         log.email = login_session['email']
+#         log.user_id = login_session['user_id']
+#         log.itemid = item.id
+#         log.itemname = item.name
+#         log.itemdesc = item.desc
+#         log.itemcategory_id = logitem.category_id 
+#         session.add(newItem)
+#         return
+        
 # Disconnect based on provider
 @app.route('/disconnect')
 def disconnect():
