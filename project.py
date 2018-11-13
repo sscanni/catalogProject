@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, jsonify, url_for, flash
 from sqlalchemy import create_engine, asc, desc
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, relationship, joinedload
 from sqlalchemy.exc import IntegrityError
 from models import Base, Category, CatalogItem, User
 from flask import session as login_session
@@ -258,30 +258,13 @@ def gdisconnect():
         response.headers['Content-Type'] = 'application/json'
         return response
 
-
-# JSON APIs to view Restaurant Information
-# @app.route('/restaurant/<int:restaurant_id>/menu/JSON')
-# def restaurantMenuJSON(restaurant_id):
-#     restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
-#     items = session.query(MenuItem).filter_by(
-#         restaurant_id=restaurant_id).all()
-#     return jsonify(MenuItems=[i.serialize for i in items])
-
-
-# @app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/JSON')
-# def menuItemJSON(restaurant_id, menu_id):
-#     Menu_Item = session.query(MenuItem).filter_by(id=menu_id).one()
-#     return jsonify(Menu_Item=Menu_Item.serialize)
-
-
-# @app.route('/restaurant/JSON')
-# def restaurantsJSON():
-#     restaurants = session.query(Restaurant).all()
-#     return jsonify(restaurants=[r.serialize for r in restaurants])
-
+@app.route('/catalog/JSON')
+def catalogJSON():
+    categories = session.query(Category).options(joinedload(Category.items)).all()
+    return jsonify(dict(Catalog=[dict(c.serialize, items=[i.serialize for i in c.items])
+                         for c in categories]))
 
 # Show all categories
-
 @app.route('/')
 @app.route('/catalog/categories')
 def showCategories():
@@ -300,11 +283,11 @@ def showCategories():
 def showCategoryItems(name):
     category = session.query(Category).filter_by(name=name).one()
     items = session.query(CatalogItem).filter_by(category_id=category.id).order_by(asc(CatalogItem.name)).all()
-    itemcount = session.query(CatalogItem).filter_by(category_id=category.id).count()   
+    itemcount = session.query(CatalogItem).filter_by(category_id=category.id).count()
     if itemcount == 1:
        itemtitle = "%s (%s item)" % (category.name, str(itemcount))
     else:
-       itemtitle = "%s (%s items)" % (category.name, str(itemcount)) 
+       itemtitle = "%s (%s items)" % (category.name, str(itemcount))
     categories = session.query(Category).order_by(asc(Category.name)).all()
     if 'username' not in login_session:
         return render_template('publiccategories.html', category=category, categories=categories, items=items, itemtitle=itemtitle, displayRecent=False)
@@ -331,20 +314,20 @@ def newItem():
     if request.method == 'POST':
         if request.form.get('save') == 'save':
            try:
-              item = CatalogItem(name=request.form['name'], desc=request.form['desc'], 
+              item = CatalogItem(name=request.form['name'], desc=request.form['desc'],
                         category_id=request.form['category'])
                         #category_id=request.form['category'], user_id="sscanni")
                         # category_id=request.form['category'], user_id=login_session.user_id)
               session.add(item)
               session.commit()
               flash('New Catalog Item %s Successfully Created' % (item.name))
-              return redirect(url_for('showCategories'))  
-           except IntegrityError: 
+              return redirect(url_for('showCategories'))
+           except IntegrityError:
               session.rollback()
               flash('"%s" Already Exists...Catalog Item not added.' % request.form['name'])
-              return redirect(url_for('showCategories')) 
+              return redirect(url_for('showCategories'))
         else:
-           return redirect(url_for('showCategories'))   
+           return redirect(url_for('showCategories'))
     else:
         categories = session.query(Category).order_by(asc(Category.name)).all()
         return render_template('newitem.html', categories=categories)
@@ -360,10 +343,10 @@ def editItem(category_name, item_name):
       categories = session.query(Category).order_by(asc(Category.name)).all()
       if request.method == 'POST':
          if request.form.get('save') == 'save':
-            try: 
-                print ("current category_name=" + category_name) 
-                print ("current item_name=" + item_name) 
-                print ("current item.category_id on db table=" + str(item.category.id)) 
+            try:
+                print ("current category_name=" + category_name)
+                print ("current item_name=" + item_name)
+                print ("current item.category_id on db table=" + str(item.category.id))
                 print ("name=" + request.form['name'])
                 print ("desc=" + request.form['desc'])
                 print ("category=" + request.form['category'])
@@ -373,21 +356,21 @@ def editItem(category_name, item_name):
                 session.add(item)
                 session.commit()
                 flash('Catalog Item Successfully Edited %s' % item.name)
-                return redirect(url_for('showCategories'))   
-            except IntegrityError: 
+                return redirect(url_for('showCategories'))
+            except IntegrityError:
                 session.rollback()
                 flash('"%s" Already Exists...Catalog Item not changed.' % request.form['name'])
-                return redirect(url_for('showCategories')) 
-         else: 
-            return redirect(url_for('showCategories'))   
-      else: 
+                return redirect(url_for('showCategories'))
+         else:
+            return redirect(url_for('showCategories'))
+      else:
          return render_template('edititem.html', category_name=category_name, item=item, categories=categories)
 
 #     if 'username' not in login_session:
 #         return redirect('/login')
 #     if editedRestaurant.user_id != login_session['user_id']:
 #         return "<script>function myFunction() {alert('You are not authorized to edit this restaurant. Please create your own restaurant in order to edit.');}</script><body onload='myFunction()'>"
-#      if request.method == 'POST': 
+#      if request.method == 'POST':
 #         if request.form['name']:
 #             editedRestaurant.name = request.form['name']
 #             session.add(editedRestaurant)
@@ -405,11 +388,11 @@ def deleteItem(category_name, item_name):
     if request.method == 'POST':
        if request.form.get('delete') == 'delete':
 #         category = session.query(Category).filter_by(name=category_name).one()
-#         item = session.query(CatalogItem).filter_by(name=item_name, category_id=category.id).one()        
+#         item = session.query(CatalogItem).filter_by(name=item_name, category_id=category.id).one()
 #         session.delete(item)
 #         session.commit()
           flash('Catalog Item Successfully Deleted')
-          return redirect(url_for('showCategories'))  
+          return redirect(url_for('showCategories'))
        else:
           return redirect(url_for('showCategories'))
     else:
@@ -547,10 +530,10 @@ def deleteItem(category_name, item_name):
 #         log.itemid = item.id
 #         log.itemname = item.name
 #         log.itemdesc = item.desc
-#         log.itemcategory_id = logitem.category_id 
+#         log.itemcategory_id = logitem.category_id
 #         session.add(newItem)
 #         return
-        
+
 # Disconnect based on provider
 @app.route('/disconnect')
 def disconnect():

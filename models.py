@@ -37,7 +37,7 @@ class Category(Base):
        """Return object data in easily serializeable format"""
        return {
            'name'         : self.name,
-           'id'           : self.id,
+           'id'           : self.id
        }
 
 class CatalogItem(Base):
@@ -50,15 +50,16 @@ class CatalogItem(Base):
     name = Column(String(250), nullable=False)
     desc = Column(String(250), nullable=False)
     category_id = Column(ForeignKey('category.id'))
-    category = relationship('Category')
+    category = relationship(Category, backref='items')
 
     @property
     def serialize(self):
        """Return object data in easily serializeable format"""
        return {
-           'name'         : self.name,
-           'id'           : self.id,
+           'cat-id'       : self.category_id,
            'description'  : self.desc,
+           'id'           : self.id,
+           'title'        : self.name
        }
 
 engine = create_engine('sqlite:///catalog.db?check_same_thread=False')
