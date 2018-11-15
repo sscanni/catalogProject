@@ -51,6 +51,7 @@ class CatalogItem(Base):
     desc = Column(String(250), nullable=False)
     category_id = Column(ForeignKey('category.id'))
     category = relationship(Category, backref='items')
+    user_id = Column(Integer, nullable=False)
 
     @property
     def serialize(self):
@@ -61,6 +62,23 @@ class CatalogItem(Base):
            'id'           : self.id,
            'title'        : self.name
        }
+
+# class ItemLog(Base):
+#     __tablename__ = 'itemlog'
+
+#     id = Column(Integer, primary_key=True)
+#     timestamp = Column(String(250), nullable=False)
+#     transcode = Column(String(10), nullable=False)
+
+#     username = Column(String(250), nullable=False)
+#     email = Column(String(250), nullable=False)
+#     user_id = Column(String(250), nullable=False)
+
+#     item_id = Column(Integer, nullable=False)
+#     itemname = Column(String(250), nullable=False)
+#     itemdesc = Column(String(250), nullable=False)
+#     itemcategory_id = Column(Integer, nullable=False)
+#     itemcategory = Column(String(250), nullable=False)
 
 engine = create_engine('sqlite:///catalog.db?check_same_thread=False')
  

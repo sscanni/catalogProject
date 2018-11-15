@@ -315,9 +315,7 @@ def newItem():
         if request.form.get('save') == 'save':
            try:
               item = CatalogItem(name=request.form['name'], desc=request.form['desc'],
-                        category_id=request.form['category'])
-                        #category_id=request.form['category'], user_id="sscanni")
-                        # category_id=request.form['category'], user_id=login_session.user_id)
+                        category_id=request.form['category'], user_id=login_session['user_id'])
               session.add(item)
               session.commit()
               flash('New Catalog Item %s Successfully Created' % (item.name))
@@ -353,6 +351,7 @@ def editItem(category_name, item_name):
                 item.name = request.form['name']
                 item.desc = request.form['desc']
                 item.category_id = request.form['category']
+                item.user_id=login_session['user_id']
                 session.add(item)
                 session.commit()
                 flash('Catalog Item Successfully Edited %s' % item.name)
@@ -386,7 +385,8 @@ def deleteItem(category_name, item_name):
         return render_template('deleteitem.html', category_name=category_name, item_name=item_name)
 
 # Save new item information on add
-# Save old item information on an update or delete
+# Save new item information on an update
+# Save item being deleted on a delete
 # def logTrans(trans, item):
 #         log.timestamp = timestamp
 #         log.trans = trans
