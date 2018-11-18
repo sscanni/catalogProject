@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, redirect, jsonify, url_for, f
 from sqlalchemy import create_engine, asc, desc
 from sqlalchemy.orm import sessionmaker, relationship, joinedload
 from sqlalchemy.exc import IntegrityError
-from models import Base, Category, CatalogItem, User
+from models import Base, Category, CatalogItem, User, ItemLog
 from flask import session as login_session
 import random
 import string
@@ -13,6 +13,7 @@ import httplib2
 import json
 from flask import make_response
 import requests
+import datetime
 
 app = Flask(__name__)
 
@@ -318,6 +319,7 @@ def newItem():
                         category_id=request.form['category'], user_id=login_session['user_id'])
               session.add(item)
               session.commit()
+              logTrans("Add", item)
               flash('New Catalog Item %s Successfully Created' % (item.name))
               return redirect(url_for('showCategories'))
            except IntegrityError:
@@ -354,6 +356,7 @@ def editItem(category_name, item_name):
                 item.user_id=login_session['user_id']
                 session.add(item)
                 session.commit()
+                logTrans("Change", item)
                 flash('Catalog Item Successfully Edited %s' % item.name)
                 return redirect(url_for('showCategories'))
             except IntegrityError:
@@ -377,6 +380,7 @@ def deleteItem(category_name, item_name):
           item = session.query(CatalogItem).filter_by(name=item_name, category_id=category.id).one()
           session.delete(item)
           session.commit()
+          logTrans("Delete", item)
           flash('Catalog Item Successfully Deleted')
           return redirect(url_for('showCategories'))
        else:
@@ -387,18 +391,33 @@ def deleteItem(category_name, item_name):
 # Save new item information on add
 # Save new item information on an update
 # Save item being deleted on a delete
-# def logTrans(trans, item):
-#         log.timestamp = timestamp
-#         log.trans = trans
-#         log.username = login_session['username']
-#         log.email = login_session['email']
-#         log.user_id = login_session['user_id']
-#         log.itemid = item.id
-#         log.itemname = item.name
-#         log.itemdesc = item.desc
-#         log.itemcategory_id = logitem.category_id
-#         session.add(newItem)
-#         return
+def logTrans(trans, item):
+    now = datetime.datetime.now()
+    ts = now.strftime("%Y-%m-%d %H:%M:%S")
+    # print ("ts=%s" % (ts))
+    # print ("trans=%s" % (trans))
+    # print ("username=%s" % (login_session['username']))
+    # print ("email=%s" % (login_session['email']))
+    # print ("user_id=%s" % (login_session['user_id']))
+    # print ("item.id=%s" % (item.id))
+    # print ("item.name=%s" % (item.name))
+    # print ("item.desc=%s" % (item.desc))
+    # print ("item.category_id=%s" % (item.category_id))
+    category = session.query(Category).filter_by(id=item.category_id).one()
+    # print ("category.name=%s" % (category.name))
+    log = ItemLog(timestamp=ts, 
+          trans=trans,
+          username=login_session['username'],
+          email=login_session['email'],
+          user_id = login_session['user_id'],
+          item_id=item.id,
+          itemname=item.name,
+          itemdesc=item.desc,
+          itemcategory_id=item.category_id,
+          itemcategory=category.name)
+    session.add(log)
+    session.commit()
+    return
 
 # Disconnect based on provider
 @app.route('/disconnect')

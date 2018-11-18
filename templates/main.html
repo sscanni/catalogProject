@@ -1,11 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<!-- <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"> -->
+		
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<!-- Latest compiled JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 		<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
 	</head>
 	<body>
+		<div class="container-fluid">
+			<div class="row banner main">
+				<h1>Sports Catalog</h1>
+			</div>
+		</div>		
+		<nav class="navbar navbar-inverse navbar-static-top">
+			<div class="container-fluid"> 
+				<div class="container"> 
+				<div class="navbar-header">
+					<a class="navbar-brand" href="{{url_for('showCategories')}}"><span class="glyphicon glyphicon-home"></span>Sports Catalog</a>
+					{%if 'username' in session %}
+					<a class="navbar-brand" href="{{url_for('showCategories')}}"><span class="glyphicon glyphicon-plus"></span>Add Item</a>
+					{% endif %}
+				</div>
+				<ul class="nav navbar-nav navbar-right">
+						{%if 'username' not in session %}
+						<li><a href="{{url_for('showLogin')}}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+						{% else %}
+						<li><a href="{{url_for('disconnect')}}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+						{% endif %}
+				</ul>
+			</div>
+			</div>
+		</nav>
+		<!-- <div class="container-fluid"> 
+			<div class="row divider lightblue">
+				<div class="col-md-12"></div>
+			</div>
+		</div> -->
+		<div class="container-fluid"> 
+			<div class="row divider">
+				<div class="col-md-12"></div>
+			</div>
+		</div>		
 		<div class="container">
 			{% block content %}
 			{% endblock %}

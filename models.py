@@ -50,7 +50,7 @@ class CatalogItem(Base):
     name = Column(String(250), nullable=False)
     desc = Column(String(250), nullable=False)
     category_id = Column(ForeignKey('category.id'))
-    category = relationship(Category, backref='items')
+    category = relationship(Category, backref='items') # backref added for JSON endpoint
     user_id = Column(Integer, nullable=False)
 
     @property
@@ -63,22 +63,22 @@ class CatalogItem(Base):
            'title'        : self.name
        }
 
-# class ItemLog(Base):
-#     __tablename__ = 'itemlog'
+class ItemLog(Base):
+    __tablename__ = 'itemlog'
 
-#     id = Column(Integer, primary_key=True)
-#     timestamp = Column(String(250), nullable=False)
-#     transcode = Column(String(10), nullable=False)
+    id = Column(Integer, primary_key=True)
+    timestamp = Column(String(250), nullable=False)
+    trans = Column(String(10), nullable=False)
 
-#     username = Column(String(250), nullable=False)
-#     email = Column(String(250), nullable=False)
-#     user_id = Column(String(250), nullable=False)
+    item_id = Column(Integer, nullable=False)
+    itemname = Column(String(250), nullable=False)
+    itemdesc = Column(String(250), nullable=False)
+    itemcategory_id = Column(Integer, nullable=False)
+    itemcategory = Column(String(250), nullable=False)
 
-#     item_id = Column(Integer, nullable=False)
-#     itemname = Column(String(250), nullable=False)
-#     itemdesc = Column(String(250), nullable=False)
-#     itemcategory_id = Column(Integer, nullable=False)
-#     itemcategory = Column(String(250), nullable=False)
+    username = Column(String(250), nullable=False)
+    email = Column(String(250), nullable=False)
+    user_id = Column(String(250), nullable=False)
 
 engine = create_engine('sqlite:///catalog.db?check_same_thread=False')
  

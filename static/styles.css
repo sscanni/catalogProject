@@ -2,14 +2,18 @@
 	font-family: "Helvetica Neue Bold", Roboto, Helvetica, Arial, sans-serif;
 	font-weight: 700;
 }
+ /* remove blank line after nav bar */
+/* .navbar {
+	margin-bottom: 0;
+ } */
 
-h1 {
+/* h1 {
 	font-family: "Helvetica Neue Light", Roboto, Helvetica, Arial, sans-serif;
 	font-size: 50px;
 	color: #51453B;
 	line-height: 60px;
 	font-weight: 300;
-}
+} */
 
 h2 {
 	font-size: 24px;
@@ -42,10 +46,12 @@ h3 {
  	line-height: 17px;
  }
 .padding-top {
-	padding-top: 30px;
+	/* padding-top: 30px; */
+	padding-top: 10px;
 }
 .padding-bottom {
-	padding-bottom: 30px;
+	/* padding-bottom: 30px; */
+	padding-bottom: 10px;
 }
 .margin-right {
 	margin-right: 30px;
@@ -98,28 +104,33 @@ h3 {
 .divider.green {
 	background-color: #9FB80A;
 }
+.divider.lightblue {
+	background-color: #3EA4E7;
+}
 .banner.main {
-	height: 150px;
+	/* height: 150px; */
+	height: 100px;
 	background: url("/static/top-banner.png");
 	background-position: right;
 	background-repeat: no-repeat;
 	background-size: cover;
 }
-.banner.menu {
+/* .banner.menu {
 	height: 150px;
 	background-color: #E1E17F;
 }
 .banner.profile {
 	height: 150px;
 	background-color: #42C3C9; 
-}
+} */
 .banner h1 {
-	margin: 45px 0;
+	/* margin: 45px 0; */
+    margin: 30px 30px;	
 }
  .restaurant-list {
  	background-color: #F0F0F0;
  	padding: 20px;
-u }
+}
  .restaurant-list:hover {
  	background-color: #e1e17f;
  	padding: 20px;
@@ -161,3 +172,9 @@ u }
 	text-align: center;
 
 }
+.backshade {
+	background-color: #E0E0E0;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+

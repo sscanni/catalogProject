@@ -6,15 +6,16 @@
 		<div class="col-md-2 text-right">
 					</div>
 	</div> -->
-	<div class="row divider blue">
+	<!-- <div class="row divider blue">
 		<div class="col-md-12"></div>
-	</div>
-	<div class="row banner main">
+	</div> -->
+	<!-- <div class="row banner main">
 		<div class="col-md-1"></div>
 		<div class="col-md-11 padding-none">
 			<h1>Sports Catalog</h1>
 		</div>
-	</div>
+	</div> -->
+	<!-- </div> -->
 	<!-- <div class="row top-menu">
 		<div class="col-md-10"></div>
 		<div class="col-md-2 text-right">
@@ -43,18 +44,20 @@
       {% endwith %}
 
 	</div>
-<div class="container">
-    <div class="row grid-divider">
+	<div class="row divider"></div>
+<!-- <div class="container"> -->
+    <!-- <div class="row grid-divider"> -->
     <div class="col-sm-12 backshade">
       <div class="col-padding">
-        <h3>{{item_name}}</h3>
-        <p>Description: {{itemDesc}}</p>
+		<h2>Catalog Item</h2>  
+		<p><b>Name: </b>{{item_name}}</p>
+		<p><b>Description: </b>{{itemDesc}}</p>
+		<p><b>Category: </b>{{category_name}}</p>
      </div>
      <p><a href="{{url_for('showCategories')}}">Home</a></p>
-    </div>
+	</div>
+</div> 
 
-
-</div>
-</div>
+ 
 {% endblock %}
 
