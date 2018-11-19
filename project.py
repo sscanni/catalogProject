@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-from flask import Flask, render_template, request, redirect, jsonify, url_for, flash
+from flask import Flask, render_template, request, redirect, jsonify, url_for, flash, send_from_directory
 from sqlalchemy import create_engine, asc, desc
 from sqlalchemy.orm import sessionmaker, relationship, joinedload
 from sqlalchemy.exc import IntegrityError
@@ -14,6 +14,7 @@ import json
 from flask import make_response
 import requests
 import datetime
+import os
 
 app = Flask(__name__)
 
@@ -272,7 +273,7 @@ def catalogJSON():
 def showCategories():
     rows = session.query(Category).count()
     categories = session.query(Category).order_by(asc(Category.name)).all()
-    items = session.query(CatalogItem.name, Category.name).filter(CatalogItem.category_id==Category.id).order_by(desc(CatalogItem.id)).limit(rows).all()
+    items = session.query(CatalogItem, Category.name).filter(CatalogItem.category_id==Category.id).order_by(desc(CatalogItem.id)).limit(rows).all()
     if 'username' not in login_session:
         return render_template('publiccategories.html', categories=categories, items=items, displayRecent=True)
     else:
@@ -301,10 +302,15 @@ def showCategoryItems(name):
 def showItem(category_name, item_name):
     category = session.query(Category).filter_by(name=category_name).one()
     item = session.query(CatalogItem).filter_by(name=item_name, category_id=category.id).one()
+    try:
+        itemuser = session.query(User).filter_by(id=item.user_id).one()
+    except:
+        itemuser = None
     if 'username' not in login_session:
-        return render_template('publicitem.html', category_name=category_name, item_name=item_name, itemDesc=item.desc)
+        return render_template('publicitem.html', category_name=category_name, item=item, itemuser=itemuser)
+        # return render_template('publicitem.html', category_name=category_name, item_name=item_name, itemDesc=item.desc)
     else:
-        return render_template('item.html', category_name=category_name, item_name=item_name, itemDesc=item.desc)
+        return render_template('item.html', category_name=category_name, item_name=item_name, itemDesc=item.desc, itemuser=itemuser)
 
 # Add new item
 # Example: localhost:8000/catalog/item/new
@@ -387,6 +393,27 @@ def deleteItem(category_name, item_name):
           return redirect(url_for('showCategories'))
     else:
         return render_template('deleteitem.html', category_name=category_name, item_name=item_name)
+
+@app.route('/catalog/<string:category_name>/<string:item_name>/image', methods=['GET', 'POST'])
+def getImages(category_name, item_name):
+    # if 'username' not in login_session:
+    #     return redirect('/login')
+    folder = 'images'
+    imageList = os.listdir(folder)
+    return render_template('images.html', category_name=category_name, item_name=item_name, imageList=imageList)
+
+@app.route('/catalog/<string:filename>/<string:category_name>/<string:item_name>/saveimage')
+def save_image(filename, category_name, item_name):
+    category = session.query(Category).filter_by(name=category_name).one()
+    item = session.query(CatalogItem).filter_by(name=item_name, category_id=category.id).one()
+    item.image = filename
+    session.commit()
+    # logTrans("Change", item)
+    return redirect(url_for('showCategories'))
+
+@app.route('/upload/<filename>')
+def send_image(filename):
+    return send_from_directory("images", filename)
 
 # Save new item information on add
 # Save new item information on an update

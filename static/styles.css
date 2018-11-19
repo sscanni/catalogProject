@@ -3,9 +3,9 @@
 	font-weight: 700;
 }
  /* remove blank line after nav bar */
-/* .navbar {
+.navbar {
 	margin-bottom: 0;
- } */
+ }
 
 /* h1 {
 	font-family: "Helvetica Neue Light", Roboto, Helvetica, Arial, sans-serif;
@@ -17,7 +17,7 @@
 
 h2 {
 	font-size: 24px;
-	color: #42C3C9;
+	color: #0093B9;
 	line-height: 29px;
 }
 
@@ -174,7 +174,7 @@ h3 {
 }
 .backshade {
 	background-color: #E0E0E0;
-	padding-top: 10px;
+	/* padding-top: 100px; */
 	padding-bottom: 10px;
 }
 

@@ -49,6 +49,7 @@ class CatalogItem(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
     desc = Column(String(250), nullable=False)
+    image = Column(String(250), nullable=False)
     category_id = Column(ForeignKey('category.id'))
     category = relationship(Category, backref='items') # backref added for JSON endpoint
     user_id = Column(Integer, nullable=False)
@@ -59,6 +60,7 @@ class CatalogItem(Base):
        return {
            'cat-id'       : self.category_id,
            'description'  : self.desc,
+           'image'        : self.image,
            'id'           : self.id,
            'title'        : self.name
        }
@@ -73,6 +75,7 @@ class ItemLog(Base):
     item_id = Column(Integer, nullable=False)
     itemname = Column(String(250), nullable=False)
     itemdesc = Column(String(250), nullable=False)
+    itemimage = Column(String(250), nullable=False)
     itemcategory_id = Column(Integer, nullable=False)
     itemcategory = Column(String(250), nullable=False)
 

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Select image</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <p><a href="{{url_for('showCategories')}}">Home</a> 
+  <h3>Select new image for item: <Strong> {{item_name}} </Strong> in Category: <Strong>{{category_name}}</Strong></h3>
+  <h2>Image Gallery</h2>
+      <div class="row">
+        {% for fn in imageList %}        
+        <div class="col-md-3">
+          <div class="thumbnail">
+            <a href="{{ url_for('save_image', filename=fn, category_name=category_name, item_name=item_name) }}">
+              <img src="{{ url_for('send_image', filename=fn) }}" alt="image" style="width: 72px; height: 72px;">
+              <div class="caption">
+                <p>{{fn}}</p>
+              </div>
+            </a>
+          </div>
+        </div>
+    {% endfor %}
+</div>
+</body>
+</html>
