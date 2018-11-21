@@ -1,0 +1,54 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+	<div class = 'flash'>
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+        {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+      {% endwith %}
+	</div>
+
+    <div class="col-sm-12">
+		<h2>Item Change Log</h2>  
+		<table class="table logtable">
+			<tbody>
+				<thead>
+					<tr>
+						<th>Timestamp</th>
+						<th>Trans</th>
+						<th>Item ID</th>
+						<th>Item Name</th>
+						<th>Item Image</th>
+						<th>Category ID</th>
+						<th>Category</th>
+						<th>User Name</th>
+						<th>User Email</th>
+						<th>User ID</th>
+					</tr>
+				</thead>
+				{% for trans in itemlog %}
+					<tr>
+						<td>{{trans.timestamp}}</td>
+						<td>{{trans.trans}}</td>
+						<td>{{trans.item_id}}</td>
+						<td>{{trans.itemname}}</td>
+						<td>{{trans.itemimage}}</td>
+						<td>{{trans.itemcategory_id}}</td>
+						<td>{{trans.itemcategory}}</td>
+						<td>{{trans.username}}</td>
+						<td>{{trans.email}}</td>
+						<td>{{trans.user_id}}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+{% endblock %}
+

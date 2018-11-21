@@ -1,25 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Select image</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-<body>
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
 
 <div class="container">
-  <p><a href="{{url_for('showCategories')}}">Home</a> 
-  <h3>Select new image for item: <Strong> {{item_name}} </Strong> in Category: <Strong>{{category_name}}</Strong></h3>
-  <h2>Image Gallery</h2>
-      <div class="row">
-        {% for fn in imageList %}        
+    <form id="my_form" action="#" method = "post">
+        <div class="row">
+          <input type="hidden" name="catalogName" value={{category_name}}> 
+          <input type="hidden" name="itemName" value={{item_name}}> 
+          <input id="imageName" type="hidden" name="imageName" value="image"> 
+    </form>  
+    <p><a href="{{url_for('showItem', category_name=category_name, item_name=item_name)}}">Return</a> 
+    <h2>Select new image for item: <b> {{item_name}} </b> in Category: <b>{{category_name}}</b></h2>
+    {% for fn in imageList %}    
         <div class="col-md-3">
           <div class="thumbnail">
-            <a href="{{ url_for('save_image', filename=fn, category_name=category_name, item_name=item_name) }}">
-              <img src="{{ url_for('send_image', filename=fn) }}" alt="image" style="width: 72px; height: 72px;">
+              <img src="{{ url_for('send_image', filename=fn) }}" alt="{{fn}}" style="width: 72px; height: 72px;" onclick="myFunction(this);">  
               <div class="caption">
                 <p>{{fn}}</p>
               </div>
@@ -28,5 +23,11 @@
         </div>
     {% endfor %}
 </div>
-</body>
-</html>
+<script>
+    function myFunction(imgs) {
+        var imageName = document.getElementById("imageName");
+        imageName.value = imgs.alt;
+        document.getElementById("my_form").submit()
+    }
+</script>
+{% endblock %}

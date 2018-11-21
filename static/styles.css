@@ -3,6 +3,7 @@
 	font-weight: 700;
 }
  /* remove blank line after nav bar */
+
 .navbar {
 	margin-bottom: 0;
  }
@@ -44,6 +45,10 @@ h3 {
  	font-size: 14px;
  	color: #0093B9;
  	line-height: 17px;
+ } a {
+ 	font-size: 14px;
+ 	color: #0093B9;
+ 	line-height: 17px;
  }
 .padding-top {
 	/* padding-top: 30px; */
@@ -59,7 +64,7 @@ h3 {
 .padding-none {
 	padding: 0;
 }
-.btn {
+/* .btn {
 	padding: 20px;
 	margin: 0;
 	border-color: #9FB80A;
@@ -76,11 +81,11 @@ h3 {
 .btn.delete:hover {
 	border-color: #aaaaaa;
 	color: red;
-}
+} */
 .glyphicon {
 	margin-right: 10px;
 }
-.top-menu {
+/* .top-menu {
 	padding-top: 30px;
 	padding-bottom: 30px;
 }
@@ -94,7 +99,7 @@ h3 {
 	font-size: 16px;
 	color: #7B7573;
 	font-weight: 400;
-}
+} */
 .divider {
 	height: 15px;
 }
@@ -127,7 +132,7 @@ h3 {
 	/* margin: 45px 0; */
     margin: 30px 30px;	
 }
- .restaurant-list {
+ /* .restaurant-list {
  	background-color: #F0F0F0;
  	padding: 20px;
 }
@@ -143,7 +148,7 @@ h3 {
 }
 .menu-price {
 	font-weight: 700;
-}
+} */
 .creator {
 	padding-right: 20px;
 	margin-top: -20px;
@@ -177,4 +182,18 @@ h3 {
 	/* padding-top: 100px; */
 	padding-bottom: 10px;
 }
-
+.logtable * {
+	font-size: 12px;
+	font-weight: 100;
+}
+.imgBtn {
+	font-size: 14px;
+	color: #0093B9;
+	line-height: 17px;
+	font-weight: 700;
+}
+.imgBtn:hover {
+	color: #0093B9;
+	font-weight: 700;
+}
+	

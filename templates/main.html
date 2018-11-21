@@ -25,15 +25,15 @@
 				<div class="navbar-header">
 					<a class="navbar-brand" href="{{url_for('showCategories')}}"><span class="glyphicon glyphicon-home"></span>Sports Catalog</a>
 					{%if 'username' in session %}
-					<a class="navbar-brand" href="{{url_for('showCategories')}}"><span class="glyphicon glyphicon-plus"></span>Add Item</a>
+						<a class="navbar-brand" href="{{url_for('newItem')}}"><span class="glyphicon glyphicon-plus"></span>Add Item</a>
 					{% endif %}
 				</div>
 				<ul class="nav navbar-nav navbar-right">
-						{%if 'username' not in session %}
+					{%if 'username' not in session %}
 						<li><a href="{{url_for('showLogin')}}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-						{% else %}
+					{% else %}
 						<li><a href="{{url_for('disconnect')}}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-						{% endif %}
+					{% endif %}
 				</ul>
 			</div>
 			</div>
