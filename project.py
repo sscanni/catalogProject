@@ -342,8 +342,8 @@ def newItem():
 
 # Edit a specific item
 # Example: localhost:8000/catalog/Snowboarding/Snowboard/edit
-@app.route('/catalog/<string:category_name>/<string:item_name>/edit', methods=['GET', 'POST'])
-def editItem(category_name, item_name):
+@app.route('/catalog/<string:category_name>/<string:item_name>/edit/<i>/', methods=['GET', 'POST'])
+def editItem(category_name, item_name, i):
       if 'username' not in login_session:
           return redirect('/login')
       category = session.query(Category).filter_by(name=category_name).one()
@@ -354,6 +354,7 @@ def editItem(category_name, item_name):
             try:
                 item.name = request.form['name']
                 item.desc = request.form['desc']
+                item.image = image=request.form['image']
                 item.category_id = request.form['category']
                 item.user_id=login_session['user_id']
                 session.commit()
@@ -366,24 +367,32 @@ def editItem(category_name, item_name):
                 return redirect(url_for('showCategories'))
          elif request.form.get('getimg') == 'getimg':
                 try:
-                    formdata = session.query(FormData).filter_by(id=1).one().delete()
+                    formdata = session.query(FormData).filter_by(id=1).one()
+                    formdata.name=request.form['name']
+                    formdata.desc=request.form['desc']
+                    formdata.image=request.form['image']
+                    formdata.category_id=request.form['category']
                     session.commit()
                 except:
-                    pass
-                formdata = FormData(id=1, name=request.form['name'], desc=request.form['desc'],
-                     image = request.form['image'], category_id=request.form['category'])
-                session.add(formdata)
-                session.commit()
+                    formdata = FormData(id=1, name=request.form['name'], desc=request.form['desc'],
+                         image = request.form['image'], category_id=request.form['category'])
+                    session.add(formdata)
+                    session.commit()
                 return redirect(url_for('getImages', category_name=category_name, item_name=item_name))
          else:
             try:
-                formdata = session.query(FormData).filter_by(id=1).one().delete()
+                formdata = session.query(FormData).filter_by(id=1).one()
+                session.delete(formdata)
                 session.commit()
             except:
                 pass
             return redirect(url_for('showItem', category_name=category_name, item_name=item_name))
       else:
-         return render_template('edititem.html', category_name=category_name, item=item, categories=categories)
+         if i == "Y":
+            formdata = session.query(FormData).filter_by(id=1).one()
+            return render_template('edititem.html', category_name=category_name, item_name=item_name, item=formdata, categories=categories)
+         else:
+            return render_template('edititem.html', category_name=category_name, item_name=item_name, item=item, categories=categories)
 
 # Delete a specific item
 # Example: localhost:8000/catalog/Snowboarding/Snowboard/delete
@@ -419,10 +428,9 @@ def getImages(category_name, item_name):
         # categories = session.query(Category).order_by(asc(Category.name)).all()
         formdata = session.query(FormData).filter_by(id=1).one()
         formdata.image = request.form['imageName']
-        print ("request.form['imageName']=" + request.form['imageName'])
         session.commit()
         # return render_template('edititem.html', category_name=category_name, item=item, categories=categories)
-        return redirect(url_for('editItem', category_name=category_name, item_name=item_name))
+        return redirect(url_for('editItem', category_name=category_name, item_name=item_name, i='Y'))
 
 @app.route('/upload/<filename>')
 def send_image(filename):
@@ -453,6 +461,7 @@ def logTrans(trans, item):
           item_id=item.id,
           itemname=item.name,
           itemdesc=item.desc,
+          itemimage=item.image,
           itemcategory_id=item.category_id,
           itemcategory=category.name)
     session.add(log)
@@ -463,6 +472,17 @@ def logTrans(trans, item):
 def showLogTrans():
     itemlog = session.query(ItemLog).order_by(desc(ItemLog.timestamp)).all()
     return render_template('logview.html', itemlog=itemlog)
+
+@app.route('/catalog/showItemlog/<string:category_name>/<string:item_name>/')
+def showItemLogTrans(category_name, item_name):
+    category = session.query(Category).filter_by(name=category_name).one()
+    item = session.query(CatalogItem).filter_by(name=item_name, category_id=category.id).one()
+    try:
+        itemlog = session.query(ItemLog).filter_by(item_id=item.id, itemcategory_id=category.id).order_by(desc(ItemLog.timestamp)).all()
+    except:
+        pass
+    return render_template('logview.html', itemlog=itemlog)
+
 
 # Disconnect based on provider
 @app.route('/disconnect')
@@ -485,6 +505,20 @@ def disconnect():
     else:
         flash("You were not logged in")
         return redirect(url_for('showCategories'))
+       
+def imagePageProc(func, val):
+    if func == "set":
+        s = val
+        print ("in routine set")
+        print (s)
+    try:
+        print ("in routine get")
+        print (s)
+        return s
+    except:
+        print ("in routine get")
+        return False
+  
 
 
 if __name__ == '__main__':
