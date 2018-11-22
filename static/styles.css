@@ -45,10 +45,6 @@ h3 {
  	font-size: 14px;
  	color: #0093B9;
  	line-height: 17px;
- } a {
- 	font-size: 14px;
- 	color: #0093B9;
- 	line-height: 17px;
  }
 .padding-top {
 	/* padding-top: 30px; */
@@ -132,6 +128,7 @@ h3 {
 	/* margin: 45px 0; */
     margin: 30px 30px;	
 }
+
  /* .restaurant-list {
  	background-color: #F0F0F0;
  	padding: 20px;
@@ -150,8 +147,8 @@ h3 {
 	font-weight: 700;
 } */
 .creator {
-	padding-right: 20px;
-	margin-top: -20px;
+	padding-right: 275px;
+	margin-top: -40px;
 	text-align: right;
 	float:right;
 }
@@ -159,12 +156,12 @@ h3 {
 	width: 100px;
 	border-radius: 50%;
 }
-.creator figcaption {
+/* .creator figcaption {
 	font-size: 14px;
 	color: #7B7573;
 	font-weight: 400;
 	margin-top: -20px;
-}
+} */
 .flash {
 	background-color: #98FB98;
 	width:100%;

@@ -16,8 +16,14 @@
 	<body>
 		<div class="container-fluid">
 			<div class="row banner main">
-				<h1>Sports Catalog</h1> 
-			</div>		
+				<h1>Sports Catalog</h1>
+			</div>	
+			{%if 'username' in session %}
+			<div class="creator">
+				<img src="{{session['picture']}}" style = "width: 30px; height: 30px;border-radius: 25px;-webkit-border-radius: 25px;-moz-border-radius: 25px;">
+				<span>{{session['username']}} logged in</span>
+			</div>
+			{% endif %}
 		</div>
 		<nav class="navbar navbar-inverse navbar-static-top">
 			<div class="container-fluid"> 
