@@ -2,53 +2,44 @@
 {% block content %}
 {% include "header.html" %}
 
-	<!-- <div class="row top-menu">
-		<div class="col-md-10"></div>
-		<div class="col-md-2 text-right">
-			<a href="{{url_for('showLogin')}}">Click Here to Log in </a>
-		</div>
-	</div>
-	<div class="row divider blue">
-		<div class="col-md-12"></div>
-	</div>
-	<div class="row banner main">
-		<div class="col-md-1"></div>
-		<div class="col-md-11 padding-none">
-			<h1>Catalog App</h1>
-		</div>
-	</div> -->
-
-<div class="container">
+  <div class="container">
     <div class="row grid-divider">
     <div class="col-sm-12 backshade">
       <div class="col-padding">
-        <h3>New Catalog Item</h3>
+        <h3>Add New Item</h3>
         <form action="#" method = "post">
           <div class="form-group">
             <label for="formGroupExampleInput">Name</label>
-            <input type="text" name="name" class="form-control" id="formGroupExampleInput" value="">
+            <input type="text" name="name" class="form-control" id="formGroupExampleInput" value="{{formdata.name}}">
           </div>
           <div class="form-group">
             <label for="exampleFormControlTextarea1">Description</label>
-            <textarea class="form-control" name="desc" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea class="form-control" name="desc" id="exampleFormControlTextarea1" rows="3">{{formdata.desc}}</textarea>
           </div>
           <div class="form-group">
             <label for="exampleFormControlSelect1">Catagory</label>
             <select class="form-control" id="exampleFormControlSelect1" name="category">
             {% for c in categories %}
-               <option value="{{c.id}}">{{c.name}}</option>
+              {% if c.id == formdata.category_id %}
+                <option value="{{c.id}}" selected>{{c.name}}</option>
+              {% else %}
+                <option value="{{c.id}}">{{c.name}}</option>
+              {% endif %}
             {% endfor %}
             </select>
-        </div>
-            <!-- <button type="button" class="btn btn-primary" onclick="location.href = 'item.html';">Save</button>
-            <button type="button" class="btn btn-primary" onclick="location.href = '{{url_for('showCategories')}}'>Cancel</button> -->
-
-            <button type="submit" class="btn btn-default" id="submit" type="submit" name="save" value="save">
-					  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Save</button>
-            <!-- <a href = "{{url_for('showCategories')}}"> -->
-						<button class="btn btn-default delete" name="cancel" value="cancel">
-						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel</button>
-					<!-- </a> -->
+          </div>
+          <div class="row divider"></div>
+          <div class="form-group">
+              <input type="hidden" name="image" value={{formdata.image}}>
+              <label for="exampleFormControlSelect1">Image: {{formdata.image}}</label>
+              <p><img src="{{ url_for('send_image', filename=formdata.image) }}" alt="image" style="width: 72px; height: 72px;">
+              <button type="submit" class="btn btn-basic imgBtn" id="submit" type="submit" name="getimg" value="getimg"> 
+              <span aria-hidden="true"></span>Select new image</button></p>
+          </div>
+          <button type="submit" class="btn btn-primary" id="submit" type="submit" name="save" value="save">
+          <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Save</button>
+          <button class="btn btn-primary delete" name="cancel" value="cancel">
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel</button>
         </form>
      </div>
     </div>

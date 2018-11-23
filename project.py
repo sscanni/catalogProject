@@ -1,17 +1,16 @@
 #!/usr/bin/env python2
-from flask import Flask, render_template, request, redirect, jsonify, url_for, flash, send_from_directory
+from flask import Flask, render_template, request, redirect, jsonify, url_for, flash, send_from_directory, make_response
 from sqlalchemy import create_engine, asc, desc
 from sqlalchemy.orm import sessionmaker, relationship, joinedload
 from sqlalchemy.exc import IntegrityError
 from models import Base, Category, CatalogItem, User, ItemLog, FormData
 from flask import session as login_session
-import random
-import string
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
+import random
+import string
 import httplib2
 import json
-from flask import make_response
 import requests
 import datetime
 import os
@@ -322,9 +321,8 @@ def newItem():
     if request.method == 'POST':
         if request.form.get('save') == 'save':
            try:
-              item = CatalogItem(name=request.form['name'], desc=request.form['desc'],
+              item = CatalogItem(name=request.form['name'], desc=request.form['desc'], image=request.form['image'],
                         category_id=request.form['category'], user_id=login_session['user_id'])
-             ## Need to save image
               session.add(item)
               session.commit()
               logTrans("Add", item)
@@ -337,8 +335,9 @@ def newItem():
         else:
            return redirect(url_for('showCategories'))
     else:
+        formdata = FormData(name="", desc="", image="default.jpg", category_id=1)
         categories = session.query(Category).order_by(asc(Category.name)).all()
-        return render_template('newitem.html', categories=categories)
+        return render_template('newitem.html', categories=categories, formdata=formdata)
 
 # Edit a specific item
 # Example: localhost:8000/catalog/Snowboarding/Snowboard/edit
@@ -423,13 +422,9 @@ def getImages(category_name, item_name):
         imageList = os.listdir(folder)
         return render_template('images.html', category_name=category_name, item_name=item_name, imageList=imageList)
     elif request.method == 'POST': 
-        # category = session.query(Category).filter_by(name=category_name).one()
-        # item = session.query(CatalogItem).filter_by(name=item_name, category_id=category.id).one()
-        # categories = session.query(Category).order_by(asc(Category.name)).all()
         formdata = session.query(FormData).filter_by(id=1).one()
         formdata.image = request.form['imageName']
         session.commit()
-        # return render_template('edititem.html', category_name=category_name, item=item, categories=categories)
         return redirect(url_for('editItem', category_name=category_name, item_name=item_name, i='Y'))
 
 @app.route('/upload/<filename>')

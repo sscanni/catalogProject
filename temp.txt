@@ -1,0 +1,19 @@
+		<nav class="navbar navbar-inverse navbar-static-top">
+			<div class="container-fluid"> 
+				<div class="container"> 
+					<ul class="nav navbar-nav navbar-left">
+						<li><a href="{{url_for('showCategories')}}"><span class="glyphicon glyphicon-home"></span>Sports Catalog</a></li>
+						{%if 'username' in session %}
+						<li><a href="{{url_for('newItem')}}"><span class="glyphicon glyphicon-plus"></span>Add Item</a></li>
+						{% endif %}
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						{%if 'username' not in session %}
+							<li><a href="{{url_for('showLogin')}}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+						{% else %}
+							<li><a href="{{url_for('disconnect')}}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+						{% endif %}
+					</ul>
+				</div>
+			</div>
+		</nav>
