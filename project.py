@@ -399,19 +399,13 @@ def editItem(category_name, item_name, i):
 def deleteItem(category_name, item_name):
     if 'username' not in login_session:
         return redirect('/login')
-    if request.method == 'POST':
-       if request.form.get('delete') == 'delete':
-          category = session.query(Category).filter_by(name=category_name).one()
-          item = session.query(CatalogItem).filter_by(name=item_name, category_id=category.id).one()
-          session.delete(item)
-          session.commit()
-          logTrans("Delete", item)
-          flash('Catalog Item Successfully Deleted')
-          return redirect(url_for('showCategories'))
-       else:
-          return redirect(url_for('showCategories'))
-    else:
-        return render_template('deleteitem.html', category_name=category_name, item_name=item_name)
+    category = session.query(Category).filter_by(name=category_name).one()
+    item = session.query(CatalogItem).filter_by(name=item_name, category_id=category.id).one()
+    session.delete(item)
+    session.commit()
+    logTrans("Delete", item)
+    flash('Catalog Item Successfully Deleted')
+    return redirect(url_for('showCategories'))
 
 @app.route('/catalog/<string:category_name>/<string:item_name>/images', methods=['GET', 'POST'])
 def getImages(category_name, item_name):
