@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, redirect, jsonify, url_for, f
 from sqlalchemy import create_engine, asc, desc
 from sqlalchemy.orm import sessionmaker, relationship, joinedload
 from sqlalchemy.exc import IntegrityError
-from models import Base, Category, CatalogItem, User, ItemLog, FormData
+from models import Base, Category, CatalogItem, User, ItemLog
 from flask import session as login_session
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
@@ -267,20 +267,16 @@ def catalogJSON():
 
 # Show all categories
 @app.route('/')
-@app.route('/catalog/categories')
+@app.route('/catalog/categories/')
 def showCategories():
     rows = session.query(Category).count()
     categories = session.query(Category).order_by(asc(Category.name)).all()
     items = session.query(CatalogItem, Category.name).filter(CatalogItem.category_id==Category.id).order_by(desc(CatalogItem.id)).limit(rows).all()
     return render_template('publiccategories.html', categories=categories, items=items, displayRecent=True)
-    # if 'username' not in login_session:
-    #     return render_template('publiccategories.html', categories=categories, items=items, displayRecent=True)
-    # else:
-    #     return render_template('categories.html', categories=categories, items=items, displayRecent=True)
 
 # Display all items for a Category
 # Example: localhost:8000/catalog/Snowboarding/items
-@app.route('/catalog/<string:name>/items')
+@app.route('/catalog/<string:name>/items/')
 def showCategoryItems(name):
     category = session.query(Category).filter_by(name=name).one()
     items = session.query(CatalogItem).filter_by(category_id=category.id).order_by(asc(CatalogItem.name)).all()
@@ -290,15 +286,27 @@ def showCategoryItems(name):
     else:
        itemtitle = "%s (%s items)" % (category.name, str(itemcount))
     categories = session.query(Category).order_by(asc(Category.name)).all()
-    return render_template('publiccategories.html', category=category, categories=categories, items=items, itemtitle=itemtitle, displayRecent=False)
-    # if 'username' not in login_session:
-    #     return render_template('publiccategories.html', category=category, categories=categories, items=items, itemtitle=itemtitle, displayRecent=False)
-    # else:
-    #     return render_template('categories.html', category=category, categories=categories, items=items, itemtitle=itemtitle, displayRecent=False)
+
+    # Setup prev and next category links
+    cat = []
+    for x, c in enumerate(categories):
+        cat.append(c.name)
+        if name == cat[x]:
+           curIndex = x
+    if curIndex == 0:
+       prevCat = cat[len(cat)-1]
+    else:
+       prevCat = cat[curIndex-1]
+    if curIndex == len(cat)-1:
+       nextCat = cat[0]
+    else:
+       nextCat = cat[curIndex+1]             
+
+    return render_template('publiccategories.html', category=category, categories=categories, items=items, itemtitle=itemtitle, displayRecent=False, prevCat=prevCat, nextCat=nextCat)
 
 # Display a specific item
 # Example: localhost:8000/catalog/Snowboarding/Snowboard
-@app.route('/catalog/<string:category_name>/<string:item_name>')
+@app.route('/catalog/<string:category_name>/<string:item_name>/')
 def showItem(category_name, item_name):
     category = session.query(Category).filter_by(name=category_name).one()
     item = session.query(CatalogItem).filter_by(name=item_name, category_id=category.id).one()
@@ -307,14 +315,10 @@ def showItem(category_name, item_name):
     except:
         itemuser = None
     return render_template('publicitem.html', category_name=category_name, item=item, itemuser=itemuser)
-    # if 'username' not in login_session:
-    #     return render_template('publicitem.html', category_name=category_name, item_name=item_name, itemDesc=item.desc)
-    # else:
-    #     return render_template('item.html', category_name=category_name, item_name=item_name, itemDesc=item.desc, itemuser=itemuser)
 
 # Add new item
 # Example: localhost:8000/catalog/item/new
-@app.route('/catalog/item/new', methods=['GET', 'POST'])
+@app.route('/catalog/item/new/', methods=['GET', 'POST'])
 def newItem():
     if 'username' not in login_session:
         return redirect('/login')
@@ -335,14 +339,15 @@ def newItem():
         else:
            return redirect(url_for('showCategories'))
     else:
-        formdata = FormData(name="", desc="", image="default.jpg", category_id=1)
+        folder = 'images'
+        imageList = os.listdir(folder)
         categories = session.query(Category).order_by(asc(Category.name)).all()
-        return render_template('newitem.html', categories=categories, formdata=formdata)
+        return render_template('newitem.html', categories=categories, imageList=imageList)
 
 # Edit a specific item
 # Example: localhost:8000/catalog/Snowboarding/Snowboard/edit
-@app.route('/catalog/<string:category_name>/<string:item_name>/edit/<i>/', methods=['GET', 'POST'])
-def editItem(category_name, item_name, i):
+@app.route('/catalog/<string:category_name>/<string:item_name>/edit/', methods=['GET', 'POST'])
+def editItem(category_name, item_name):
       if 'username' not in login_session:
           return redirect('/login')
       category = session.query(Category).filter_by(name=category_name).one()
@@ -364,38 +369,16 @@ def editItem(category_name, item_name, i):
                 session.rollback()
                 flash('"%s" Already Exists...Catalog Item not changed.' % request.form['name'])
                 return redirect(url_for('showCategories'))
-         elif request.form.get('getimg') == 'getimg':
-                try:
-                    formdata = session.query(FormData).filter_by(id=1).one()
-                    formdata.name=request.form['name']
-                    formdata.desc=request.form['desc']
-                    formdata.image=request.form['image']
-                    formdata.category_id=request.form['category']
-                    session.commit()
-                except:
-                    formdata = FormData(id=1, name=request.form['name'], desc=request.form['desc'],
-                         image = request.form['image'], category_id=request.form['category'])
-                    session.add(formdata)
-                    session.commit()
-                return redirect(url_for('getImages', category_name=category_name, item_name=item_name))
          else:
-            try:
-                formdata = session.query(FormData).filter_by(id=1).one()
-                session.delete(formdata)
-                session.commit()
-            except:
-                pass
-            return redirect(url_for('showItem', category_name=category_name, item_name=item_name))
+             return redirect(url_for('showItem', category_name=category_name, item_name=item_name))
       else:
-         if i == "Y":
-            formdata = session.query(FormData).filter_by(id=1).one()
-            return render_template('edititem.html', category_name=category_name, item_name=item_name, item=formdata, categories=categories)
-         else:
-            return render_template('edititem.html', category_name=category_name, item_name=item_name, item=item, categories=categories)
+          folder = 'images'
+          imageList = os.listdir(folder)
+          return render_template('edititem.html', category_name=category_name, item_name=item_name, item=item, categories=categories, imageList=imageList)
 
 # Delete a specific item
 # Example: localhost:8000/catalog/Snowboarding/Snowboard/delete
-@app.route('/catalog/<string:category_name>/<string:item_name>/delete', methods=['GET', 'POST'])
+@app.route('/catalog/<string:category_name>/<string:item_name>/delete/', methods=['GET', 'POST'])
 def deleteItem(category_name, item_name):
     if 'username' not in login_session:
         return redirect('/login')
@@ -407,19 +390,19 @@ def deleteItem(category_name, item_name):
     flash('Catalog Item Successfully Deleted')
     return redirect(url_for('showCategories'))
 
-@app.route('/catalog/<string:category_name>/<string:item_name>/images', methods=['GET', 'POST'])
-def getImages(category_name, item_name):
+# Delete Category
+# Example: localhost:8000/catalog/category/<string:category_name>/delete/
+@app.route('/catalog/category/<string:category_name>/delete/', methods=['GET', 'POST'])
+def deleteCategory(category_name):
     if 'username' not in login_session:
         return redirect('/login')
-    if request.method == 'GET':
-        folder = 'images'
-        imageList = os.listdir(folder)
-        return render_template('images.html', category_name=category_name, item_name=item_name, imageList=imageList)
-    elif request.method == 'POST': 
-        formdata = session.query(FormData).filter_by(id=1).one()
-        formdata.image = request.form['imageName']
-        session.commit()
-        return redirect(url_for('editItem', category_name=category_name, item_name=item_name, i='Y'))
+    # category = session.query(Category).filter_by(name=category_name).one()
+    # item = session.query(CatalogItem).filter_by(name=item_name, category_id=category.id).one()
+    # session.delete(item)
+    # session.commit()
+    # logTrans("Delete", item)
+    flash('Category Successfully Deleted')
+    return redirect(url_for('showCategories'))
 
 @app.route('/upload/<filename>')
 def send_image(filename):
@@ -457,7 +440,7 @@ def logTrans(trans, item):
     session.commit()
     return
 
-@app.route('/catalog/showlog')
+@app.route('/catalog/showlog/')
 def showLogTrans():
     itemlog = session.query(ItemLog).order_by(desc(ItemLog.timestamp)).all()
     return render_template('logview.html', itemlog=itemlog)
@@ -494,19 +477,6 @@ def disconnect():
     else:
         flash("You were not logged in")
         return redirect(url_for('showCategories'))
-       
-def imagePageProc(func, val):
-    if func == "set":
-        s = val
-        print ("in routine set")
-        print (s)
-    try:
-        print ("in routine get")
-        print (s)
-        return s
-    except:
-        print ("in routine get")
-        return False
   
 
 

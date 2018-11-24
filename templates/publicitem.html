@@ -38,7 +38,7 @@
 			{%if 'username' not in session %}
 				<p><a href="{{url_for('showCategories')}}">Home</a> 
 			{% else %}
-				<p><a href="{{url_for('showCategories')}}">Home</a> | <a href="{{url_for('showItemLogTrans', category_name=category_name, item_name=item.name)}}">Change Log</a> | <a href="{{url_for('editItem', category_name=category_name, item_name=item.name, i='N')}}">Edit</a> | <a href="#myModal" data-toggle="modal" data-target="#myModal">Delete</a></p>				
+				<p><a href="{{url_for('showCategories')}}">Home</a> | <a href="{{url_for('showItemLogTrans', category_name=category_name, item_name=item.name)}}">Change Log</a> | <a href="{{url_for('editItem', category_name=category_name, item_name=item.name)}}">Edit</a> | <a href="#myModal" data-toggle="modal" data-target="#myModal">Delete</a></p>				
 				<!-- <a href="{{url_for('showCategories')}}" class="btn btn-info btn-sm" role="button">Home</a>   <a href="{{url_for('showItemLogTrans', category_name=category_name, item_name=item.name)}}" class="btn btn-info btn-sm" role="button">Change Log</a>  <a href="{{url_for('editItem', category_name=category_name, item_name=item.name, i='N')}}" class="btn btn-info btn-sm" role="button">Edit</a>  <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Delete</button> -->
 			{% endif %}
 			</td></tr>

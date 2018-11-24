@@ -65,16 +65,6 @@ class CatalogItem(Base):
            'title'        : self.name
        }
 
-class FormData(Base):
-    __tablename__ = 'formdata'
-
-    id = Column(Integer, primary_key=True)
-    name = Column(String(250), nullable=False)
-    desc = Column(String(250), nullable=False)
-    image = Column(String(250), nullable=False)
-    category_id = Column(Integer, nullable=False)
-
-
 class ItemLog(Base):
     __tablename__ = 'itemlog'
 

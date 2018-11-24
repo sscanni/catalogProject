@@ -30,11 +30,12 @@
           </div>
           <div class="row divider"></div>
           <div class="form-group">
-              <input type="hidden" name="image" value={{item.image}}>
-              <label for="exampleFormControlSelect1">Image: {{item.image}}</label>
-              <p><img src="{{ url_for('send_image', filename=item.image) }}" alt="image" style="width: 72px; height: 72px;">
-              <button type="submit" class="btn btn-basic imgBtn" id="submit" type="submit" name="getimg" value="getimg"> 
-              <span aria-hidden="true"></span>Select new image</button></p>
+              <input id=imageName type="hidden" name="image" value={{item.image}}>
+              <label id=imageLabel for="exampleFormControlSelect1">Image: {{item.image}}</label>
+              <p><img id=imageFile src="{{ url_for('send_image', filename=item.image) }}" alt="image" style="width: 72px; height: 72px;">
+         <!-- <button type="submit" class="btn btn-basic imgBtn" id="submit" type="submit" name="getimg" value="getimg"> 
+              <span aria-hidden="true"></span>Select new image</button></p> -->
+              <a href="#myModal" data-toggle="modal" data-target="#myModal">Select Image</a></p>
           </div>
           <button type="submit" class="btn btn-primary" id="submit" type="submit" name="save" value="save">
           <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Save</button>
@@ -45,5 +46,53 @@
     </div>
   </div>
 </div>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Select Image</h4>
+        </div>
+        <div class="modal-body">
+          <div class="list-group">
+            <div class="row">
+              {% for fn in imageList %}    
+              <div class="col-sm-2">
+                 <div class="thumbnail" style="width: 72px; height: 72px;">
+                    <a data-dismiss="modal"href="javascript:{}" return false;><img src="{{ url_for('send_image', filename=fn) }}" alt="{{fn}}" style="width: 72px; height: 72px;" onclick="myFunction(this);"></a>
+                    <!-- <a class="imagelink" href="javascript:void(0);" alt="{{fn}}" onclick="LinkFunction(this);">{{fn}}</a> -->
+                  </div>
+              </div>
+              {% endfor %}
+            </div>            
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
+<script>
+    function myFunction(imgs) {
+        $('#myModal').modal('hide')
+        var imageName = document.getElementById("imageName");
+        imageName.value = imgs.alt;
+        imageFile.src = imgs.src;
+        imageLabel.innerHTML = imgs.alt;
+        $('#myModal').modal('hide')
+        // document.getElementById("my_form").submit()
+    }
+    // function LinkFunction(imgs) {
+    //     var imageName = document.getElementById("imageName");
+    //     imageName.value = imgs.text;
+    //     imageFile.src = imgs.text;
+    //     imageLabel.innerHTML = imgs.text;
+    //     $('#myModal').modal('hide')
+    //     // document.getElementById("my_form").submit()
+    // }
+</script>
 {% endblock %}

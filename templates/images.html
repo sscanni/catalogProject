@@ -9,7 +9,7 @@
           <input type="hidden" name="itemName" value={{item_name}}> 
           <input id="imageName" type="hidden" name="imageName" value="image"> 
     </form>  
-    <p><a href="{{url_for('editItem', category_name=category_name, item_name=item_name, i='Y')}}">Return</a> 
+    <p><a href="{{url_for('editItem', category_name=category_name, item_name=item_name)}}">Return</a> 
     <h2>Select new image for item: <b> {{item_name}} </b> in Category: <b>{{category_name}}</b></h2>
     {% for fn in imageList %}    
         <div class="col-md-3">
