@@ -325,7 +325,7 @@ def newItem():
     if request.method == 'POST':
         if request.form.get('save') == 'save':
            try:
-              item = CatalogItem(name=request.form['name'], desc=request.form['desc'], image=request.form['image'],
+              item = CatalogItem(name=request.form['name'].strip(), desc=request.form['desc'].strip(), image=request.form['image'],
                         category_id=request.form['category'], user_id=login_session['user_id'])
               session.add(item)
               session.commit()
@@ -334,7 +334,7 @@ def newItem():
               return redirect(url_for('showCategories'))
            except IntegrityError:
               session.rollback()
-              flash('"%s" Already Exists...Catalog Item not added.' % request.form['name'])
+              flash('"%s" Already Exists in this Category...Item not changed.' % request.form['name'])
               return redirect(url_for('showCategories'))
         else:
            return redirect(url_for('showCategories'))
@@ -356,8 +356,8 @@ def editItem(category_name, item_name):
       if request.method == 'POST':
          if request.form.get('save') == 'save':
             try:
-                item.name = request.form['name']
-                item.desc = request.form['desc']
+                item.name = request.form['name'].strip()
+                item.desc = request.form['desc'].strip()
                 item.image = image=request.form['image']
                 item.category_id = request.form['category']
                 item.user_id=login_session['user_id']
@@ -367,7 +367,7 @@ def editItem(category_name, item_name):
                 return redirect(url_for('showCategories'))
             except IntegrityError:
                 session.rollback()
-                flash('"%s" Already Exists...Catalog Item not changed.' % request.form['name'])
+                flash('"%s" Already Exists in this Category...Item not changed.' % request.form['name'])
                 return redirect(url_for('showCategories'))
          else:
              return redirect(url_for('showItem', category_name=category_name, item_name=item_name))
@@ -396,13 +396,65 @@ def deleteItem(category_name, item_name):
 def deleteCategory(category_name):
     if 'username' not in login_session:
         return redirect('/login')
+        category = session.query(Category).filter_by(name=category_name).one()
+        # item = session.query(CatalogItem).filter_by(name=item_name, category_id=category.id).one()
+        session.delete(category)
+        session.commit()
+    # logTrans("Delete", item)
+    flash('Category Successfully Deleted')
+    return redirect(url_for('showCategories'))
+
+# Edit Category
+# Example: localhost:8000/catalog/category/<string:category_name>/edit/
+@app.route('/catalog/category/<string:category_name>/edit/', methods=['GET', 'POST'])
+def editCategory(category_name):
+    if 'username' not in login_session:
+        return redirect('/login')
+    if request.method == 'POST':
+        if request.form.get('save') == 'save':
+           try:
+               category = session.query(Category).filter_by(name=category_name).one()
+               category.name = request.form['name'].strip()
+               session.commit()
+               flash('Category Successfully Editted')
+               return redirect(url_for('showCategories'))
+           except IntegrityError:
+              session.rollback()
+              flash('"%s" Already Exists...Category name not changed.' % request.form['name'])
+              return redirect(url_for('showCategories'))
+        else:         
+            return redirect(url_for('showCategories'))
     # category = session.query(Category).filter_by(name=category_name).one()
     # item = session.query(CatalogItem).filter_by(name=item_name, category_id=category.id).one()
     # session.delete(item)
     # session.commit()
     # logTrans("Delete", item)
-    flash('Category Successfully Deleted')
-    return redirect(url_for('showCategories'))
+    else:
+        return render_template('editcategory.html', category_name=category_name)
+
+# New Category
+# Example: localhost:8000/catalog/category/<string:category_name>/new/
+@app.route('/catalog/category/new/', methods=['GET', 'POST'])
+def newCategory():
+    if 'username' not in login_session:
+        return redirect('/login')
+    if request.method == 'POST':
+        if request.form.get('save') == 'save':
+           try:
+              category = Category(name=request.form['name'].strip())
+              session.add(category)
+              session.commit()
+            #   logTrans("Add", item)
+              flash('New Category %s Successfully Created' % (category.name))
+              return redirect(url_for('showCategories'))
+           except IntegrityError:
+              session.rollback()
+              flash('"%s" Already Exists...Category not added.' % request.form['name'])
+              return redirect(url_for('showCategories'))
+        else:
+           return redirect(url_for('showCategories'))
+    else:
+        return render_template('newcategory.html')
 
 @app.route('/upload/<filename>')
 def send_image(filename):

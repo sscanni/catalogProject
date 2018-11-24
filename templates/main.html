@@ -28,6 +28,7 @@
 					<a class="navbar-brand" href="{{url_for('showCategories')}}"><span class="glyphicon glyphicon-home"></span>Sports Catalog</a>
 					{%if 'username' in session %}
 						<a class="navbar-brand" href="{{url_for('newItem')}}"><span class="glyphicon glyphicon-plus"></span>Add Item</a>
+						<a class="navbar-brand" href="{{url_for('newCategory')}}"><span class="glyphicon glyphicon-plus"></span>Add Category</a>
 					{% endif %}
 				</div>
 				<ul class="nav navbar-nav navbar-right">
