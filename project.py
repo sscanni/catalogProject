@@ -269,10 +269,9 @@ def catalogJSON():
 @app.route('/')
 @app.route('/catalog/categories/')
 def showCategories():
-    rows = session.query(Category).count()
     categories = session.query(Category).order_by(asc(Category.name)).all()
-    items = session.query(CatalogItem, Category.name).filter(CatalogItem.category_id==Category.id).order_by(desc(CatalogItem.id)).limit(rows).all()
-    return render_template('publiccategories.html', categories=categories, items=items, displayRecent=True)
+    items = session.query(CatalogItem, Category.name).filter(CatalogItem.category_id==Category.id).order_by(desc(CatalogItem.id)).limit(7).all()
+    return render_template('categories.html', categories=categories, items=items, displayRecent=True)
 
 # Display all items for a Category
 # Example: localhost:8000/catalog/Snowboarding/items
@@ -302,7 +301,7 @@ def showCategoryItems(name):
     else:
        nextCat = cat[curIndex+1]             
 
-    return render_template('publiccategories.html', category=category, categories=categories, items=items, itemtitle=itemtitle, displayRecent=False, prevCat=prevCat, nextCat=nextCat)
+    return render_template('categories.html', category=category, categories=categories, items=items, itemtitle=itemtitle, displayRecent=False, prevCat=prevCat, nextCat=nextCat)
 
 # Display a specific item
 # Example: localhost:8000/catalog/Snowboarding/Snowboard
@@ -314,7 +313,7 @@ def showItem(category_name, item_name):
         itemuser = session.query(User).filter_by(id=item.user_id).one()
     except:
         itemuser = None
-    return render_template('publicitem.html', category_name=category_name, item=item, itemuser=itemuser)
+    return render_template('item.html', category_name=category_name, item=item, itemuser=itemuser)
 
 # Add new item
 # Example: localhost:8000/catalog/item/new
@@ -424,11 +423,6 @@ def editCategory(category_name):
               return redirect(url_for('showCategories'))
         else:         
             return redirect(url_for('showCategories'))
-    # category = session.query(Category).filter_by(name=category_name).one()
-    # item = session.query(CatalogItem).filter_by(name=item_name, category_id=category.id).one()
-    # session.delete(item)
-    # session.commit()
-    # logTrans("Delete", item)
     else:
         return render_template('editcategory.html', category_name=category_name)
 

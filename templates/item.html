@@ -1,35 +1,5 @@
 {% extends "main.html" %}
 {% block content %}
-{% include "header.html" %}
-	<!-- <div class="row top-menu">
-		<div class="col-md-10"></div>
-		<div class="col-md-2 text-right">
-					</div>
-	</div> -->
-	<div class="row divider blue">
-		<div class="col-md-12"></div>
-	</div>
-	<div class="row banner main">
-		<div class="col-md-1"></div>
-		<div class="col-md-11 padding-none">
-			<h1>Sports Catalog</h1>
-		</div>
-	</div>
-	<!-- <div class="row top-menu">
-		<div class="col-md-10"></div>
-		<div class="col-md-2 text-right">
-			<a href="{{url_for('showLogin')}}">Click Here to Log in </a>
-		</div>
-	</div>
-	<div class="row divider blue">
-		<div class="col-md-12"></div>
-	</div>
-	<div class="row banner main">
-		<div class="col-md-1"></div>
-		<div class="col-md-11 padding-none">
-			<h1>Catalog App</h1>
-		</div>
-	</div> -->
 
 	<div class = 'flash'>
       {% with messages = get_flashed_messages() %}
@@ -41,18 +11,57 @@
         </ul>
         {% endif %}
       {% endwith %}
-
 	</div>
-<div class="container">
-    <div class="row grid-divider">
-    <div class="col-sm-12 backshade">
-      <div class="col-padding">
-        <h3>{{item_name}}</h3>
-        <p>Description: {{itemDesc}}</p>
-     </div>
-     <p><a href="{{url_for('showCategories')}}">Home</a> | <a href="{{url_for('editItem', category_name=category_name, item_name=item_name)}}">Edit</a> | <a href="{{url_for('deleteItem', category_name=category_name, item_name=item_name)}}">Delete</a></p>
-    </div>
-</div>
-</div>
+
+    <div class="col-sm-12">
+		<h2>Catalog Item</h2>  
+		<table class="table">
+			<tbody><tr><td>
+	
+		<div class="media">
+			<div class="media-left">
+				<img class="media-object" src="{{ url_for('send_image', filename=item.image) }}" style="width: 132px; height: 132px;">
+			</div>
+			<div class="media-body">
+				<p><Strong>Name: </Strong>{{item.name}}</p>
+				<p><Strong>Item ID#: </Strong>{{'{:0>5d}'.format(item.id)}}</p>
+				<p><Strong>Category: </Strong>{{category_name}}</p>
+				<p><Strong>Description: </Strong>{{item.desc}}</p>
+				<br>
+				{% if itemuser %}
+					<p>Item added by {{itemuser.name}} (email: {{itemuser.email}})</p>
+				{% endif %}
+			</div>
+			</td></tr>
+			<tr><td>
+			{%if 'username' not in session %}
+				<p><a href="{{url_for('showCategories')}}">Home</a> 
+			{% else %}
+				<p><a href="{{url_for('showCategories')}}">Home</a> | <a href="{{url_for('showItemLogTrans', category_name=category_name, item_name=item.name)}}">Change Log</a> | <a href="{{url_for('editItem', category_name=category_name, item_name=item.name)}}">Edit</a> | <a href="#myModal" data-toggle="modal" data-target="#myModal">Delete</a></p>				
+				<!-- <a href="{{url_for('showCategories')}}" class="btn btn-info btn-sm" role="button">Home</a>   <a href="{{url_for('showItemLogTrans', category_name=category_name, item_name=item.name)}}" class="btn btn-info btn-sm" role="button">Change Log</a>  <a href="{{url_for('editItem', category_name=category_name, item_name=item.name, i='N')}}" class="btn btn-info btn-sm" role="button">Edit</a>  <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Delete</button> -->
+			{% endif %}
+			</td></tr>
+		</tbody></table>
+		</div>
+	</div>
+	<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+			  		<button type="button" class="close" data-dismiss="modal">&times;</button>
+			  		<h4 class="modal-title">Delete "{{item.name}}" ?</h4>
+				</div>
+				<form action="{{url_for('deleteItem', category_name=category_name, item_name=item.name)}}" method="post">
+				<div class="modal-body">
+			  		<p><Strong>Are you sure you want to delete this item?</Strong></p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+					<button type="submit" class="btn btn-danger">Delete</button>
+				</div>
+			 </div>	
+		</div>
+	</div>
+
 {% endblock %}
 
