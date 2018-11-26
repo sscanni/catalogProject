@@ -91,6 +91,22 @@
 	{% if not displayRecent %}	
 	<div class="modal fade" id="DelCatModal" role="dialog">
 			<div class="modal-dialog modal-lg">
+				{% if items %}
+				<div class="modal-content">
+						<div class="modal-header">
+							  <button type="button" class="close" data-dismiss="modal">&times;</button>
+							  <h4 class="modal-title">Delete not allowed</h4>
+						</div>
+						<form>
+							<div class="modal-body">
+								<p><Strong>Category can not be deleted! Items still exist with this category!</Strong></p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+							</div>
+						</form>
+				</div>
+				{% else %}
 				<div class="modal-content">
 					<div class="modal-header">
 						  <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -106,6 +122,7 @@
 						</div>
 					</form>
 				</div>	
+				{% endif %}
 			</div>
 	</div>
 	{% endif %}

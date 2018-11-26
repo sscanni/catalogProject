@@ -401,11 +401,10 @@ def deleteItem(category_name, item_name):
 def deleteCategory(category_name):
     if 'username' not in login_session:
         return redirect('/login')
-        category = session.query(Category).filter_by(name=category_name).one()
-        # item = session.query(CatalogItem).filter_by(name=item_name, category_id=category.id).one()
-        session.delete(category)
-        session.commit()
-    # logTrans("Delete", item)
+    category = session.query(Category).filter_by(name=category_name).one()
+    session.delete(category)
+    session.commit()
+    # # logTrans("Delete", item)
     flash('Category Successfully Deleted')
     return redirect(url_for('showCategories'))
 
