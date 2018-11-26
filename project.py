@@ -188,7 +188,13 @@ def gconnect():
 
     data = answer.json()
 
-    login_session['username'] = data['name']
+    # Changed line because google user account may not have a username
+    if 'name' in data:
+       login_session['username'] = data['name']
+    else:
+       emailPrefix = data['email'].split("@")
+       login_session['username'] = emailPrefix[0]
+
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
     # ADD PROVIDER TO LOGIN SESSION
