@@ -1,5 +1,6 @@
 #!/usr/bin/env python2
 from flask import Flask, render_template, request, redirect, jsonify, url_for, flash, send_from_directory, make_response
+from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
 from sqlalchemy import create_engine, asc, desc
 from sqlalchemy.orm import sessionmaker, relationship, joinedload
 from sqlalchemy.exc import IntegrityError
@@ -26,6 +27,14 @@ Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
+
+app.secret_key = '\x0b8\xdf\x7f\x147\x1c\xe4\xdb5\xf1\x1f\xe3\x05\x7f_(8\xbd\x8bY'
+
+class CategoryForm(Form):
+    name = TextField('Name:', validators=[validators.required()])
+
+class ItemForm(Form):
+    name = TextField('Name:', validators=[validators.required()])
 
 # Create anti-forgery state token
 @app.route('/login')
@@ -327,27 +336,35 @@ def showItem(category_name, item_name):
 def newItem():
     if 'username' not in login_session:
         return redirect('/login')
+    form = ItemForm(request.form)
     if request.method == 'POST':
         if request.form.get('save') == 'save':
-           try:
-              item = CatalogItem(name=request.form['name'].strip(), desc=request.form['desc'].strip(), image=request.form['image'],
-                        category_id=request.form['category'], user_id=login_session['user_id'])
-              session.add(item)
-              session.commit()
-              logTrans("Add", item)
-              flash('New Catalog Item %s Successfully Created' % (item.name))
-              return redirect(url_for('showCategories'))
-           except IntegrityError:
-              session.rollback()
-              flash('"%s" Already Exists in this Category...Item not changed.' % request.form['name'])
-              return redirect(url_for('showCategories'))
+           if form.validate(): 
+               try:
+                   item = CatalogItem(name=request.form['name'].strip(), desc=request.form['desc'].strip(), image=request.form['image'],
+                               category_id=request.form['category'], user_id=login_session['user_id'])
+                   session.add(item)
+                   session.commit()
+                   logTrans("Add", item)
+                   flash('New Catalog Item %s Successfully Created' % (item.name))
+                   return redirect(url_for('showCategories'))
+               except IntegrityError:
+                   session.rollback()
+                   flash('Error! "%s" Already Exists in this Category...Item not changed.' % request.form['name'])
+                   categories = session.query(Category).order_by(asc(Category.name)).all()
+                   imageList = getImages()             
+                   return render_template('newitem.html', categories=categories, imageList=imageList, form=form)
+           else:
+               flash('Error! Item name can not be blank')     
+               imageList = getImages()               
+               categories = session.query(Category).order_by(asc(Category.name)).all()
+               return render_template('newitem.html', categories=categories, imageList=imageList, form=form)
         else:
-           return redirect(url_for('showCategories'))
+            return redirect(url_for('showCategories'))
     else:
-        folder = 'images'
-        imageList = os.listdir(folder)
+        imageList = getImages()
         categories = session.query(Category).order_by(asc(Category.name)).all()
-        return render_template('newitem.html', categories=categories, imageList=imageList)
+        return render_template('newitem.html', categories=categories, imageList=imageList, form=form)
 
 # Edit a specific item
 # Example: localhost:8000/catalog/Snowboarding/Snowboard/edit
@@ -414,22 +431,30 @@ def deleteCategory(category_name):
 def editCategory(category_name):
     if 'username' not in login_session:
         return redirect('/login')
+    form = CategoryForm(request.form)
     if request.method == 'POST':
-        if request.form.get('save') == 'save':
-           try:
-               category = session.query(Category).filter_by(name=category_name).one()
-               category.name = request.form['name'].strip()
-               session.commit()
-               flash('Category Successfully Editted')
-               return redirect(url_for('showCategories'))
-           except IntegrityError:
-              session.rollback()
-              flash('"%s" Already Exists...Category name not changed.' % request.form['name'])
-              return redirect(url_for('showCategories'))
-        else:         
-            return redirect(url_for('showCategories'))
+        if form.validate():
+            if request.form.get('save') == 'save':
+                try:
+                    category = session.query(Category).filter_by(name=category_name).one()
+                    if category.name != request.form['name'].strip():
+                       category.name = request.form['name'].strip()
+                       session.commit()
+                       flash('Category Successfully Editted')
+                    else:
+                       flash('No change made to category')
+                    return redirect(url_for('showCategories'))
+                except IntegrityError:
+                    session.rollback()
+                    flash('"Error! %s" Already Exists...Category name not changed.' % request.form['name'])
+                    return render_template('editcategory.html', category_name=category_name, form=form)
+            else:         
+                return redirect(url_for('showCategories'))
+        else:
+            flash('Error! Category name can not be blank') 
+            return render_template('editcategory.html', category_name=category_name, form=form)
     else:
-        return render_template('editcategory.html', category_name=category_name)
+        return render_template('editcategory.html', category_name=category_name, form=form)
 
 # New Category
 # Example: localhost:8000/catalog/category/<string:category_name>/new/
@@ -437,27 +462,36 @@ def editCategory(category_name):
 def newCategory():
     if 'username' not in login_session:
         return redirect('/login')
+    form = CategoryForm(request.form)
     if request.method == 'POST':
         if request.form.get('save') == 'save':
-           try:
-              category = Category(name=request.form['name'].strip())
-              session.add(category)
-              session.commit()
-            #   logTrans("Add", item)
-              flash('New Category %s Successfully Created' % (category.name))
-              return redirect(url_for('showCategories'))
-           except IntegrityError:
-              session.rollback()
-              flash('"%s" Already Exists...Category not added.' % request.form['name'])
-              return redirect(url_for('showCategories'))
+           if form.validate():
+               try:
+                  category = Category(name=request.form['name'].strip())
+                  session.add(category)
+                  session.commit()
+                  # logTrans("Add", item)
+                  flash('New Category %s Successfully Created' % (category.name))
+                  return redirect(url_for('showCategories'))
+               except IntegrityError:
+                  session.rollback()
+                  flash('Error! "%s" Already Exists...Category not added.' % request.form['name'])
+                  return render_template('newcategory.html', form=form)
+           else:
+               flash('Error! Category name can not be blank') 
+               return render_template('newcategory.html', form=form)
         else:
            return redirect(url_for('showCategories'))
     else:
-        return render_template('newcategory.html')
+        return render_template('newcategory.html', form=form)
 
 @app.route('/upload/<filename>')
 def send_image(filename):
     return send_from_directory("images", filename)
+
+def getImages():
+    folder = 'images'
+    return os.listdir(folder)
 
 # Save new item information on add
 # Save new item information on an update
@@ -532,6 +566,5 @@ def disconnect():
 
 
 if __name__ == '__main__':
-    app.secret_key = 'super_secret_key'
     app.debug = True
     app.run(host='0.0.0.0', port=5000)

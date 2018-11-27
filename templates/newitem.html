@@ -7,9 +7,10 @@
         <div class="col-padding">
           <h3>New Item: </h3>
           <form action="#" method = "post">
+            {{ form.csrf }} 
             <div class="form-group">
               <label for="formGroupExampleInput">Name</label>
-              <input type="text" name="name" class="form-control" id="formGroupExampleInput" value="">
+              <input id="name" type="text" name="name" class="form-control" value="">
             </div>
             <div class="form-group">
               <label for="exampleFormControlTextarea1">Description</label>
@@ -35,6 +36,18 @@
             <button class="btn btn-primary delete" name="cancel" value="cancel">
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel</button>
           </form>
+          <br>
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for message in messages %}
+                  {% if "Error" in message[1]: %}
+                    <div class="alert alert-danger">
+                    {{ message[1] }}
+                    </div>
+                  {% endif %}
+                {% endfor %}
+            {% endif %}
+          {% endwith %}              
         </div>
       </div>
     </div>
