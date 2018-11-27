@@ -394,8 +394,7 @@ def editItem(category_name, item_name):
          else:
              return redirect(url_for('showItem', category_name=category_name, item_name=item_name))
       else:
-          folder = 'images'
-          imageList = os.listdir(folder)
+          imageList = getImages()
           return render_template('edititem.html', category_name=category_name, item_name=item_name, item=item, categories=categories, imageList=imageList)
 
 # Delete a specific item
