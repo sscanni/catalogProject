@@ -2,95 +2,96 @@
 {% block content %}
 
 <div class="container">
-    <div class="row grid-divider">
-      <div class="col-sm-12 backshade">
-        <div class="col-padding">
-          <h3>New Item: </h3>
-          <form action="#" method = "post">
-            {{ form.csrf }} 
-            <div class="form-group">
-              <label for="formGroupExampleInput">Name</label>
-              <input id="name" type="text" name="name" class="form-control" value="">
-            </div>
-            <div class="form-group">
-              <label for="exampleFormControlTextarea1">Description</label>
-              <textarea class="form-control" name="desc" id="exampleFormControlTextarea1" rows="3"></textarea>
-            </div>
-            <div class="form-group">
-              <label for="exampleFormControlSelect1">Catagory</label>
-              <select class="form-control" id="exampleFormControlSelect1" name="category">
-              {% for c in categories %}
-                  <option value="{{c.id}}">{{c.name}}</option>
-              {% endfor %}
-              </select>
-            </div>
-            <div class="row divider"></div>
-            <div class="form-group">
-                <input id=imageName type="hidden" name="image" value="default.jpg">
-                <label id=imageLabel for="exampleFormControlSelect1">Image: default.jpg</label>
-                <p><img id=imageFile src="{{ url_for('send_image', filename='default.jpg') }}" alt="image" style="width: 72px; height: 72px;">
-                <a href="#myModal" data-toggle="modal" data-target="#myModal">Select Image</a></p>
-            </div>
-            <button type="submit" class="btn btn-primary" id="submit" type="submit" name="save" value="save">
-            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Save</button>
-            <button class="btn btn-primary delete" name="cancel" value="cancel">
-            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel</button>
-          </form>
-          <br>
-          {% with messages = get_flashed_messages(with_categories=true) %}
+  <div class="row grid-divider">
+    <div class="col-sm-12 backshade">
+      <div class="col-padding">
+        <h3>New Item: </h3>
+        <form action="#" method = "post">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" name="name" class="form-control" id="name" value="{{form['name']}}">
+          </div>
+          <div class="form-group">
+            <label for="desc">Description</label>
+            <textarea class="form-control" name="desc" id="desc" rows="3">{{form['desc']}}</textarea>
+          </div>
+          <div class="form-group">
+            <label for="category">Catagory</label>
+            <select class="form-control" id="category" name="category">
+            {% for c in categories %}
+              {% if c.id == form['category'] %}
+                <option value="{{c.id}}" selected>{{c.name}}</option>
+              {% else %}
+                <option value="{{c.id}}">{{c.name}}</option>
+              {% endif %}
+            {% endfor %}
+            </select>
+          </div>
+          <div class="row divider"></div>
+          <div class="form-group">
+              <input id=imageName type="hidden" name="image" value="default.jpg">
+              <label id=imageLabel for="exampleFormControlSelect1">Image: default.jpg</label>
+              <p><img id=imageFile src="{{ url_for('send_image', filename='default.jpg') }}" alt="image" style="width: 72px; height: 72px;">
+              <a href="#myModal" data-toggle="modal" data-target="#myModal">Select Image</a></p>
+          </div>
+          <button type="submit" class="btn btn-primary" id="submit" type="submit" name="save" value="save">
+          <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Save</button>
+          <button class="btn btn-primary delete" name="cancel" value="cancel">
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel</button>
+        </form>
+        <br>
+        {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
-                {% for message in messages %}
+              {% for message in messages %}
                   {% if "Error" in message[1]: %}
                     <div class="alert alert-danger">
-                    {{ message[1] }}
+                     {{ message[1] }}
                     </div>
                   {% endif %}
-                {% endfor %}
+              {% endfor %}
             {% endif %}
-          {% endwith %}              
+        {% endwith %}   
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Select Image</h4>
+        </div>
+        <div class="modal-body">
+          <div class="list-group">
+            <div class="row">
+              {% for fn in imageList %}    
+              <div class="col-sm-2">
+                 <div class="thumbnail" style="width: 72px; height: 72px;">
+                    <a data-dismiss="modal"href="javascript:{}" return false;><img src="{{ url_for('send_image', filename=fn) }}" alt="{{fn}}" style="width: 72px; height: 72px;" onclick="myFunction(this);"></a>
+                  </div>
+              </div>
+              {% endfor %}
+            </div>            
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
         </div>
       </div>
     </div>
   </div>
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" role="dialog">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Select Image</h4>
-          </div>
-          <div class="modal-body">
-            <div class="list-group">
-              <div class="row">
-                {% for fn in imageList %}    
-                <div class="col-sm-2">
-                   <div class="thumbnail" style="width: 72px; height: 72px;">
-                      <a data-dismiss="modal"href="javascript:{}" return false;><img src="{{ url_for('send_image', filename=fn) }}" alt="{{fn}}" style="width: 72px; height: 72px;" onclick="myFunction(this);"></a>
-                    </div>
-                </div>
-                {% endfor %}
-              </div>            
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <script>
-      function myFunction(imgs) {
-          $('#myModal').modal('hide')
-          var imageName = document.getElementById("imageName");
-          imageName.value = imgs.alt;
-          imageFile.src = imgs.src;
-          imageLabel.innerHTML = imgs.alt;
-          $('#myModal').modal('hide')
-      }
+</div>
 
-  </script>
-
+<script>
+    function myFunction(imgs) {
+        $('#myModal').modal('hide')
+        var imageName = document.getElementById("imageName");
+        imageName.value = imgs.alt;
+        imageFile.src = imgs.src;
+        imageLabel.innerHTML = 'Image: ' + imgs.alt;
+        $('#myModal').modal('hide')
+    }
+</script>
 {% endblock %}

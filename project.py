@@ -1,6 +1,5 @@
 #!/usr/bin/env python2
 from flask import Flask, render_template, request, redirect, jsonify, url_for, flash, send_from_directory, make_response
-from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
 from sqlalchemy import create_engine, asc, desc
 from sqlalchemy.orm import sessionmaker, relationship, joinedload
 from sqlalchemy.exc import IntegrityError
@@ -29,12 +28,6 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 app.secret_key = '\x0b8\xdf\x7f\x147\x1c\xe4\xdb5\xf1\x1f\xe3\x05\x7f_(8\xbd\x8bY'
-
-class CategoryForm(Form):
-    name = TextField('Name:', validators=[validators.required()])
-
-class ItemForm(Form):
-    name = TextField('Name:', validators=[validators.required()])
 
 # Create anti-forgery state token
 @app.route('/login')
@@ -288,8 +281,7 @@ def showCategories():
     items = session.query(CatalogItem, Category.name).filter(CatalogItem.category_id==Category.id).order_by(desc(CatalogItem.id)).limit(7).all()
     return render_template('categories.html', categories=categories, items=items, displayRecent=True)
 
-# Display all items for a Category
-# Example: localhost:8000/catalog/Snowboarding/items
+# Display all items for a Category. Example: localhost:8000/catalog/Snowboarding/items
 @app.route('/catalog/<string:name>/items/')
 def showCategoryItems(name):
     category = session.query(Category).filter_by(name=name).one()
@@ -318,8 +310,7 @@ def showCategoryItems(name):
 
     return render_template('categories.html', category=category, categories=categories, items=items, itemtitle=itemtitle, displayRecent=False, prevCat=prevCat, nextCat=nextCat)
 
-# Display a specific item
-# Example: localhost:8000/catalog/Snowboarding/Snowboard
+# Display a specific item. Example: localhost:8000/catalog/Snowboarding/Snowboard
 @app.route('/catalog/<string:category_name>/<string:item_name>/')
 def showItem(category_name, item_name):
     category = session.query(Category).filter_by(name=category_name).one()
@@ -330,44 +321,54 @@ def showItem(category_name, item_name):
         itemuser = None
     return render_template('item.html', category_name=category_name, item=item, itemuser=itemuser)
 
-# Add new item
-# Example: localhost:8000/catalog/item/new
+# Add new item. Example: localhost:8000/catalog/item/new
 @app.route('/catalog/item/new/', methods=['GET', 'POST'])
 def newItem():
     if 'username' not in login_session:
         return redirect('/login')
-    form = ItemForm(request.form)
+    form = {}
     if request.method == 'POST':
         if request.form.get('save') == 'save':
-           if form.validate(): 
-               try:
-                   item = CatalogItem(name=request.form['name'].strip(), desc=request.form['desc'].strip(), image=request.form['image'],
-                               category_id=request.form['category'], user_id=login_session['user_id'])
-                   session.add(item)
-                   session.commit()
-                   logTrans("Add", item)
-                   flash('New Catalog Item %s Successfully Created' % (item.name))
-                   return redirect(url_for('showCategories'))
-               except IntegrityError:
-                   session.rollback()
-                   flash('Error! "%s" Already Exists in this Category...Item not changed.' % request.form['name'])
-                   categories = session.query(Category).order_by(asc(Category.name)).all()
-                   imageList = getImages()             
-                   return render_template('newitem.html', categories=categories, imageList=imageList, form=form)
-           else:
-               flash('Error! Item name can not be blank')     
-               imageList = getImages()               
+            form['name'] = str(request.form['name'])
+            form['desc'] = str(request.form['desc'])
+            form['image'] = str(request.form['image'])
+            form['category'] = int(request.form['category'])
+            if len(request.form['name'].strip()) == 0:
+               flash('Error! Item Name can not be blank') 
                categories = session.query(Category).order_by(asc(Category.name)).all()
-               return render_template('newitem.html', categories=categories, imageList=imageList, form=form)
+               return render_template('newitem.html', categories=categories, imageList=getImages(), form=form)
+            if len(request.form['name'].strip()) > 30:
+               flash('Error! Item Name must be bwtween 1 and 30 characters') 
+               categories = session.query(Category).order_by(asc(Category.name)).all()
+               return render_template('newitem.html',categories=categories, imageList=getImages(), form=form)
+            if len(request.form['desc'].strip()) > 250:
+               flash('Error! Item Description must be bwtween 1 and 250 characters') 
+               categories = session.query(Category).order_by(asc(Category.name)).all()
+               return render_template('newitem.html', categories=categories, imageList=getImages(), form=form)
+            try:
+                item = CatalogItem(name=request.form['name'].strip(), desc=request.form['desc'].strip(), image=request.form['image'],
+                            category_id=request.form['category'], user_id=login_session['user_id'])
+                session.add(item)
+                session.commit()
+                logTrans("Add", item)
+                flash('New Catalog Item %s Successfully Created' % (item.name))
+                return redirect(url_for('showCategories'))
+            except IntegrityError:
+                session.rollback()
+                flash('Error! "%s" Already Exists in this Category...Item not changed.' % request.form['name'])
+                categories = session.query(Category).order_by(asc(Category.name)).all()
+                return render_template('newitem.html', categories=categories, imageList=getImages(), form=form)
         else:
             return redirect(url_for('showCategories'))
     else:
-        imageList = getImages()
+        form['name'] = ""
+        form['desc'] = ""
+        form['image'] = ""
+        form['category'] = 1
         categories = session.query(Category).order_by(asc(Category.name)).all()
-        return render_template('newitem.html', categories=categories, imageList=imageList, form=form)
+        return render_template('newitem.html', categories=categories, imageList=getImages(), form=form)
 
-# Edit a specific item
-# Example: localhost:8000/catalog/Snowboarding/Snowboard/edit
+# Edit a specific item. Example: localhost:8000/catalog/Snowboarding/Snowboard/edit
 @app.route('/catalog/<string:category_name>/<string:item_name>/edit/', methods=['GET', 'POST'])
 def editItem(category_name, item_name):
       if 'username' not in login_session:
@@ -377,6 +378,20 @@ def editItem(category_name, item_name):
       categories = session.query(Category).order_by(asc(Category.name)).all()
       if request.method == 'POST':
          if request.form.get('save') == 'save':
+            form = {}
+            form['name'] = str(request.form['name'])
+            form['desc'] = str(request.form['desc'])
+            form['image'] = str(request.form['image'])
+            form['category'] = int(request.form['category'])
+            if len(request.form['name'].strip()) == 0:
+               flash('Error! Item Name can not be blank') 
+               return render_template('edititem.html', category_name=category_name, item_name=item_name, form=form, categories=categories, imageList=getImages())
+            if len(request.form['name'].strip()) > 30:
+               flash('Error! Item Name must be bwtween 1 and 30 characters') 
+               return render_template('edititem.html', category_name=category_name, item_name=item_name, form=form, categories=categories, imageList=getImages())
+            if len(request.form['desc'].strip()) > 250:
+               flash('Error! Item Description must be bwtween 1 and 250 characters') 
+               return render_template('edititem.html', category_name=category_name, item_name=item_name, form=form, categories=categories, imageList=getImages())
             try:
                 item.name = request.form['name'].strip()
                 item.desc = request.form['desc'].strip()
@@ -389,16 +404,19 @@ def editItem(category_name, item_name):
                 return redirect(url_for('showCategories'))
             except IntegrityError:
                 session.rollback()
-                flash('"%s" Already Exists in this Category...Item not changed.' % request.form['name'])
-                return redirect(url_for('showCategories'))
+                flash('Error! "%s" Already Exists in this Category...Item not changed.' % request.form['name'])
+                return render_template('edititem.html', category_name=category_name, item_name=item_name, form=form, categories=categories, imageList=getImages())
          else:
              return redirect(url_for('showItem', category_name=category_name, item_name=item_name))
       else:
-          imageList = getImages()
-          return render_template('edititem.html', category_name=category_name, item_name=item_name, item=item, categories=categories, imageList=imageList)
+          form = {}
+          form['name'] = item.name
+          form['desc'] = item.desc
+          form['image'] = item.image
+          form['category'] = item.category_id
+          return render_template('edititem.html', category_name=category_name, item_name=item_name, form=form, categories=categories, imageList=getImages())
 
-# Delete a specific item
-# Example: localhost:8000/catalog/Snowboarding/Snowboard/delete
+# Delete a specific item. Example: localhost:8000/catalog/Snowboarding/Snowboard/delete
 @app.route('/catalog/<string:category_name>/<string:item_name>/delete/', methods=['GET', 'POST'])
 def deleteItem(category_name, item_name):
     if 'username' not in login_session:
@@ -411,8 +429,7 @@ def deleteItem(category_name, item_name):
     flash('Catalog Item Successfully Deleted')
     return redirect(url_for('showCategories'))
 
-# Delete Category
-# Example: localhost:8000/catalog/category/<string:category_name>/delete/
+# Delete Category. Example: localhost:8000/catalog/category/<string:category_name>/delete/
 @app.route('/catalog/category/<string:category_name>/delete/', methods=['GET', 'POST'])
 def deleteCategory(category_name):
     if 'username' not in login_session:
@@ -424,64 +441,71 @@ def deleteCategory(category_name):
     flash('Category Successfully Deleted')
     return redirect(url_for('showCategories'))
 
-# Edit Category
-# Example: localhost:8000/catalog/category/<string:category_name>/edit/
+# Edit Category. Example: localhost:8000/catalog/category/<string:category_name>/edit/
 @app.route('/catalog/category/<string:category_name>/edit/', methods=['GET', 'POST'])
 def editCategory(category_name):
     if 'username' not in login_session:
         return redirect('/login')
-    form = CategoryForm(request.form)
     if request.method == 'POST':
-        if form.validate():
-            if request.form.get('save') == 'save':
-                try:
-                    category = session.query(Category).filter_by(name=category_name).one()
-                    if category.name != request.form['name'].strip():
-                       category.name = request.form['name'].strip()
-                       session.commit()
-                       flash('Category Successfully Editted')
-                    else:
-                       flash('No change made to category')
-                    return redirect(url_for('showCategories'))
-                except IntegrityError:
-                    session.rollback()
-                    flash('"Error! %s" Already Exists...Category name not changed.' % request.form['name'])
-                    return render_template('editcategory.html', category_name=category_name, form=form)
-            else:         
-                return redirect(url_for('showCategories'))
-        else:
-            flash('Error! Category name can not be blank') 
-            return render_template('editcategory.html', category_name=category_name, form=form)
+        if request.form.get('save') == 'save':
+           form = request.form
+           if len(request.form['name'].strip()) == 0:
+              flash('Error! Category name can not be blank') 
+              return render_template('editcategory.html', category_name=category_name, form=form)
+           if len(request.form['name'].strip()) > 30:
+              flash('Error! Category name must be between 1 to 30 characters') 
+              return render_template('editcategory.html', category_name=category_name, form=form)
+           try:
+               category = session.query(Category).filter_by(name=category_name).one()
+               print "category.name={}".format(category.name)
+               if category.name != request.form['name'].strip():
+                   category.name = request.form['name'].strip()
+                   session.commit()
+                   flash('Category Successfully Editted')
+               else:
+                   flash('No change made to category')
+               return redirect(url_for('showCategories'))
+           except IntegrityError:
+                   session.rollback()
+                   flash('Error! "%s" Already Exists...Category name not changed.' % request.form['name'])
+                   return render_template('editcategory.html', category_name=category_name, form=form)
+        else:         
+            return redirect(url_for('showCategories'))
     else:
+        form = {}
+        form['name'] = category_name
         return render_template('editcategory.html', category_name=category_name, form=form)
 
-# New Category
-# Example: localhost:8000/catalog/category/<string:category_name>/new/
+# New Category. Example: localhost:8000/catalog/category/<string:category_name>/new/
 @app.route('/catalog/category/new/', methods=['GET', 'POST'])
 def newCategory():
     if 'username' not in login_session:
         return redirect('/login')
-    form = CategoryForm(request.form)
     if request.method == 'POST':
-        if request.form.get('save') == 'save':
-           if form.validate():
-               try:
-                  category = Category(name=request.form['name'].strip())
-                  session.add(category)
-                  session.commit()
-                  # logTrans("Add", item)
-                  flash('New Category %s Successfully Created' % (category.name))
-                  return redirect(url_for('showCategories'))
-               except IntegrityError:
-                  session.rollback()
-                  flash('Error! "%s" Already Exists...Category not added.' % request.form['name'])
-                  return render_template('newcategory.html', form=form)
-           else:
-               flash('Error! Category name can not be blank') 
-               return render_template('newcategory.html', form=form)
-        else:
+       if request.form.get('save') == 'save':
+          form = request.form
+          if len(request.form['name'].strip()) == 0:
+             flash('Error! Category name can not be blank') 
+             return render_template('newcategory.html', form=form)
+          if len(request.form['name'].strip()) > 30:
+             flash('Error! Category name must be between 1 to 30 characters') 
+             return render_template('newcategory.html', form=form)
+          try:
+             category = Category(name=request.form['name'].strip())
+             session.add(category)
+             session.commit()
+             # logTrans("Add", item)
+             flash('New Category %s Successfully Created' % (category.name))
+             return redirect(url_for('showCategories'))
+          except IntegrityError:
+             session.rollback()
+             flash('Error! "%s" Already Exists...Category not added.' % request.form['name'])
+             return render_template('newcategory.html', form=form)
+       else:
            return redirect(url_for('showCategories'))
     else:
+        form = {}
+        form['name'] = ""
         return render_template('newcategory.html', form=form)
 
 @app.route('/upload/<filename>')

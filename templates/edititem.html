@@ -8,18 +8,18 @@
         <h3>Edit Item: {{item_name}}</h3>
         <form action="#" method = "post">
           <div class="form-group">
-            <label for="formGroupExampleInput">Name</label>
-            <input type="text" name="name" class="form-control" id="formGroupExampleInput" value="{{item.name}}">
+            <label for="name">Name</label>
+            <input type="text" name="name" class="form-control" id="name" value="{{form['name']}}">
           </div>
           <div class="form-group">
-            <label for="exampleFormControlTextarea1">Description</label>
-            <textarea class="form-control" name="desc" id="exampleFormControlTextarea1" rows="3">{{item.desc}}</textarea>
+            <label for="desc">Description</label>
+            <textarea class="form-control" name="desc" id="desc" rows="3">{{form['desc']}}</textarea>
           </div>
           <div class="form-group">
-            <label for="exampleFormControlSelect1">Catagory</label>
-            <select class="form-control" id="exampleFormControlSelect1" name="category">
+            <label for="category">Catagory</label>
+            <select class="form-control" id="category" name="category">
             {% for c in categories %}
-              {% if c.id == item.category_id %}
+              {% if c.id == form['category'] %}
                 <option value="{{c.id}}" selected>{{c.name}}</option>
               {% else %}
                 <option value="{{c.id}}">{{c.name}}</option>
@@ -29,9 +29,9 @@
           </div>
           <div class="row divider"></div>
           <div class="form-group">
-              <input id=imageName type="hidden" name="image" value={{item.image}}>
-              <label id=imageLabel for="exampleFormControlSelect1">Image: {{item.image}}</label>
-              <p><img id=imageFile src="{{ url_for('send_image', filename=item.image) }}" alt="image" style="width: 72px; height: 72px;">
+              <input id=imageName type="hidden" name="image" value={{ form['image'] }}>
+              <label id=imageLabel for="exampleFormControlSelect1">Image: {{form['image']}}</label>
+              <p><img id=imageFile src="{{ url_for('send_image', filename=form['image']) }}" alt="image" style="width: 72px; height: 72px;">
          <!-- <button type="submit" class="btn btn-basic imgBtn" id="submit" type="submit" name="getimg" value="getimg"> 
               <span aria-hidden="true"></span>Select new image</button></p> -->
               <a href="#myModal" data-toggle="modal" data-target="#myModal">Select Image</a></p>
@@ -41,6 +41,18 @@
           <button class="btn btn-primary delete" name="cancel" value="cancel">
           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel</button>
         </form>
+        <br>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for message in messages %}
+                  {% if "Error" in message[1]: %}
+                    <div class="alert alert-danger">
+                     {{ message[1] }}
+                    </div>
+                  {% endif %}
+              {% endfor %}
+            {% endif %}
+        {% endwith %}   
       </div>
     </div>
   </div>
@@ -81,7 +93,7 @@
         var imageName = document.getElementById("imageName");
         imageName.value = imgs.alt;
         imageFile.src = imgs.src;
-        imageLabel.innerHTML = imgs.alt;
+        imageLabel.innerHTML = 'Image: ' + imgs.alt;
         $('#myModal').modal('hide')
         // document.getElementById("my_form").submit()
     }
