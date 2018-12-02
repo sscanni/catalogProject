@@ -29,7 +29,7 @@
           </div>
           <div class="row divider"></div>
           <div class="form-group">
-              <input id=imageName type="hidden" name="image" value={{ form['image'] }}>
+              <input id=imageName type="hidden" name="image" value="{{ form['image'] }}">
               <label id=imageLabel for="exampleFormControlSelect1">Image: {{form['image']}}</label>
               <p><img id=imageFile src="{{ url_for('send_image', filename=form['image']) }}" alt="image" style="width: 72px; height: 72px;">
          <!-- <button type="submit" class="btn btn-basic imgBtn" id="submit" type="submit" name="getimg" value="getimg"> 
@@ -97,13 +97,5 @@
         $('#myModal').modal('hide')
         // document.getElementById("my_form").submit()
     }
-    // function LinkFunction(imgs) {
-    //     var imageName = document.getElementById("imageName");
-    //     imageName.value = imgs.text;
-    //     imageFile.src = imgs.text;
-    //     imageLabel.innerHTML = imgs.text;
-    //     $('#myModal').modal('hide')
-    //     // document.getElementById("my_form").submit()
-    // }
 </script>
 {% endblock %}

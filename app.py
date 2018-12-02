@@ -1,5 +1,6 @@
 #!/usr/bin/env python2
-from flask import Flask, render_template, request, redirect, jsonify, url_for, flash, send_from_directory, make_response
+from flask import Flask, render_template, request, redirect, jsonify, url_for
+from flask import flash, send_from_directory, make_response
 from sqlalchemy import create_engine, asc, desc
 from sqlalchemy.orm import sessionmaker, relationship, joinedload
 from sqlalchemy.exc import IntegrityError
@@ -27,7 +28,9 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
-app.secret_key = '\x0b8\xdf\x7f\x147\x1c\xe4\xdb5\xf1\x1f\xe3\x05\x7f_(8\xbd\x8bY'
+app.secret_key = '''\x0b8\xdf\x7f\x147\x1c\xe4\xdb5\xf1\
+x1f\xe3\x05\x7f_(8\xbd\x8bY'''
+
 
 # Create anti-forgery state token
 @app.route('/login')
@@ -46,7 +49,7 @@ def fbconnect():
         response.headers['Content-Type'] = 'application/json'
         return response
     access_token = request.data
-    print "access token received %s " % access_token
+    print ("access token received %s " % access_token)
 
 
     app_id = json.loads(open('fb_client_secrets.json', 'r').read())[
@@ -167,7 +170,7 @@ def gconnect():
     if result['issued_to'] != CLIENT_ID:
         response = make_response(
             json.dumps("Token's client ID does not match app's."), 401)
-        print "Token's client ID does not match app's."
+        print ("Token's client ID does not match app's.")
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -216,7 +219,7 @@ def gconnect():
     output += login_session['picture']
     output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
     flash("you are now logged in as %s" % login_session['username'])
-    print "done!"
+    print ("done!")
     return output
 
 # User Helper Functions
@@ -273,7 +276,7 @@ def catalogJSON():
     return jsonify(dict(Catalog=[dict(c.serialize, items=[i.serialize for i in c.items])
                          for c in categories]))
 
-# Show all categories
+# Show all categories: Example: http://localhost:8000/catalog/categories or http://localhost:8000
 @app.route('/')
 @app.route('/catalog/categories/')
 def showCategories():
@@ -281,7 +284,7 @@ def showCategories():
     items = session.query(CatalogItem, Category.name).filter(CatalogItem.category_id==Category.id).order_by(desc(CatalogItem.id)).limit(7).all()
     return render_template('categories.html', categories=categories, items=items, displayRecent=True)
 
-# Display all items for a Category. Example: localhost:8000/catalog/Snowboarding/items
+# Display all items for a Category. Example: http://localhost:8000/catalog/Snowboarding/items
 @app.route('/catalog/<string:name>/items/')
 def showCategoryItems(name):
     category = session.query(Category).filter_by(name=name).one()
@@ -310,7 +313,7 @@ def showCategoryItems(name):
 
     return render_template('categories.html', category=category, categories=categories, items=items, itemtitle=itemtitle, displayRecent=False, prevCat=prevCat, nextCat=nextCat)
 
-# Display a specific item. Example: localhost:8000/catalog/Snowboarding/Snowboard
+# Display a specific item. Example: http://localhost:8000/catalog/Snowboarding/Snowboard
 @app.route('/catalog/<string:category_name>/<string:item_name>/')
 def showItem(category_name, item_name):
     category = session.query(Category).filter_by(name=category_name).one()
@@ -321,7 +324,7 @@ def showItem(category_name, item_name):
         itemuser = None
     return render_template('item.html', category_name=category_name, item=item, itemuser=itemuser)
 
-# Add new item. Example: localhost:8000/catalog/item/new
+# Add new item. Example: http://localhost:8000/catalog/item/new
 @app.route('/catalog/item/new/', methods=['GET', 'POST'])
 def newItem():
     if 'username' not in login_session:
@@ -363,12 +366,12 @@ def newItem():
     else:
         form['name'] = ""
         form['desc'] = ""
-        form['image'] = ""
+        form['image'] = "default.jpg"
         form['category'] = 1
         categories = session.query(Category).order_by(asc(Category.name)).all()
         return render_template('newitem.html', categories=categories, imageList=getImages(), form=form)
 
-# Edit a specific item. Example: localhost:8000/catalog/Snowboarding/Snowboard/edit
+# Edit a specific item. Example: http://localhost:8000/catalog/Snowboarding/Snowboard/edit
 @app.route('/catalog/<string:category_name>/<string:item_name>/edit/', methods=['GET', 'POST'])
 def editItem(category_name, item_name):
       if 'username' not in login_session:
@@ -416,7 +419,7 @@ def editItem(category_name, item_name):
           form['category'] = item.category_id
           return render_template('edititem.html', category_name=category_name, item_name=item_name, form=form, categories=categories, imageList=getImages())
 
-# Delete a specific item. Example: localhost:8000/catalog/Snowboarding/Snowboard/delete
+# Delete a specific item. Example: http://localhost:8000/catalog/Snowboarding/Snowboard/delete
 @app.route('/catalog/<string:category_name>/<string:item_name>/delete/', methods=['GET', 'POST'])
 def deleteItem(category_name, item_name):
     if 'username' not in login_session:
@@ -429,7 +432,7 @@ def deleteItem(category_name, item_name):
     flash('Catalog Item Successfully Deleted')
     return redirect(url_for('showCategories'))
 
-# Delete Category. Example: localhost:8000/catalog/category/<string:category_name>/delete/
+# Delete Category. Example: http://localhost:8000/catalog/category/<string:category_name>/delete/
 @app.route('/catalog/category/<string:category_name>/delete/', methods=['GET', 'POST'])
 def deleteCategory(category_name):
     if 'username' not in login_session:
@@ -441,7 +444,7 @@ def deleteCategory(category_name):
     flash('Category Successfully Deleted')
     return redirect(url_for('showCategories'))
 
-# Edit Category. Example: localhost:8000/catalog/category/<string:category_name>/edit/
+# Edit Category. Example: http://localhost:8000/catalog/category/<string:category_name>/edit/
 @app.route('/catalog/category/<string:category_name>/edit/', methods=['GET', 'POST'])
 def editCategory(category_name):
     if 'username' not in login_session:
@@ -457,7 +460,6 @@ def editCategory(category_name):
               return render_template('editcategory.html', category_name=category_name, form=form)
            try:
                category = session.query(Category).filter_by(name=category_name).one()
-               print "category.name={}".format(category.name)
                if category.name != request.form['name'].strip():
                    category.name = request.form['name'].strip()
                    session.commit()
@@ -476,7 +478,7 @@ def editCategory(category_name):
         form['name'] = category_name
         return render_template('editcategory.html', category_name=category_name, form=form)
 
-# New Category. Example: localhost:8000/catalog/category/<string:category_name>/new/
+# Add New Category. Example: http://localhost:8000/catalog/category/new/
 @app.route('/catalog/category/new/', methods=['GET', 'POST'])
 def newCategory():
     if 'username' not in login_session:
@@ -508,31 +510,23 @@ def newCategory():
         form['name'] = ""
         return render_template('newcategory.html', form=form)
 
+# Enable the application to read images from image folder rather than the static folder.
 @app.route('/upload/<filename>')
 def send_image(filename):
     return send_from_directory("images", filename)
 
+# Read the available item images from images folder on server and load into a list.
 def getImages():
     folder = 'images'
     return os.listdir(folder)
 
-# Save new item information on add
-# Save new item information on an update
-# Save item being deleted on a delete
+# Log new item information on add
+# Log new item information on an update
+# Log item being deleted on a delete
 def logTrans(trans, item):
-    now = datetime.datetime.now()
+    now = datetime.datetime.now() # Use Greenwich Mean Time (GMT)
     ts = now.strftime("%Y-%m-%d %H:%M:%S")
-    # print ("ts=%s" % (ts))
-    # print ("trans=%s" % (trans))
-    # print ("username=%s" % (login_session['username']))
-    # print ("email=%s" % (login_session['email']))
-    # print ("user_id=%s" % (login_session['user_id']))
-    # print ("item.id=%s" % (item.id))
-    # print ("item.name=%s" % (item.name))
-    # print ("item.desc=%s" % (item.desc))
-    # print ("item.category_id=%s" % (item.category_id))
     category = session.query(Category).filter_by(id=item.category_id).one()
-    # print ("category.name=%s" % (category.name))
     log = ItemLog(timestamp=ts, 
           trans=trans,
           username=login_session['username'],
@@ -548,13 +542,19 @@ def logTrans(trans, item):
     session.commit()
     return
 
+# Display entire Transaction Log. Example: http://localhost:8000/catalog/showlog
 @app.route('/catalog/showlog/')
 def showLogTrans():
+    if 'username' not in login_session:
+        return redirect('/login')
     itemlog = session.query(ItemLog).order_by(desc(ItemLog.timestamp)).all()
     return render_template('logview.html', itemlog=itemlog)
 
-@app.route('/catalog/showItemlog/<string:category_name>/<string:item_name>/')
+# Display Transaction Log for a specific item. Example: http://localhost:8000/catalog/showItemlogTrans/Baseball/Bat
+@app.route('/catalog/showItemLogTrans/<string:category_name>/<string:item_name>/')
 def showItemLogTrans(category_name, item_name):
+    if 'username' not in login_session:
+        return redirect('/login')    
     category = session.query(Category).filter_by(name=category_name).one()
     item = session.query(CatalogItem).filter_by(name=item_name, category_id=category.id).one()
     try:

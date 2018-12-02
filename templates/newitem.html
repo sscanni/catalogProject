@@ -29,9 +29,9 @@
           </div>
           <div class="row divider"></div>
           <div class="form-group">
-              <input id=imageName type="hidden" name="image" value="default.jpg">
-              <label id=imageLabel for="exampleFormControlSelect1">Image: default.jpg</label>
-              <p><img id=imageFile src="{{ url_for('send_image', filename='default.jpg') }}" alt="image" style="width: 72px; height: 72px;">
+              <input id=imageName type="hidden" name="image" value="{{ form['image'] }}">
+              <label id=imageLabel for="exampleFormControlSelect1">Image: {{ form['image'] }}</label>
+              <p><img id=imageFile src="{{ url_for('send_image', filename=form['image']) }}" alt="image" style="width: 72px; height: 72px;">
               <a href="#myModal" data-toggle="modal" data-target="#myModal">Select Image</a></p>
           </div>
           <button type="submit" class="btn btn-primary" id="submit" type="submit" name="save" value="save">

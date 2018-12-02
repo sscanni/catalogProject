@@ -1,0 +1,3773 @@
+app.py:52:10: E211 whitespace before '('
+    print ("access token received %s " % access_token)
+         ^
+    Avoid extraneous whitespace.
+
+    Avoid extraneous whitespace in the following situations:
+    - before the open parenthesis that starts the argument list of a
+      function call.
+    - before the open parenthesis that starts an indexing or slicing.
+
+    Okay: spam(1)
+    E211: spam (1)
+
+    Okay: dict['key'] = list[index]
+    E211: dict ['key'] = list[index]
+    E211: dict['key'] = list [index]
+app.py:55:5: E303 too many blank lines (2)
+    app_id = json.loads(open('fb_client_secrets.json', 'r').read())[
+    ^
+    Separate top-level function and class definitions with two blank lines.
+
+    Method definitions inside a class are separated by a single blank line.
+
+    Extra blank lines may be used (sparingly) to separate groups of related
+    functions.  Blank lines may be omitted between a bunch of related
+    one-liners (e.g. a set of dummy implementations).
+
+    Use blank lines in functions, sparingly, to indicate logical sections.
+
+    Okay: def a():\n    pass\n\n\ndef b():\n    pass
+    Okay: def a():\n    pass\n\n\nasync def b():\n    pass
+    Okay: def a():\n    pass\n\n\n# Foo\n# Bar\n\ndef b():\n    pass
+    Okay: default = 1\nfoo = 1
+    Okay: classify = 1\nfoo = 1
+
+    E301: class Foo:\n    b = 0\n    def bar():\n        pass
+    E302: def a():\n    pass\n\ndef b(n):\n    pass
+    E302: def a():\n    pass\n\nasync def b(n):\n    pass
+    E303: def a():\n    pass\n\n\n\ndef b(n):\n    pass
+    E303: def a():\n\n\n\n    pass
+    E304: @decorator\n\ndef a():\n    pass
+    E305: def a():\n    pass\na()
+    E306: def a():\n    def b():\n        pass\n    def c():\n        pass
+app.py:59:80: E501 line too long (141 > 79 characters)
+    url = 'https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=%s&client_secret=%s&fb_exchange_token=%s' % (
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:65:5: E303 too many blank lines (2)
+    # Use token to get user info from API
+    ^
+    Separate top-level function and class definitions with two blank lines.
+
+    Method definitions inside a class are separated by a single blank line.
+
+    Extra blank lines may be used (sparingly) to separate groups of related
+    functions.  Blank lines may be omitted between a bunch of related
+    one-liners (e.g. a set of dummy implementations).
+
+    Use blank lines in functions, sparingly, to indicate logical sections.
+
+    Okay: def a():\n    pass\n\n\ndef b():\n    pass
+    Okay: def a():\n    pass\n\n\nasync def b():\n    pass
+    Okay: def a():\n    pass\n\n\n# Foo\n# Bar\n\ndef b():\n    pass
+    Okay: default = 1\nfoo = 1
+    Okay: classify = 1\nfoo = 1
+
+    E301: class Foo:\n    b = 0\n    def bar():\n        pass
+    E302: def a():\n    pass\n\ndef b(n):\n    pass
+    E302: def a():\n    pass\n\nasync def b(n):\n    pass
+    E303: def a():\n    pass\n\n\n\ndef b(n):\n    pass
+    E303: def a():\n\n\n\n    pass
+    E304: @decorator\n\ndef a():\n    pass
+    E305: def a():\n    pass\na()
+    E306: def a():\n    def b():\n        pass\n    def c():\n        pass
+app.py:68:80: E501 line too long (86 > 79 characters)
+        Due to the formatting for the result from the server token exchange we have to
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:69:80: E501 line too long (97 > 79 characters)
+        split the token first on commas and select the first index which gives us the key : value
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:70:80: E501 line too long (97 > 79 characters)
+        for the server access token then we split it on colons to pull out the actual token value
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:71:80: E501 line too long (98 > 79 characters)
+        and replace the remaining quotes with nothing so that it can be used directly in the graph
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:76:80: E501 line too long (91 > 79 characters)
+    url = 'https://graph.facebook.com/v2.8/me?access_token=%s&fields=name,id,email' % token
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:91:80: E501 line too long (110 > 79 characters)
+    url = 'https://graph.facebook.com/v2.8/me/picture?access_token=%s&redirect=0&height=200&width=200' % token
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:111:80: E501 line too long (135 > 79 characters)
+    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:122:80: E501 line too long (98 > 79 characters)
+    url = 'https://graph.facebook.com/%s/permissions?access_token=%s' % (facebook_id,access_token)
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:122:85: E231 missing whitespace after ','
+    url = 'https://graph.facebook.com/%s/permissions?access_token=%s' % (facebook_id,access_token)
+                                                                                    ^
+    Each comma, semicolon or colon should be followed by whitespace.
+
+    Okay: [a, b]
+    Okay: (3,)
+    Okay: a[1:4]
+    Okay: a[:4]
+    Okay: a[1:]
+    Okay: a[1:4:2]
+    E231: ['a','b']
+    E231: foo(bar,baz)
+    E231: [{'a':'b'}]
+app.py:173:14: E211 whitespace before '('
+        print ("Token's client ID does not match app's.")
+             ^
+    Avoid extraneous whitespace.
+
+    Avoid extraneous whitespace in the following situations:
+    - before the open parenthesis that starts the argument list of a
+      function call.
+    - before the open parenthesis that starts an indexing or slicing.
+
+    Okay: spam(1)
+    E211: spam (1)
+
+    Okay: dict['key'] = list[index]
+    E211: dict ['key'] = list[index]
+    E211: dict['key'] = list [index]
+app.py:180:80: E501 line too long (82 > 79 characters)
+        response = make_response(json.dumps('Current user is already connected.'),
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:198:8: E111 indentation is not a multiple of four
+       login_session['username'] = data['name']
+       ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:200:8: E111 indentation is not a multiple of four
+       emailPrefix = data['email'].split("@")
+       ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:201:8: E111 indentation is not a multiple of four
+       login_session['username'] = emailPrefix[0]
+       ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:220:80: E501 line too long (135 > 79 characters)
+    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:222:10: E211 whitespace before '('
+    print ("done!")
+         ^
+    Avoid extraneous whitespace.
+
+    Avoid extraneous whitespace in the following situations:
+    - before the open parenthesis that starts the argument list of a
+      function call.
+    - before the open parenthesis that starts an indexing or slicing.
+
+    Okay: spam(1)
+    E211: spam (1)
+
+    Okay: dict['key'] = list[index]
+    E211: dict ['key'] = list[index]
+    E211: dict['key'] = list [index]
+app.py:246:5: E722 do not use bare 'except'
+    except:
+    ^
+    When catching exceptions, mention specific exceptions when possible.
+
+    Okay: except Exception:
+    Okay: except BaseException:
+    E722: except:
+app.py:269:80: E501 line too long (91 > 79 characters)
+        response = make_response(json.dumps('Failed to revoke token for given user.', 400))
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:273:1: E302 expected 2 blank lines, found 1
+@app.route('/catalog/JSON')
+^
+    Separate top-level function and class definitions with two blank lines.
+
+    Method definitions inside a class are separated by a single blank line.
+
+    Extra blank lines may be used (sparingly) to separate groups of related
+    functions.  Blank lines may be omitted between a bunch of related
+    one-liners (e.g. a set of dummy implementations).
+
+    Use blank lines in functions, sparingly, to indicate logical sections.
+
+    Okay: def a():\n    pass\n\n\ndef b():\n    pass
+    Okay: def a():\n    pass\n\n\nasync def b():\n    pass
+    Okay: def a():\n    pass\n\n\n# Foo\n# Bar\n\ndef b():\n    pass
+    Okay: default = 1\nfoo = 1
+    Okay: classify = 1\nfoo = 1
+
+    E301: class Foo:\n    b = 0\n    def bar():\n        pass
+    E302: def a():\n    pass\n\ndef b(n):\n    pass
+    E302: def a():\n    pass\n\nasync def b(n):\n    pass
+    E303: def a():\n    pass\n\n\n\ndef b(n):\n    pass
+    E303: def a():\n\n\n\n    pass
+    E304: @decorator\n\ndef a():\n    pass
+    E305: def a():\n    pass\na()
+    E306: def a():\n    def b():\n        pass\n    def c():\n        pass
+app.py:275:80: E501 line too long (82 > 79 characters)
+    categories = session.query(Category).options(joinedload(Category.items)).all()
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:276:80: E501 line too long (88 > 79 characters)
+    return jsonify(dict(Catalog=[dict(c.serialize, items=[i.serialize for i in c.items])
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:277:26: E128 continuation line under-indented for visual indent
+                         for c in categories]))
+                         ^
+    Continuation lines indentation.
+
+    Continuation lines should align wrapped elements either vertically
+    using Python's implicit line joining inside parentheses, brackets
+    and braces, or using a hanging indent.
+
+    When using a hanging indent these considerations should be applied:
+    - there should be no arguments on the first line, and
+    - further indentation should be used to clearly distinguish itself as a
+      continuation line.
+
+    Okay: a = (\n)
+    E123: a = (\n    )
+
+    Okay: a = (\n    42)
+    E121: a = (\n   42)
+    E122: a = (\n42)
+    E123: a = (\n    42\n    )
+    E124: a = (24,\n     42\n)
+    E125: if (\n    b):\n    pass
+    E126: a = (\n        42)
+    E127: a = (24,\n      42)
+    E128: a = (24,\n    42)
+    E129: if (a or\n    b):\n    pass
+    E131: a = (\n    42\n 24)
+app.py:279:80: E501 line too long (97 > 79 characters)
+# Show all categories: Example: http://localhost:8000/catalog/categories or http://localhost:8000
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:280:1: E302 expected 2 blank lines, found 1
+@app.route('/')
+^
+    Separate top-level function and class definitions with two blank lines.
+
+    Method definitions inside a class are separated by a single blank line.
+
+    Extra blank lines may be used (sparingly) to separate groups of related
+    functions.  Blank lines may be omitted between a bunch of related
+    one-liners (e.g. a set of dummy implementations).
+
+    Use blank lines in functions, sparingly, to indicate logical sections.
+
+    Okay: def a():\n    pass\n\n\ndef b():\n    pass
+    Okay: def a():\n    pass\n\n\nasync def b():\n    pass
+    Okay: def a():\n    pass\n\n\n# Foo\n# Bar\n\ndef b():\n    pass
+    Okay: default = 1\nfoo = 1
+    Okay: classify = 1\nfoo = 1
+
+    E301: class Foo:\n    b = 0\n    def bar():\n        pass
+    E302: def a():\n    pass\n\ndef b(n):\n    pass
+    E302: def a():\n    pass\n\nasync def b(n):\n    pass
+    E303: def a():\n    pass\n\n\n\ndef b(n):\n    pass
+    E303: def a():\n\n\n\n    pass
+    E304: @decorator\n\ndef a():\n    pass
+    E305: def a():\n    pass\na()
+    E306: def a():\n    def b():\n        pass\n    def c():\n        pass
+app.py:284:80: E501 line too long (144 > 79 characters)
+    items = session.query(CatalogItem, Category.name).filter(CatalogItem.category_id==Category.id).order_by(desc(CatalogItem.id)).limit(7).all()
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:284:85: E225 missing whitespace around operator
+    items = session.query(CatalogItem, Category.name).filter(CatalogItem.category_id==Category.id).order_by(desc(CatalogItem.id)).limit(7).all()
+                                                                                    ^
+    Surround operators with a single space on either side.
+
+    - Always surround these binary operators with a single space on
+      either side: assignment (=), augmented assignment (+=, -= etc.),
+      comparisons (==, <, >, !=, <=, >=, in, not in, is, is not),
+      Booleans (and, or, not).
+
+    - If operators with different priorities are used, consider adding
+      whitespace around the operators with the lowest priorities.
+
+    Okay: i = i + 1
+    Okay: submitted += 1
+    Okay: x = x * 2 - 1
+    Okay: hypot2 = x * x + y * y
+    Okay: c = (a + b) * (a - b)
+    Okay: foo(bar, key='word', *args, **kwargs)
+    Okay: alpha[:-i]
+
+    E225: i=i+1
+    E225: submitted +=1
+    E225: x = x /2 - 1
+    E225: z = x **y
+    E226: c = (a+b) * (a-b)
+    E226: hypot2 = x*x + y*y
+    E227: c = a|b
+    E228: msg = fmt%(errno, errmsg)
+app.py:285:80: E501 line too long (101 > 79 characters)
+    return render_template('categories.html', categories=categories, items=items, displayRecent=True)
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:287:80: E501 line too long (93 > 79 characters)
+# Display all items for a Category. Example: http://localhost:8000/catalog/Snowboarding/items
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:288:1: E302 expected 2 blank lines, found 1
+@app.route('/catalog/<string:name>/items/')
+^
+    Separate top-level function and class definitions with two blank lines.
+
+    Method definitions inside a class are separated by a single blank line.
+
+    Extra blank lines may be used (sparingly) to separate groups of related
+    functions.  Blank lines may be omitted between a bunch of related
+    one-liners (e.g. a set of dummy implementations).
+
+    Use blank lines in functions, sparingly, to indicate logical sections.
+
+    Okay: def a():\n    pass\n\n\ndef b():\n    pass
+    Okay: def a():\n    pass\n\n\nasync def b():\n    pass
+    Okay: def a():\n    pass\n\n\n# Foo\n# Bar\n\ndef b():\n    pass
+    Okay: default = 1\nfoo = 1
+    Okay: classify = 1\nfoo = 1
+
+    E301: class Foo:\n    b = 0\n    def bar():\n        pass
+    E302: def a():\n    pass\n\ndef b(n):\n    pass
+    E302: def a():\n    pass\n\nasync def b(n):\n    pass
+    E303: def a():\n    pass\n\n\n\ndef b(n):\n    pass
+    E303: def a():\n\n\n\n    pass
+    E304: @decorator\n\ndef a():\n    pass
+    E305: def a():\n    pass\na()
+    E306: def a():\n    def b():\n        pass\n    def c():\n        pass
+app.py:291:80: E501 line too long (111 > 79 characters)
+    items = session.query(CatalogItem).filter_by(category_id=category.id).order_by(asc(CatalogItem.name)).all()
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:292:80: E501 line too long (85 > 79 characters)
+    itemcount = session.query(CatalogItem).filter_by(category_id=category.id).count()
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:294:8: E111 indentation is not a multiple of four
+       itemtitle = "%s (%s item)" % (category.name, str(itemcount))
+       ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:296:8: E111 indentation is not a multiple of four
+       itemtitle = "%s (%s items)" % (category.name, str(itemcount))
+       ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:304:12: E111 indentation is not a multiple of four
+           curIndex = x
+           ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:306:8: E111 indentation is not a multiple of four
+       prevCat = cat[len(cat)-1]
+       ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:308:8: E111 indentation is not a multiple of four
+       prevCat = cat[curIndex-1]
+       ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:310:8: E111 indentation is not a multiple of four
+       nextCat = cat[0]
+       ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:312:8: E111 indentation is not a multiple of four
+       nextCat = cat[curIndex+1]
+       ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:312:33: W291 trailing whitespace
+       nextCat = cat[curIndex+1]
+                                ^
+    Trailing whitespace is superfluous.
+
+    The warning returned varies on whether the line itself is blank, for easier
+    filtering for those who want to indent their blank lines.
+
+    Okay: spam(1)\n#
+    W291: spam(1) \n#
+    W293: class Foo(object):\n    \n    bang = 12
+app.py:314:80: E501 line too long (176 > 79 characters)
+    return render_template('categories.html', category=category, categories=categories, items=items, itemtitle=itemtitle, displayRecent=False, prevCat=prevCat, nextCat=nextCat)
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:316:80: E501 line too long (88 > 79 characters)
+# Display a specific item. Example: http://localhost:8000/catalog/Snowboarding/Snowboard
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:317:1: E302 expected 2 blank lines, found 1
+@app.route('/catalog/<string:category_name>/<string:item_name>/')
+^
+    Separate top-level function and class definitions with two blank lines.
+
+    Method definitions inside a class are separated by a single blank line.
+
+    Extra blank lines may be used (sparingly) to separate groups of related
+    functions.  Blank lines may be omitted between a bunch of related
+    one-liners (e.g. a set of dummy implementations).
+
+    Use blank lines in functions, sparingly, to indicate logical sections.
+
+    Okay: def a():\n    pass\n\n\ndef b():\n    pass
+    Okay: def a():\n    pass\n\n\nasync def b():\n    pass
+    Okay: def a():\n    pass\n\n\n# Foo\n# Bar\n\ndef b():\n    pass
+    Okay: default = 1\nfoo = 1
+    Okay: classify = 1\nfoo = 1
+
+    E301: class Foo:\n    b = 0\n    def bar():\n        pass
+    E302: def a():\n    pass\n\ndef b(n):\n    pass
+    E302: def a():\n    pass\n\nasync def b(n):\n    pass
+    E303: def a():\n    pass\n\n\n\ndef b(n):\n    pass
+    E303: def a():\n\n\n\n    pass
+    E304: @decorator\n\ndef a():\n    pass
+    E305: def a():\n    pass\na()
+    E306: def a():\n    def b():\n        pass\n    def c():\n        pass
+app.py:320:80: E501 line too long (94 > 79 characters)
+    item = session.query(CatalogItem).filter_by(name=item_name, category_id=category.id).one()
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:323:5: E722 do not use bare 'except'
+    except:
+    ^
+    When catching exceptions, mention specific exceptions when possible.
+
+    Okay: except Exception:
+    Okay: except BaseException:
+    E722: except:
+app.py:325:80: E501 line too long (98 > 79 characters)
+    return render_template('item.html', category_name=category_name, item=item, itemuser=itemuser)
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:328:1: E302 expected 2 blank lines, found 1
+@app.route('/catalog/item/new/', methods=['GET', 'POST'])
+^
+    Separate top-level function and class definitions with two blank lines.
+
+    Method definitions inside a class are separated by a single blank line.
+
+    Extra blank lines may be used (sparingly) to separate groups of related
+    functions.  Blank lines may be omitted between a bunch of related
+    one-liners (e.g. a set of dummy implementations).
+
+    Use blank lines in functions, sparingly, to indicate logical sections.
+
+    Okay: def a():\n    pass\n\n\ndef b():\n    pass
+    Okay: def a():\n    pass\n\n\nasync def b():\n    pass
+    Okay: def a():\n    pass\n\n\n# Foo\n# Bar\n\ndef b():\n    pass
+    Okay: default = 1\nfoo = 1
+    Okay: classify = 1\nfoo = 1
+
+    E301: class Foo:\n    b = 0\n    def bar():\n        pass
+    E302: def a():\n    pass\n\ndef b(n):\n    pass
+    E302: def a():\n    pass\n\nasync def b(n):\n    pass
+    E303: def a():\n    pass\n\n\n\ndef b(n):\n    pass
+    E303: def a():\n\n\n\n    pass
+    E304: @decorator\n\ndef a():\n    pass
+    E305: def a():\n    pass\na()
+    E306: def a():\n    def b():\n        pass\n    def c():\n        pass
+app.py:340:16: E111 indentation is not a multiple of four
+               flash('Error! Item Name can not be blank')
+               ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:340:58: W291 trailing whitespace
+               flash('Error! Item Name can not be blank')
+                                                         ^
+    Trailing whitespace is superfluous.
+
+    The warning returned varies on whether the line itself is blank, for easier
+    filtering for those who want to indent their blank lines.
+
+    Okay: spam(1)\n#
+    W291: spam(1) \n#
+    W293: class Foo(object):\n    \n    bang = 12
+app.py:341:16: E111 indentation is not a multiple of four
+               categories = session.query(Category).order_by(asc(Category.name)).all()
+               ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:341:80: E501 line too long (86 > 79 characters)
+               categories = session.query(Category).order_by(asc(Category.name)).all()
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:342:16: E111 indentation is not a multiple of four
+               return render_template('newitem.html', categories=categories, imageList=getImages(), form=form)
+               ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:342:80: E501 line too long (110 > 79 characters)
+               return render_template('newitem.html', categories=categories, imageList=getImages(), form=form)
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:344:16: E111 indentation is not a multiple of four
+               flash('Error! Item Name must be bwtween 1 and 30 characters')
+               ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:344:77: W291 trailing whitespace
+               flash('Error! Item Name must be bwtween 1 and 30 characters')
+                                                                            ^
+    Trailing whitespace is superfluous.
+
+    The warning returned varies on whether the line itself is blank, for easier
+    filtering for those who want to indent their blank lines.
+
+    Okay: spam(1)\n#
+    W291: spam(1) \n#
+    W293: class Foo(object):\n    \n    bang = 12
+app.py:345:16: E111 indentation is not a multiple of four
+               categories = session.query(Category).order_by(asc(Category.name)).all()
+               ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:345:80: E501 line too long (86 > 79 characters)
+               categories = session.query(Category).order_by(asc(Category.name)).all()
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:346:16: E111 indentation is not a multiple of four
+               return render_template('newitem.html',categories=categories, imageList=getImages(), form=form)
+               ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:346:53: E231 missing whitespace after ','
+               return render_template('newitem.html',categories=categories, imageList=getImages(), form=form)
+                                                    ^
+    Each comma, semicolon or colon should be followed by whitespace.
+
+    Okay: [a, b]
+    Okay: (3,)
+    Okay: a[1:4]
+    Okay: a[:4]
+    Okay: a[1:]
+    Okay: a[1:4:2]
+    E231: ['a','b']
+    E231: foo(bar,baz)
+    E231: [{'a':'b'}]
+app.py:346:80: E501 line too long (109 > 79 characters)
+               return render_template('newitem.html',categories=categories, imageList=getImages(), form=form)
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:348:16: E111 indentation is not a multiple of four
+               flash('Error! Item Description must be bwtween 1 and 250 characters')
+               ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:348:80: E501 line too long (84 > 79 characters)
+               flash('Error! Item Description must be bwtween 1 and 250 characters')
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:348:85: W291 trailing whitespace
+               flash('Error! Item Description must be bwtween 1 and 250 characters')
+                                                                                    ^
+    Trailing whitespace is superfluous.
+
+    The warning returned varies on whether the line itself is blank, for easier
+    filtering for those who want to indent their blank lines.
+
+    Okay: spam(1)\n#
+    W291: spam(1) \n#
+    W293: class Foo(object):\n    \n    bang = 12
+app.py:349:16: E111 indentation is not a multiple of four
+               categories = session.query(Category).order_by(asc(Category.name)).all()
+               ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:349:80: E501 line too long (86 > 79 characters)
+               categories = session.query(Category).order_by(asc(Category.name)).all()
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:350:16: E111 indentation is not a multiple of four
+               return render_template('newitem.html', categories=categories, imageList=getImages(), form=form)
+               ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:350:80: E501 line too long (110 > 79 characters)
+               return render_template('newitem.html', categories=categories, imageList=getImages(), form=form)
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:352:80: E501 line too long (133 > 79 characters)
+                item = CatalogItem(name=request.form['name'].strip(), desc=request.form['desc'].strip(), image=request.form['image'],
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:353:29: E128 continuation line under-indented for visual indent
+                            category_id=request.form['category'], user_id=login_session['user_id'])
+                            ^
+    Continuation lines indentation.
+
+    Continuation lines should align wrapped elements either vertically
+    using Python's implicit line joining inside parentheses, brackets
+    and braces, or using a hanging indent.
+
+    When using a hanging indent these considerations should be applied:
+    - there should be no arguments on the first line, and
+    - further indentation should be used to clearly distinguish itself as a
+      continuation line.
+
+    Okay: a = (\n)
+    E123: a = (\n    )
+
+    Okay: a = (\n    42)
+    E121: a = (\n   42)
+    E122: a = (\n42)
+    E123: a = (\n    42\n    )
+    E124: a = (24,\n     42\n)
+    E125: if (\n    b):\n    pass
+    E126: a = (\n        42)
+    E127: a = (24,\n      42)
+    E128: a = (24,\n    42)
+    E129: if (a or\n    b):\n    pass
+    E131: a = (\n    42\n 24)
+app.py:353:80: E501 line too long (99 > 79 characters)
+                            category_id=request.form['category'], user_id=login_session['user_id'])
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:361:80: E501 line too long (111 > 79 characters)
+                flash('Error! "%s" Already Exists in this Category...Item not changed.' % request.form['name'])
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:362:80: E501 line too long (87 > 79 characters)
+                categories = session.query(Category).order_by(asc(Category.name)).all()
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:363:80: E501 line too long (111 > 79 characters)
+                return render_template('newitem.html', categories=categories, imageList=getImages(), form=form)
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:372:80: E501 line too long (103 > 79 characters)
+        return render_template('newitem.html', categories=categories, imageList=getImages(), form=form)
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:374:80: E501 line too long (90 > 79 characters)
+# Edit a specific item. Example: http://localhost:8000/catalog/Snowboarding/Snowboard/edit
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:375:1: E302 expected 2 blank lines, found 1
+@app.route('/catalog/<string:category_name>/<string:item_name>/edit/', methods=['GET', 'POST'])
+^
+    Separate top-level function and class definitions with two blank lines.
+
+    Method definitions inside a class are separated by a single blank line.
+
+    Extra blank lines may be used (sparingly) to separate groups of related
+    functions.  Blank lines may be omitted between a bunch of related
+    one-liners (e.g. a set of dummy implementations).
+
+    Use blank lines in functions, sparingly, to indicate logical sections.
+
+    Okay: def a():\n    pass\n\n\ndef b():\n    pass
+    Okay: def a():\n    pass\n\n\nasync def b():\n    pass
+    Okay: def a():\n    pass\n\n\n# Foo\n# Bar\n\ndef b():\n    pass
+    Okay: default = 1\nfoo = 1
+    Okay: classify = 1\nfoo = 1
+
+    E301: class Foo:\n    b = 0\n    def bar():\n        pass
+    E302: def a():\n    pass\n\ndef b(n):\n    pass
+    E302: def a():\n    pass\n\nasync def b(n):\n    pass
+    E303: def a():\n    pass\n\n\n\ndef b(n):\n    pass
+    E303: def a():\n\n\n\n    pass
+    E304: @decorator\n\ndef a():\n    pass
+    E305: def a():\n    pass\na()
+    E306: def a():\n    def b():\n        pass\n    def c():\n        pass
+app.py:375:80: E501 line too long (95 > 79 characters)
+@app.route('/catalog/<string:category_name>/<string:item_name>/edit/', methods=['GET', 'POST'])
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:377:7: E111 indentation is not a multiple of four
+      if 'username' not in login_session:
+      ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:378:11: E111 indentation is not a multiple of four
+          return redirect('/login')
+          ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:379:7: E111 indentation is not a multiple of four
+      category = session.query(Category).filter_by(name=category_name).one()
+      ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:380:7: E111 indentation is not a multiple of four
+      item = session.query(CatalogItem).filter_by(name=item_name, category_id=category.id).one()
+      ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:380:80: E501 line too long (96 > 79 characters)
+      item = session.query(CatalogItem).filter_by(name=item_name, category_id=category.id).one()
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:381:7: E111 indentation is not a multiple of four
+      categories = session.query(Category).order_by(asc(Category.name)).all()
+      ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:382:7: E111 indentation is not a multiple of four
+      if request.method == 'POST':
+      ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:383:10: E111 indentation is not a multiple of four
+         if request.form.get('save') == 'save':
+         ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:390:16: E111 indentation is not a multiple of four
+               flash('Error! Item Name can not be blank')
+               ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:390:58: W291 trailing whitespace
+               flash('Error! Item Name can not be blank')
+                                                         ^
+    Trailing whitespace is superfluous.
+
+    The warning returned varies on whether the line itself is blank, for easier
+    filtering for those who want to indent their blank lines.
+
+    Okay: spam(1)\n#
+    W291: spam(1) \n#
+    W293: class Foo(object):\n    \n    bang = 12
+app.py:391:16: E111 indentation is not a multiple of four
+               return render_template('edititem.html', category_name=category_name, item_name=item_name, form=form, categories=categories, imageList=getImages())
+               ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:391:80: E501 line too long (161 > 79 characters)
+               return render_template('edititem.html', category_name=category_name, item_name=item_name, form=form, categories=categories, imageList=getImages())
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:393:16: E111 indentation is not a multiple of four
+               flash('Error! Item Name must be bwtween 1 and 30 characters')
+               ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:393:77: W291 trailing whitespace
+               flash('Error! Item Name must be bwtween 1 and 30 characters')
+                                                                            ^
+    Trailing whitespace is superfluous.
+
+    The warning returned varies on whether the line itself is blank, for easier
+    filtering for those who want to indent their blank lines.
+
+    Okay: spam(1)\n#
+    W291: spam(1) \n#
+    W293: class Foo(object):\n    \n    bang = 12
+app.py:394:16: E111 indentation is not a multiple of four
+               return render_template('edititem.html', category_name=category_name, item_name=item_name, form=form, categories=categories, imageList=getImages())
+               ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:394:80: E501 line too long (161 > 79 characters)
+               return render_template('edititem.html', category_name=category_name, item_name=item_name, form=form, categories=categories, imageList=getImages())
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:396:16: E111 indentation is not a multiple of four
+               flash('Error! Item Description must be bwtween 1 and 250 characters')
+               ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:396:80: E501 line too long (84 > 79 characters)
+               flash('Error! Item Description must be bwtween 1 and 250 characters')
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:396:85: W291 trailing whitespace
+               flash('Error! Item Description must be bwtween 1 and 250 characters')
+                                                                                    ^
+    Trailing whitespace is superfluous.
+
+    The warning returned varies on whether the line itself is blank, for easier
+    filtering for those who want to indent their blank lines.
+
+    Okay: spam(1)\n#
+    W291: spam(1) \n#
+    W293: class Foo(object):\n    \n    bang = 12
+app.py:397:16: E111 indentation is not a multiple of four
+               return render_template('edititem.html', category_name=category_name, item_name=item_name, form=form, categories=categories, imageList=getImages())
+               ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:397:80: E501 line too long (161 > 79 characters)
+               return render_template('edititem.html', category_name=category_name, item_name=item_name, form=form, categories=categories, imageList=getImages())
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:401:35: E225 missing whitespace around operator
+                item.image = image=request.form['image']
+                                  ^
+    Surround operators with a single space on either side.
+
+    - Always surround these binary operators with a single space on
+      either side: assignment (=), augmented assignment (+=, -= etc.),
+      comparisons (==, <, >, !=, <=, >=, in, not in, is, is not),
+      Booleans (and, or, not).
+
+    - If operators with different priorities are used, consider adding
+      whitespace around the operators with the lowest priorities.
+
+    Okay: i = i + 1
+    Okay: submitted += 1
+    Okay: x = x * 2 - 1
+    Okay: hypot2 = x * x + y * y
+    Okay: c = (a + b) * (a - b)
+    Okay: foo(bar, key='word', *args, **kwargs)
+    Okay: alpha[:-i]
+
+    E225: i=i+1
+    E225: submitted +=1
+    E225: x = x /2 - 1
+    E225: z = x **y
+    E226: c = (a+b) * (a-b)
+    E226: hypot2 = x*x + y*y
+    E227: c = a|b
+    E228: msg = fmt%(errno, errmsg)
+app.py:403:29: E225 missing whitespace around operator
+                item.user_id=login_session['user_id']
+                            ^
+    Surround operators with a single space on either side.
+
+    - Always surround these binary operators with a single space on
+      either side: assignment (=), augmented assignment (+=, -= etc.),
+      comparisons (==, <, >, !=, <=, >=, in, not in, is, is not),
+      Booleans (and, or, not).
+
+    - If operators with different priorities are used, consider adding
+      whitespace around the operators with the lowest priorities.
+
+    Okay: i = i + 1
+    Okay: submitted += 1
+    Okay: x = x * 2 - 1
+    Okay: hypot2 = x * x + y * y
+    Okay: c = (a + b) * (a - b)
+    Okay: foo(bar, key='word', *args, **kwargs)
+    Okay: alpha[:-i]
+
+    E225: i=i+1
+    E225: submitted +=1
+    E225: x = x /2 - 1
+    E225: z = x **y
+    E226: c = (a+b) * (a-b)
+    E226: hypot2 = x*x + y*y
+    E227: c = a|b
+    E228: msg = fmt%(errno, errmsg)
+app.py:410:80: E501 line too long (111 > 79 characters)
+                flash('Error! "%s" Already Exists in this Category...Item not changed.' % request.form['name'])
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:411:80: E501 line too long (162 > 79 characters)
+                return render_template('edititem.html', category_name=category_name, item_name=item_name, form=form, categories=categories, imageList=getImages())
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:412:10: E111 indentation is not a multiple of four
+         else:
+         ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:413:14: E111 indentation is not a multiple of four
+             return redirect(url_for('showItem', category_name=category_name, item_name=item_name))
+             ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:413:80: E501 line too long (99 > 79 characters)
+             return redirect(url_for('showItem', category_name=category_name, item_name=item_name))
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:414:7: E111 indentation is not a multiple of four
+      else:
+      ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:415:11: E111 indentation is not a multiple of four
+          form = {}
+          ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:416:11: E111 indentation is not a multiple of four
+          form['name'] = item.name
+          ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:417:11: E111 indentation is not a multiple of four
+          form['desc'] = item.desc
+          ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:418:11: E111 indentation is not a multiple of four
+          form['image'] = item.image
+          ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:419:11: E111 indentation is not a multiple of four
+          form['category'] = item.category_id
+          ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:420:11: E111 indentation is not a multiple of four
+          return render_template('edititem.html', category_name=category_name, item_name=item_name, form=form, categories=categories, imageList=getImages())
+          ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:420:80: E501 line too long (156 > 79 characters)
+          return render_template('edititem.html', category_name=category_name, item_name=item_name, form=form, categories=categories, imageList=getImages())
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:422:80: E501 line too long (94 > 79 characters)
+# Delete a specific item. Example: http://localhost:8000/catalog/Snowboarding/Snowboard/delete
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:423:1: E302 expected 2 blank lines, found 1
+@app.route('/catalog/<string:category_name>/<string:item_name>/delete/', methods=['GET', 'POST'])
+^
+    Separate top-level function and class definitions with two blank lines.
+
+    Method definitions inside a class are separated by a single blank line.
+
+    Extra blank lines may be used (sparingly) to separate groups of related
+    functions.  Blank lines may be omitted between a bunch of related
+    one-liners (e.g. a set of dummy implementations).
+
+    Use blank lines in functions, sparingly, to indicate logical sections.
+
+    Okay: def a():\n    pass\n\n\ndef b():\n    pass
+    Okay: def a():\n    pass\n\n\nasync def b():\n    pass
+    Okay: def a():\n    pass\n\n\n# Foo\n# Bar\n\ndef b():\n    pass
+    Okay: default = 1\nfoo = 1
+    Okay: classify = 1\nfoo = 1
+
+    E301: class Foo:\n    b = 0\n    def bar():\n        pass
+    E302: def a():\n    pass\n\ndef b(n):\n    pass
+    E302: def a():\n    pass\n\nasync def b(n):\n    pass
+    E303: def a():\n    pass\n\n\n\ndef b(n):\n    pass
+    E303: def a():\n\n\n\n    pass
+    E304: @decorator\n\ndef a():\n    pass
+    E305: def a():\n    pass\na()
+    E306: def a():\n    def b():\n        pass\n    def c():\n        pass
+app.py:423:80: E501 line too long (97 > 79 characters)
+@app.route('/catalog/<string:category_name>/<string:item_name>/delete/', methods=['GET', 'POST'])
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:428:80: E501 line too long (94 > 79 characters)
+    item = session.query(CatalogItem).filter_by(name=item_name, category_id=category.id).one()
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:435:80: E501 line too long (97 > 79 characters)
+# Delete Category. Example: http://localhost:8000/catalog/category/<string:category_name>/delete/
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:436:1: E302 expected 2 blank lines, found 1
+@app.route('/catalog/category/<string:category_name>/delete/', methods=['GET', 'POST'])
+^
+    Separate top-level function and class definitions with two blank lines.
+
+    Method definitions inside a class are separated by a single blank line.
+
+    Extra blank lines may be used (sparingly) to separate groups of related
+    functions.  Blank lines may be omitted between a bunch of related
+    one-liners (e.g. a set of dummy implementations).
+
+    Use blank lines in functions, sparingly, to indicate logical sections.
+
+    Okay: def a():\n    pass\n\n\ndef b():\n    pass
+    Okay: def a():\n    pass\n\n\nasync def b():\n    pass
+    Okay: def a():\n    pass\n\n\n# Foo\n# Bar\n\ndef b():\n    pass
+    Okay: default = 1\nfoo = 1
+    Okay: classify = 1\nfoo = 1
+
+    E301: class Foo:\n    b = 0\n    def bar():\n        pass
+    E302: def a():\n    pass\n\ndef b(n):\n    pass
+    E302: def a():\n    pass\n\nasync def b(n):\n    pass
+    E303: def a():\n    pass\n\n\n\ndef b(n):\n    pass
+    E303: def a():\n\n\n\n    pass
+    E304: @decorator\n\ndef a():\n    pass
+    E305: def a():\n    pass\na()
+    E306: def a():\n    def b():\n        pass\n    def c():\n        pass
+app.py:436:80: E501 line too long (87 > 79 characters)
+@app.route('/catalog/category/<string:category_name>/delete/', methods=['GET', 'POST'])
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:447:80: E501 line too long (93 > 79 characters)
+# Edit Category. Example: http://localhost:8000/catalog/category/<string:category_name>/edit/
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:448:1: E302 expected 2 blank lines, found 1
+@app.route('/catalog/category/<string:category_name>/edit/', methods=['GET', 'POST'])
+^
+    Separate top-level function and class definitions with two blank lines.
+
+    Method definitions inside a class are separated by a single blank line.
+
+    Extra blank lines may be used (sparingly) to separate groups of related
+    functions.  Blank lines may be omitted between a bunch of related
+    one-liners (e.g. a set of dummy implementations).
+
+    Use blank lines in functions, sparingly, to indicate logical sections.
+
+    Okay: def a():\n    pass\n\n\ndef b():\n    pass
+    Okay: def a():\n    pass\n\n\nasync def b():\n    pass
+    Okay: def a():\n    pass\n\n\n# Foo\n# Bar\n\ndef b():\n    pass
+    Okay: default = 1\nfoo = 1
+    Okay: classify = 1\nfoo = 1
+
+    E301: class Foo:\n    b = 0\n    def bar():\n        pass
+    E302: def a():\n    pass\n\ndef b(n):\n    pass
+    E302: def a():\n    pass\n\nasync def b(n):\n    pass
+    E303: def a():\n    pass\n\n\n\ndef b(n):\n    pass
+    E303: def a():\n\n\n\n    pass
+    E304: @decorator\n\ndef a():\n    pass
+    E305: def a():\n    pass\na()
+    E306: def a():\n    def b():\n        pass\n    def c():\n        pass
+app.py:448:80: E501 line too long (85 > 79 characters)
+@app.route('/catalog/category/<string:category_name>/edit/', methods=['GET', 'POST'])
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:454:12: E111 indentation is not a multiple of four
+           form = request.form
+           ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:455:12: E111 indentation is not a multiple of four
+           if len(request.form['name'].strip()) == 0:
+           ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:456:15: E111 indentation is not a multiple of four
+              flash('Error! Category name can not be blank')
+              ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:456:61: W291 trailing whitespace
+              flash('Error! Category name can not be blank')
+                                                            ^
+    Trailing whitespace is superfluous.
+
+    The warning returned varies on whether the line itself is blank, for easier
+    filtering for those who want to indent their blank lines.
+
+    Okay: spam(1)\n#
+    W291: spam(1) \n#
+    W293: class Foo(object):\n    \n    bang = 12
+app.py:457:15: E111 indentation is not a multiple of four
+              return render_template('editcategory.html', category_name=category_name, form=form)
+              ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:457:80: E501 line too long (97 > 79 characters)
+              return render_template('editcategory.html', category_name=category_name, form=form)
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:458:12: E111 indentation is not a multiple of four
+           if len(request.form['name'].strip()) > 30:
+           ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:459:15: E111 indentation is not a multiple of four
+              flash('Error! Category name must be between 1 to 30 characters')
+              ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:459:79: W291 trailing whitespace
+              flash('Error! Category name must be between 1 to 30 characters')
+                                                                              ^
+    Trailing whitespace is superfluous.
+
+    The warning returned varies on whether the line itself is blank, for easier
+    filtering for those who want to indent their blank lines.
+
+    Okay: spam(1)\n#
+    W291: spam(1) \n#
+    W293: class Foo(object):\n    \n    bang = 12
+app.py:460:15: E111 indentation is not a multiple of four
+              return render_template('editcategory.html', category_name=category_name, form=form)
+              ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:460:80: E501 line too long (97 > 79 characters)
+              return render_template('editcategory.html', category_name=category_name, form=form)
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:461:12: E111 indentation is not a multiple of four
+           try:
+           ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:462:16: E111 indentation is not a multiple of four
+               category = session.query(Category).filter_by(name=category_name).one()
+               ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:462:80: E501 line too long (85 > 79 characters)
+               category = session.query(Category).filter_by(name=category_name).one()
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:463:16: E111 indentation is not a multiple of four
+               if category.name != request.form['name'].strip():
+               ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:464:20: E111 indentation is not a multiple of four
+                   category.name = request.form['name'].strip()
+                   ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:465:20: E111 indentation is not a multiple of four
+                   session.commit()
+                   ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:466:20: E111 indentation is not a multiple of four
+                   flash('Category Successfully Editted')
+                   ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:467:16: E111 indentation is not a multiple of four
+               else:
+               ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:468:20: E111 indentation is not a multiple of four
+                   flash('No change made to category')
+                   ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:469:16: E111 indentation is not a multiple of four
+               return redirect(url_for('showCategories'))
+               ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:470:12: E111 indentation is not a multiple of four
+           except IntegrityError:
+           ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:471:20: E111 indentation is not a multiple of four
+                   session.rollback()
+                   ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:472:20: E111 indentation is not a multiple of four
+                   flash('Error! "%s" Already Exists...Category name not changed.' % request.form['name'])
+                   ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:472:80: E501 line too long (106 > 79 characters)
+                   flash('Error! "%s" Already Exists...Category name not changed.' % request.form['name'])
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:473:20: E111 indentation is not a multiple of four
+                   return render_template('editcategory.html', category_name=category_name, form=form)
+                   ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:473:80: E501 line too long (102 > 79 characters)
+                   return render_template('editcategory.html', category_name=category_name, form=form)
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:474:14: W291 trailing whitespace
+        else:
+             ^
+    Trailing whitespace is superfluous.
+
+    The warning returned varies on whether the line itself is blank, for easier
+    filtering for those who want to indent their blank lines.
+
+    Okay: spam(1)\n#
+    W291: spam(1) \n#
+    W293: class Foo(object):\n    \n    bang = 12
+app.py:479:80: E501 line too long (91 > 79 characters)
+        return render_template('editcategory.html', category_name=category_name, form=form)
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:482:1: E302 expected 2 blank lines, found 1
+@app.route('/catalog/category/new/', methods=['GET', 'POST'])
+^
+    Separate top-level function and class definitions with two blank lines.
+
+    Method definitions inside a class are separated by a single blank line.
+
+    Extra blank lines may be used (sparingly) to separate groups of related
+    functions.  Blank lines may be omitted between a bunch of related
+    one-liners (e.g. a set of dummy implementations).
+
+    Use blank lines in functions, sparingly, to indicate logical sections.
+
+    Okay: def a():\n    pass\n\n\ndef b():\n    pass
+    Okay: def a():\n    pass\n\n\nasync def b():\n    pass
+    Okay: def a():\n    pass\n\n\n# Foo\n# Bar\n\ndef b():\n    pass
+    Okay: default = 1\nfoo = 1
+    Okay: classify = 1\nfoo = 1
+
+    E301: class Foo:\n    b = 0\n    def bar():\n        pass
+    E302: def a():\n    pass\n\ndef b(n):\n    pass
+    E302: def a():\n    pass\n\nasync def b(n):\n    pass
+    E303: def a():\n    pass\n\n\n\ndef b(n):\n    pass
+    E303: def a():\n\n\n\n    pass
+    E304: @decorator\n\ndef a():\n    pass
+    E305: def a():\n    pass\na()
+    E306: def a():\n    def b():\n        pass\n    def c():\n        pass
+app.py:487:8: E111 indentation is not a multiple of four
+       if request.form.get('save') == 'save':
+       ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:488:11: E111 indentation is not a multiple of four
+          form = request.form
+          ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:489:11: E111 indentation is not a multiple of four
+          if len(request.form['name'].strip()) == 0:
+          ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:490:14: E111 indentation is not a multiple of four
+             flash('Error! Category name can not be blank')
+             ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:490:60: W291 trailing whitespace
+             flash('Error! Category name can not be blank')
+                                                           ^
+    Trailing whitespace is superfluous.
+
+    The warning returned varies on whether the line itself is blank, for easier
+    filtering for those who want to indent their blank lines.
+
+    Okay: spam(1)\n#
+    W291: spam(1) \n#
+    W293: class Foo(object):\n    \n    bang = 12
+app.py:491:14: E111 indentation is not a multiple of four
+             return render_template('newcategory.html', form=form)
+             ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:492:11: E111 indentation is not a multiple of four
+          if len(request.form['name'].strip()) > 30:
+          ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:493:14: E111 indentation is not a multiple of four
+             flash('Error! Category name must be between 1 to 30 characters')
+             ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:493:78: W291 trailing whitespace
+             flash('Error! Category name must be between 1 to 30 characters')
+                                                                             ^
+    Trailing whitespace is superfluous.
+
+    The warning returned varies on whether the line itself is blank, for easier
+    filtering for those who want to indent their blank lines.
+
+    Okay: spam(1)\n#
+    W291: spam(1) \n#
+    W293: class Foo(object):\n    \n    bang = 12
+app.py:494:14: E111 indentation is not a multiple of four
+             return render_template('newcategory.html', form=form)
+             ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:495:11: E111 indentation is not a multiple of four
+          try:
+          ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:496:14: E111 indentation is not a multiple of four
+             category = Category(name=request.form['name'].strip())
+             ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:497:14: E111 indentation is not a multiple of four
+             session.add(category)
+             ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:498:14: E111 indentation is not a multiple of four
+             session.commit()
+             ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:499:14: E114 indentation is not a multiple of four (comment)
+             # logTrans("Add", item)
+             ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:500:14: E111 indentation is not a multiple of four
+             flash('New Category %s Successfully Created' % (category.name))
+             ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:501:14: E111 indentation is not a multiple of four
+             return redirect(url_for('showCategories'))
+             ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:502:11: E111 indentation is not a multiple of four
+          except IntegrityError:
+          ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:503:14: E111 indentation is not a multiple of four
+             session.rollback()
+             ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:504:14: E111 indentation is not a multiple of four
+             flash('Error! "%s" Already Exists...Category not added.' % request.form['name'])
+             ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:504:80: E501 line too long (93 > 79 characters)
+             flash('Error! "%s" Already Exists...Category not added.' % request.form['name'])
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:505:14: E111 indentation is not a multiple of four
+             return render_template('newcategory.html', form=form)
+             ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:506:8: E111 indentation is not a multiple of four
+       else:
+       ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:507:12: E111 indentation is not a multiple of four
+           return redirect(url_for('showCategories'))
+           ^
+    Use 4 spaces per indentation level.
+
+    For really old code that you don't want to mess up, you can continue to
+    use 8-space tabs.
+
+    Okay: a = 1
+    Okay: if a == 0:\n    a = 1
+    E111:   a = 1
+    E114:   # a = 1
+
+    Okay: for item in items:\n    pass
+    E112: for item in items:\npass
+    E115: for item in items:\n# Hi\n    pass
+
+    Okay: a = 1\nb = 2
+    E113: a = 1\n    b = 2
+    E116: a = 1\n    # b = 2
+app.py:513:80: E501 line too long (88 > 79 characters)
+# Enable the application to read images from image folder rather than the static folder.
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:514:1: E302 expected 2 blank lines, found 1
+@app.route('/upload/<filename>')
+^
+    Separate top-level function and class definitions with two blank lines.
+
+    Method definitions inside a class are separated by a single blank line.
+
+    Extra blank lines may be used (sparingly) to separate groups of related
+    functions.  Blank lines may be omitted between a bunch of related
+    one-liners (e.g. a set of dummy implementations).
+
+    Use blank lines in functions, sparingly, to indicate logical sections.
+
+    Okay: def a():\n    pass\n\n\ndef b():\n    pass
+    Okay: def a():\n    pass\n\n\nasync def b():\n    pass
+    Okay: def a():\n    pass\n\n\n# Foo\n# Bar\n\ndef b():\n    pass
+    Okay: default = 1\nfoo = 1
+    Okay: classify = 1\nfoo = 1
+
+    E301: class Foo:\n    b = 0\n    def bar():\n        pass
+    E302: def a():\n    pass\n\ndef b(n):\n    pass
+    E302: def a():\n    pass\n\nasync def b(n):\n    pass
+    E303: def a():\n    pass\n\n\n\ndef b(n):\n    pass
+    E303: def a():\n\n\n\n    pass
+    E304: @decorator\n\ndef a():\n    pass
+    E305: def a():\n    pass\na()
+    E306: def a():\n    def b():\n        pass\n    def c():\n        pass
+app.py:518:80: E501 line too long (83 > 79 characters)
+# Read the available item images from images folder on server and load into a list.
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:519:1: E302 expected 2 blank lines, found 1
+def getImages():
+^
+    Separate top-level function and class definitions with two blank lines.
+
+    Method definitions inside a class are separated by a single blank line.
+
+    Extra blank lines may be used (sparingly) to separate groups of related
+    functions.  Blank lines may be omitted between a bunch of related
+    one-liners (e.g. a set of dummy implementations).
+
+    Use blank lines in functions, sparingly, to indicate logical sections.
+
+    Okay: def a():\n    pass\n\n\ndef b():\n    pass
+    Okay: def a():\n    pass\n\n\nasync def b():\n    pass
+    Okay: def a():\n    pass\n\n\n# Foo\n# Bar\n\ndef b():\n    pass
+    Okay: default = 1\nfoo = 1
+    Okay: classify = 1\nfoo = 1
+
+    E301: class Foo:\n    b = 0\n    def bar():\n        pass
+    E302: def a():\n    pass\n\ndef b(n):\n    pass
+    E302: def a():\n    pass\n\nasync def b(n):\n    pass
+    E303: def a():\n    pass\n\n\n\ndef b(n):\n    pass
+    E303: def a():\n\n\n\n    pass
+    E304: @decorator\n\ndef a():\n    pass
+    E305: def a():\n    pass\na()
+    E306: def a():\n    def b():\n        pass\n    def c():\n        pass
+app.py:526:1: E302 expected 2 blank lines, found 1
+def logTrans(trans, item):
+^
+    Separate top-level function and class definitions with two blank lines.
+
+    Method definitions inside a class are separated by a single blank line.
+
+    Extra blank lines may be used (sparingly) to separate groups of related
+    functions.  Blank lines may be omitted between a bunch of related
+    one-liners (e.g. a set of dummy implementations).
+
+    Use blank lines in functions, sparingly, to indicate logical sections.
+
+    Okay: def a():\n    pass\n\n\ndef b():\n    pass
+    Okay: def a():\n    pass\n\n\nasync def b():\n    pass
+    Okay: def a():\n    pass\n\n\n# Foo\n# Bar\n\ndef b():\n    pass
+    Okay: default = 1\nfoo = 1
+    Okay: classify = 1\nfoo = 1
+
+    E301: class Foo:\n    b = 0\n    def bar():\n        pass
+    E302: def a():\n    pass\n\ndef b(n):\n    pass
+    E302: def a():\n    pass\n\nasync def b(n):\n    pass
+    E303: def a():\n    pass\n\n\n\ndef b(n):\n    pass
+    E303: def a():\n\n\n\n    pass
+    E304: @decorator\n\ndef a():\n    pass
+    E305: def a():\n    pass\na()
+    E306: def a():\n    def b():\n        pass\n    def c():\n        pass
+app.py:527:34: E261 at least two spaces before inline comment
+    now = datetime.datetime.now() # Use Greenwich Mean Time (GMT)
+                                 ^
+    Separate inline comments by at least two spaces.
+
+    An inline comment is a comment on the same line as a statement.  Inline
+    comments should be separated by at least two spaces from the statement.
+    They should start with a # and a single space.
+
+    Each line of a block comment starts with a # and a single space
+    (unless it is indented text inside the comment).
+
+    Okay: x = x + 1  # Increment x
+    Okay: x = x + 1    # Increment x
+    Okay: # Block comment
+    E261: x = x + 1 # Increment x
+    E262: x = x + 1  #Increment x
+    E262: x = x + 1  #  Increment x
+    E265: #Block comment
+    E266: ### Block comment
+app.py:530:32: W291 trailing whitespace
+    log = ItemLog(timestamp=ts,
+                               ^
+    Trailing whitespace is superfluous.
+
+    The warning returned varies on whether the line itself is blank, for easier
+    filtering for those who want to indent their blank lines.
+
+    Okay: spam(1)\n#
+    W291: spam(1) \n#
+    W293: class Foo(object):\n    \n    bang = 12
+app.py:531:11: E128 continuation line under-indented for visual indent
+          trans=trans,
+          ^
+    Continuation lines indentation.
+
+    Continuation lines should align wrapped elements either vertically
+    using Python's implicit line joining inside parentheses, brackets
+    and braces, or using a hanging indent.
+
+    When using a hanging indent these considerations should be applied:
+    - there should be no arguments on the first line, and
+    - further indentation should be used to clearly distinguish itself as a
+      continuation line.
+
+    Okay: a = (\n)
+    E123: a = (\n    )
+
+    Okay: a = (\n    42)
+    E121: a = (\n   42)
+    E122: a = (\n42)
+    E123: a = (\n    42\n    )
+    E124: a = (24,\n     42\n)
+    E125: if (\n    b):\n    pass
+    E126: a = (\n        42)
+    E127: a = (24,\n      42)
+    E128: a = (24,\n    42)
+    E129: if (a or\n    b):\n    pass
+    E131: a = (\n    42\n 24)
+app.py:532:11: E128 continuation line under-indented for visual indent
+          username=login_session['username'],
+          ^
+    Continuation lines indentation.
+
+    Continuation lines should align wrapped elements either vertically
+    using Python's implicit line joining inside parentheses, brackets
+    and braces, or using a hanging indent.
+
+    When using a hanging indent these considerations should be applied:
+    - there should be no arguments on the first line, and
+    - further indentation should be used to clearly distinguish itself as a
+      continuation line.
+
+    Okay: a = (\n)
+    E123: a = (\n    )
+
+    Okay: a = (\n    42)
+    E121: a = (\n   42)
+    E122: a = (\n42)
+    E123: a = (\n    42\n    )
+    E124: a = (24,\n     42\n)
+    E125: if (\n    b):\n    pass
+    E126: a = (\n        42)
+    E127: a = (24,\n      42)
+    E128: a = (24,\n    42)
+    E129: if (a or\n    b):\n    pass
+    E131: a = (\n    42\n 24)
+app.py:533:11: E128 continuation line under-indented for visual indent
+          email=login_session['email'],
+          ^
+    Continuation lines indentation.
+
+    Continuation lines should align wrapped elements either vertically
+    using Python's implicit line joining inside parentheses, brackets
+    and braces, or using a hanging indent.
+
+    When using a hanging indent these considerations should be applied:
+    - there should be no arguments on the first line, and
+    - further indentation should be used to clearly distinguish itself as a
+      continuation line.
+
+    Okay: a = (\n)
+    E123: a = (\n    )
+
+    Okay: a = (\n    42)
+    E121: a = (\n   42)
+    E122: a = (\n42)
+    E123: a = (\n    42\n    )
+    E124: a = (24,\n     42\n)
+    E125: if (\n    b):\n    pass
+    E126: a = (\n        42)
+    E127: a = (24,\n      42)
+    E128: a = (24,\n    42)
+    E129: if (a or\n    b):\n    pass
+    E131: a = (\n    42\n 24)
+app.py:534:11: E128 continuation line under-indented for visual indent
+          user_id = login_session['user_id'],
+          ^
+    Continuation lines indentation.
+
+    Continuation lines should align wrapped elements either vertically
+    using Python's implicit line joining inside parentheses, brackets
+    and braces, or using a hanging indent.
+
+    When using a hanging indent these considerations should be applied:
+    - there should be no arguments on the first line, and
+    - further indentation should be used to clearly distinguish itself as a
+      continuation line.
+
+    Okay: a = (\n)
+    E123: a = (\n    )
+
+    Okay: a = (\n    42)
+    E121: a = (\n   42)
+    E122: a = (\n42)
+    E123: a = (\n    42\n    )
+    E124: a = (24,\n     42\n)
+    E125: if (\n    b):\n    pass
+    E126: a = (\n        42)
+    E127: a = (24,\n      42)
+    E128: a = (24,\n    42)
+    E129: if (a or\n    b):\n    pass
+    E131: a = (\n    42\n 24)
+app.py:534:18: E251 unexpected spaces around keyword / parameter equals
+          user_id = login_session['user_id'],
+                 ^
+    Don't use spaces around the '=' sign in function arguments.
+
+    Don't use spaces around the '=' sign when used to indicate a
+    keyword argument or a default parameter value, except when using a type
+    annotation.
+
+    Okay: def complex(real, imag=0.0):
+    Okay: return magic(r=real, i=imag)
+    Okay: boolean(a == b)
+    Okay: boolean(a != b)
+    Okay: boolean(a <= b)
+    Okay: boolean(a >= b)
+    Okay: def foo(arg: int = 42):
+    Okay: async def foo(arg: int = 42):
+
+    E251: def complex(real, imag = 0.0):
+    E251: return magic(r = real, i = imag)
+    E252: def complex(real, image: float=0.0):
+app.py:534:20: E251 unexpected spaces around keyword / parameter equals
+          user_id = login_session['user_id'],
+                   ^
+    Don't use spaces around the '=' sign in function arguments.
+
+    Don't use spaces around the '=' sign when used to indicate a
+    keyword argument or a default parameter value, except when using a type
+    annotation.
+
+    Okay: def complex(real, imag=0.0):
+    Okay: return magic(r=real, i=imag)
+    Okay: boolean(a == b)
+    Okay: boolean(a != b)
+    Okay: boolean(a <= b)
+    Okay: boolean(a >= b)
+    Okay: def foo(arg: int = 42):
+    Okay: async def foo(arg: int = 42):
+
+    E251: def complex(real, imag = 0.0):
+    E251: return magic(r = real, i = imag)
+    E252: def complex(real, image: float=0.0):
+app.py:535:11: E128 continuation line under-indented for visual indent
+          item_id=item.id,
+          ^
+    Continuation lines indentation.
+
+    Continuation lines should align wrapped elements either vertically
+    using Python's implicit line joining inside parentheses, brackets
+    and braces, or using a hanging indent.
+
+    When using a hanging indent these considerations should be applied:
+    - there should be no arguments on the first line, and
+    - further indentation should be used to clearly distinguish itself as a
+      continuation line.
+
+    Okay: a = (\n)
+    E123: a = (\n    )
+
+    Okay: a = (\n    42)
+    E121: a = (\n   42)
+    E122: a = (\n42)
+    E123: a = (\n    42\n    )
+    E124: a = (24,\n     42\n)
+    E125: if (\n    b):\n    pass
+    E126: a = (\n        42)
+    E127: a = (24,\n      42)
+    E128: a = (24,\n    42)
+    E129: if (a or\n    b):\n    pass
+    E131: a = (\n    42\n 24)
+app.py:536:11: E128 continuation line under-indented for visual indent
+          itemname=item.name,
+          ^
+    Continuation lines indentation.
+
+    Continuation lines should align wrapped elements either vertically
+    using Python's implicit line joining inside parentheses, brackets
+    and braces, or using a hanging indent.
+
+    When using a hanging indent these considerations should be applied:
+    - there should be no arguments on the first line, and
+    - further indentation should be used to clearly distinguish itself as a
+      continuation line.
+
+    Okay: a = (\n)
+    E123: a = (\n    )
+
+    Okay: a = (\n    42)
+    E121: a = (\n   42)
+    E122: a = (\n42)
+    E123: a = (\n    42\n    )
+    E124: a = (24,\n     42\n)
+    E125: if (\n    b):\n    pass
+    E126: a = (\n        42)
+    E127: a = (24,\n      42)
+    E128: a = (24,\n    42)
+    E129: if (a or\n    b):\n    pass
+    E131: a = (\n    42\n 24)
+app.py:537:11: E128 continuation line under-indented for visual indent
+          itemdesc=item.desc,
+          ^
+    Continuation lines indentation.
+
+    Continuation lines should align wrapped elements either vertically
+    using Python's implicit line joining inside parentheses, brackets
+    and braces, or using a hanging indent.
+
+    When using a hanging indent these considerations should be applied:
+    - there should be no arguments on the first line, and
+    - further indentation should be used to clearly distinguish itself as a
+      continuation line.
+
+    Okay: a = (\n)
+    E123: a = (\n    )
+
+    Okay: a = (\n    42)
+    E121: a = (\n   42)
+    E122: a = (\n42)
+    E123: a = (\n    42\n    )
+    E124: a = (24,\n     42\n)
+    E125: if (\n    b):\n    pass
+    E126: a = (\n        42)
+    E127: a = (24,\n      42)
+    E128: a = (24,\n    42)
+    E129: if (a or\n    b):\n    pass
+    E131: a = (\n    42\n 24)
+app.py:538:11: E128 continuation line under-indented for visual indent
+          itemimage=item.image,
+          ^
+    Continuation lines indentation.
+
+    Continuation lines should align wrapped elements either vertically
+    using Python's implicit line joining inside parentheses, brackets
+    and braces, or using a hanging indent.
+
+    When using a hanging indent these considerations should be applied:
+    - there should be no arguments on the first line, and
+    - further indentation should be used to clearly distinguish itself as a
+      continuation line.
+
+    Okay: a = (\n)
+    E123: a = (\n    )
+
+    Okay: a = (\n    42)
+    E121: a = (\n   42)
+    E122: a = (\n42)
+    E123: a = (\n    42\n    )
+    E124: a = (24,\n     42\n)
+    E125: if (\n    b):\n    pass
+    E126: a = (\n        42)
+    E127: a = (24,\n      42)
+    E128: a = (24,\n    42)
+    E129: if (a or\n    b):\n    pass
+    E131: a = (\n    42\n 24)
+app.py:539:11: E128 continuation line under-indented for visual indent
+          itemcategory_id=item.category_id,
+          ^
+    Continuation lines indentation.
+
+    Continuation lines should align wrapped elements either vertically
+    using Python's implicit line joining inside parentheses, brackets
+    and braces, or using a hanging indent.
+
+    When using a hanging indent these considerations should be applied:
+    - there should be no arguments on the first line, and
+    - further indentation should be used to clearly distinguish itself as a
+      continuation line.
+
+    Okay: a = (\n)
+    E123: a = (\n    )
+
+    Okay: a = (\n    42)
+    E121: a = (\n   42)
+    E122: a = (\n42)
+    E123: a = (\n    42\n    )
+    E124: a = (24,\n     42\n)
+    E125: if (\n    b):\n    pass
+    E126: a = (\n        42)
+    E127: a = (24,\n      42)
+    E128: a = (24,\n    42)
+    E129: if (a or\n    b):\n    pass
+    E131: a = (\n    42\n 24)
+app.py:540:11: E128 continuation line under-indented for visual indent
+          itemcategory=category.name)
+          ^
+    Continuation lines indentation.
+
+    Continuation lines should align wrapped elements either vertically
+    using Python's implicit line joining inside parentheses, brackets
+    and braces, or using a hanging indent.
+
+    When using a hanging indent these considerations should be applied:
+    - there should be no arguments on the first line, and
+    - further indentation should be used to clearly distinguish itself as a
+      continuation line.
+
+    Okay: a = (\n)
+    E123: a = (\n    )
+
+    Okay: a = (\n    42)
+    E121: a = (\n   42)
+    E122: a = (\n42)
+    E123: a = (\n    42\n    )
+    E124: a = (24,\n     42\n)
+    E125: if (\n    b):\n    pass
+    E126: a = (\n        42)
+    E127: a = (24,\n      42)
+    E128: a = (24,\n    42)
+    E129: if (a or\n    b):\n    pass
+    E131: a = (\n    42\n 24)
+app.py:545:80: E501 line too long (80 > 79 characters)
+# Display entire Transaction Log. Example: http://localhost:8000/catalog/showlog
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:546:1: E302 expected 2 blank lines, found 1
+@app.route('/catalog/showlog/')
+^
+    Separate top-level function and class definitions with two blank lines.
+
+    Method definitions inside a class are separated by a single blank line.
+
+    Extra blank lines may be used (sparingly) to separate groups of related
+    functions.  Blank lines may be omitted between a bunch of related
+    one-liners (e.g. a set of dummy implementations).
+
+    Use blank lines in functions, sparingly, to indicate logical sections.
+
+    Okay: def a():\n    pass\n\n\ndef b():\n    pass
+    Okay: def a():\n    pass\n\n\nasync def b():\n    pass
+    Okay: def a():\n    pass\n\n\n# Foo\n# Bar\n\ndef b():\n    pass
+    Okay: default = 1\nfoo = 1
+    Okay: classify = 1\nfoo = 1
+
+    E301: class Foo:\n    b = 0\n    def bar():\n        pass
+    E302: def a():\n    pass\n\ndef b(n):\n    pass
+    E302: def a():\n    pass\n\nasync def b(n):\n    pass
+    E303: def a():\n    pass\n\n\n\ndef b(n):\n    pass
+    E303: def a():\n\n\n\n    pass
+    E304: @decorator\n\ndef a():\n    pass
+    E305: def a():\n    pass\na()
+    E306: def a():\n    def b():\n        pass\n    def c():\n        pass
+app.py:553:80: E501 line too long (115 > 79 characters)
+# Display Transaction Log for a specific item. Example: http://localhost:8000/catalog/showItemlogTrans/Baseball/Bat
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:554:1: E302 expected 2 blank lines, found 1
+@app.route('/catalog/showItemLogTrans/<string:category_name>/<string:item_name>/')
+^
+    Separate top-level function and class definitions with two blank lines.
+
+    Method definitions inside a class are separated by a single blank line.
+
+    Extra blank lines may be used (sparingly) to separate groups of related
+    functions.  Blank lines may be omitted between a bunch of related
+    one-liners (e.g. a set of dummy implementations).
+
+    Use blank lines in functions, sparingly, to indicate logical sections.
+
+    Okay: def a():\n    pass\n\n\ndef b():\n    pass
+    Okay: def a():\n    pass\n\n\nasync def b():\n    pass
+    Okay: def a():\n    pass\n\n\n# Foo\n# Bar\n\ndef b():\n    pass
+    Okay: default = 1\nfoo = 1
+    Okay: classify = 1\nfoo = 1
+
+    E301: class Foo:\n    b = 0\n    def bar():\n        pass
+    E302: def a():\n    pass\n\ndef b(n):\n    pass
+    E302: def a():\n    pass\n\nasync def b(n):\n    pass
+    E303: def a():\n    pass\n\n\n\ndef b(n):\n    pass
+    E303: def a():\n\n\n\n    pass
+    E304: @decorator\n\ndef a():\n    pass
+    E305: def a():\n    pass\na()
+    E306: def a():\n    def b():\n        pass\n    def c():\n        pass
+app.py:554:80: E501 line too long (82 > 79 characters)
+@app.route('/catalog/showItemLogTrans/<string:category_name>/<string:item_name>/')
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:557:34: W291 trailing whitespace
+        return redirect('/login')
+                                 ^
+    Trailing whitespace is superfluous.
+
+    The warning returned varies on whether the line itself is blank, for easier
+    filtering for those who want to indent their blank lines.
+
+    Okay: spam(1)\n#
+    W291: spam(1) \n#
+    W293: class Foo(object):\n    \n    bang = 12
+app.py:559:80: E501 line too long (94 > 79 characters)
+    item = session.query(CatalogItem).filter_by(name=item_name, category_id=category.id).one()
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:561:80: E501 line too long (136 > 79 characters)
+        itemlog = session.query(ItemLog).filter_by(item_id=item.id, itemcategory_id=category.id).order_by(desc(ItemLog.timestamp)).all()
+                                                                               ^
+    Limit all lines to a maximum of 79 characters.
+
+    There are still many devices around that are limited to 80 character
+    lines; plus, limiting windows to 80 characters makes it possible to have
+    several windows side-by-side.  The default wrapping on such devices looks
+    ugly.  Therefore, please limit all lines to a maximum of 79 characters.
+    For flowing long blocks of text (docstrings or comments), limiting the
+    length to 72 characters is recommended.
+
+    Reports error E501.
+app.py:562:5: E722 do not use bare 'except'
+    except:
+    ^
+    When catching exceptions, mention specific exceptions when possible.
+
+    Okay: except Exception:
+    Okay: except BaseException:
+    E722: except:
+app.py:588:1: W293 blank line contains whitespace
+
+^
+    Trailing whitespace is superfluous.
+
+    The warning returned varies on whether the line itself is blank, for easier
+    filtering for those who want to indent their blank lines.
+
+    Okay: spam(1)\n#
+    W291: spam(1) \n#
+    W293: class Foo(object):\n    \n    bang = 12
+app.py:591:1: E303 too many blank lines (3)
+if __name__ == '__main__':
+^
+    Separate top-level function and class definitions with two blank lines.
+
+    Method definitions inside a class are separated by a single blank line.
+
+    Extra blank lines may be used (sparingly) to separate groups of related
+    functions.  Blank lines may be omitted between a bunch of related
+    one-liners (e.g. a set of dummy implementations).
+
+    Use blank lines in functions, sparingly, to indicate logical sections.
+
+    Okay: def a():\n    pass\n\n\ndef b():\n    pass
+    Okay: def a():\n    pass\n\n\nasync def b():\n    pass
+    Okay: def a():\n    pass\n\n\n# Foo\n# Bar\n\ndef b():\n    pass
+    Okay: default = 1\nfoo = 1
+    Okay: classify = 1\nfoo = 1
+
+    E301: class Foo:\n    b = 0\n    def bar():\n        pass
+    E302: def a():\n    pass\n\ndef b(n):\n    pass
+    E302: def a():\n    pass\n\nasync def b(n):\n    pass
+    E303: def a():\n    pass\n\n\n\ndef b(n):\n    pass
+    E303: def a():\n\n\n\n    pass
+    E304: @decorator\n\ndef a():\n    pass
+    E305: def a():\n    pass\na()
+    E306: def a():\n    def b():\n        pass\n    def c():\n        pass
