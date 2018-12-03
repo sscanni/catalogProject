@@ -37,9 +37,15 @@
 				<div class="panel-heading"><h4 class="pull-left">Category: {{itemtitle}}</h4>
 					<div class="pull-right">
 						{%if 'username' in session %}
-						<div class="pull-left">
-							<a href="#DelCatModal" data-toggle="modal" data-target="#DelCatModal">Del</a> | <a href="{{url_for('editCategory', category_name=category.name)}}">Edit</a>
-						</div>
+							{%if category.user_id == session['user_id'] %}
+								<div class="pull-left">
+									<a href="#DelCatModal" data-toggle="modal" data-target="#DelCatModal">Del</a> | <a href="{{url_for('editCategory', category_name=category.name)}}">Edit</a>
+								</div>
+							{% else %}
+								<div class="pull-left">
+									<a href="#notAllowedModal" data-toggle="modal" data-target="#notAllowedModal">Del</a> | <a href="#notAllowedModal" data-toggle="modal" data-target="#notAllowedModal">Edit</a>
+								</div>
+							{% endif %}
 						{% endif %}
 						<div class="col-sm-1"></div>
 						<div class="pull-right">
@@ -124,6 +130,24 @@
 				</div>	
 				{% endif %}
 			</div>
+	</div>
+	<div class="modal fade" id="notAllowedModal" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+			  		<button type="button" class="close" data-dismiss="modal">&times;</button>
+			  		<h4 class="modal-title">Action not allowed!</h4>
+				</div>
+				<form action="" method="post">
+					<div class="modal-body">
+						<p><Strong>You are not authorized to change this category. Only the user that created this category is allow to change or delete it.</Strong></p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+					</div>
+				</form>
+			 </div>	
+		</div>
 	</div>
 	{% endif %}
 {% endblock %}

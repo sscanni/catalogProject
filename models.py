@@ -1,3 +1,4 @@
+#!/usr/bin/env python2
 # coding: utf-8
 from sqlalchemy import Column, ForeignKey, Index, String, Integer
 from sqlalchemy.ext.declarative import declarative_base
@@ -31,6 +32,7 @@ class Category(Base):
 
     name = Column(String(250), nullable=False, unique=True)
     id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, nullable=False)
 
     @property
     def serialize(self):

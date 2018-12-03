@@ -1,4 +1,5 @@
 #!/usr/bin/env python2
+# Sports Catalog Web Site
 from flask import Flask, render_template, request, redirect, jsonify, url_for
 from flask import flash, send_from_directory, make_response
 from sqlalchemy import create_engine, asc, desc
@@ -49,8 +50,7 @@ def fbconnect():
         response.headers['Content-Type'] = 'application/json'
         return response
     access_token = request.data
-    print ("access token received %s " % access_token)
-
+    print("access token received %s " % access_token)
 
     app_id = json.loads(open('fb_client_secrets.json', 'r').read())[
         'web']['app_id']
@@ -60,7 +60,6 @@ def fbconnect():
         app_id, app_secret, access_token)
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
-
 
     # Use token to get user info from API
     userinfo_url = "https://graph.facebook.com/v2.8/me"
@@ -195,10 +194,10 @@ def gconnect():
 
     # Changed line because google user account may not have a username
     if 'name' in data:
-       login_session['username'] = data['name']
+        login_session['username'] = data['name']
     else:
-       emailPrefix = data['email'].split("@")
-       login_session['username'] = emailPrefix[0]
+        emailPrefix = data['email'].split("@")
+        login_session['username'] = emailPrefix[0]
 
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
@@ -219,7 +218,7 @@ def gconnect():
     output += login_session['picture']
     output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
     flash("you are now logged in as %s" % login_session['username'])
-    print ("done!")
+    print("done!")
     return output
 
 # User Helper Functions
@@ -270,61 +269,88 @@ def gdisconnect():
         response.headers['Content-Type'] = 'application/json'
         return response
 
-@app.route('/catalog/JSON')
-def catalogJSON():
-    categories = session.query(Category).options(joinedload(Category.items)).all()
-    return jsonify(dict(Catalog=[dict(c.serialize, items=[i.serialize for i in c.items])
-                         for c in categories]))
 
-# Show all categories: Example: http://localhost:8000/catalog/categories or http://localhost:8000
+# API provided to return Catalog info in JSON format:
+# Example: http://localhost:8000/catalog/JSON
+@app.route('/catalog.json/')
+def catalogJSON():
+    categories = session.query(
+        Category).options(joinedload(Category.items)).all()
+    return jsonify(dict(Catalog=[dict(c.serialize,
+                        items=[i.serialize for i in c.items])
+                        for c in categories]))
+
+
+# Show all categories:
+# Example: http://localhost:8000/catalog/categories or http://localhost:8000
 @app.route('/')
 @app.route('/catalog/categories/')
 def showCategories():
-    categories = session.query(Category).order_by(asc(Category.name)).all()
-    items = session.query(CatalogItem, Category.name).filter(CatalogItem.category_id==Category.id).order_by(desc(CatalogItem.id)).limit(7).all()
-    return render_template('categories.html', categories=categories, items=items, displayRecent=True)
+    categories = session.query(
+        Category).order_by(asc(Category.name)).all()
+    items = session.query(
+        CatalogItem, Category.name).filter(
+        CatalogItem.category_id == Category.id).order_by(
+            desc(CatalogItem.id)).limit(7).all()
+    return render_template('categories.html', categories=categories,
+                           items=items, displayRecent=True)
 
-# Display all items for a Category. Example: http://localhost:8000/catalog/Snowboarding/items
+
+# Display all items for a Category.
+# Example: http://localhost:8000/catalog/Snowboarding/items
 @app.route('/catalog/<string:name>/items/')
 def showCategoryItems(name):
     category = session.query(Category).filter_by(name=name).one()
-    items = session.query(CatalogItem).filter_by(category_id=category.id).order_by(asc(CatalogItem.name)).all()
-    itemcount = session.query(CatalogItem).filter_by(category_id=category.id).count()
+    items = session.query(
+        CatalogItem).filter_by(category_id=category.id).order_by(
+            asc(CatalogItem.name)).all()
+    itemcount = session.query(
+        CatalogItem).filter_by(category_id=category.id).count()
     if itemcount == 1:
-       itemtitle = "%s (%s item)" % (category.name, str(itemcount))
+        itemtitle = "%s (%s item)" % (category.name, str(itemcount))
     else:
-       itemtitle = "%s (%s items)" % (category.name, str(itemcount))
-    categories = session.query(Category).order_by(asc(Category.name)).all()
+        itemtitle = "%s (%s items)" % (category.name, str(itemcount))
+    categories = session.query(
+        Category).order_by(asc(Category.name)).all()
 
     # Setup prev and next category links
     cat = []
     for x, c in enumerate(categories):
         cat.append(c.name)
         if name == cat[x]:
-           curIndex = x
+            curIndex = x
     if curIndex == 0:
-       prevCat = cat[len(cat)-1]
+        prevCat = cat[len(cat)-1]
     else:
-       prevCat = cat[curIndex-1]
+        prevCat = cat[curIndex-1]
     if curIndex == len(cat)-1:
-       nextCat = cat[0]
+        nextCat = cat[0]
     else:
-       nextCat = cat[curIndex+1]             
+        nextCat = cat[curIndex+1]
 
-    return render_template('categories.html', category=category, categories=categories, items=items, itemtitle=itemtitle, displayRecent=False, prevCat=prevCat, nextCat=nextCat)
+    return render_template('categories.html', category=category,
+                           categories=categories, items=items,
+                           itemtitle=itemtitle, displayRecent=False,
+                           prevCat=prevCat, nextCat=nextCat)
 
-# Display a specific item. Example: http://localhost:8000/catalog/Snowboarding/Snowboard
+
+# Display a specific item.
+# Example: http://localhost:8000/catalog/Snowboarding/Snowboard
 @app.route('/catalog/<string:category_name>/<string:item_name>/')
 def showItem(category_name, item_name):
     category = session.query(Category).filter_by(name=category_name).one()
-    item = session.query(CatalogItem).filter_by(name=item_name, category_id=category.id).one()
+    item = session.query(
+        CatalogItem).filter_by(name=item_name, category_id=category.id).one()
     try:
         itemuser = session.query(User).filter_by(id=item.user_id).one()
     except:
         itemuser = None
-    return render_template('item.html', category_name=category_name, item=item, itemuser=itemuser)
+    return render_template('item.html', category_name=category_name,
+                           item=item, itemuser=itemuser)
 
-# Add new item. Example: http://localhost:8000/catalog/item/new
+
+# Add new item.
+# Example: http://localhost:8000/catalog/item/new
 @app.route('/catalog/item/new/', methods=['GET', 'POST'])
 def newItem():
     if 'username' not in login_session:
@@ -337,20 +363,32 @@ def newItem():
             form['image'] = str(request.form['image'])
             form['category'] = int(request.form['category'])
             if len(request.form['name'].strip()) == 0:
-               flash('Error! Item Name can not be blank') 
-               categories = session.query(Category).order_by(asc(Category.name)).all()
-               return render_template('newitem.html', categories=categories, imageList=getImages(), form=form)
+                flash('Error! Item Name can not be blank')
+                categories = session.query(
+                    Category).order_by(asc(Category.name)).all()
+                return render_template('newitem.html', categories=categories,
+                                       imageList=getImages(), form=form)
             if len(request.form['name'].strip()) > 30:
-               flash('Error! Item Name must be bwtween 1 and 30 characters') 
-               categories = session.query(Category).order_by(asc(Category.name)).all()
-               return render_template('newitem.html',categories=categories, imageList=getImages(), form=form)
+                flash('''Error! Item Name must be between
+                       1 and 30 characters''')
+                categories = session.query(
+                    Category).order_by(asc(Category.name)).all()
+                return render_template('newitem.html', categories=categories,
+                                       imageList=getImages(), form=form)
             if len(request.form['desc'].strip()) > 250:
-               flash('Error! Item Description must be bwtween 1 and 250 characters') 
-               categories = session.query(Category).order_by(asc(Category.name)).all()
-               return render_template('newitem.html', categories=categories, imageList=getImages(), form=form)
+                flash(
+                    '''Error! Item Description must be bwtween 1
+                        and 250 characters''')
+                categories = session.query(
+                    Category).order_by(asc(Category.name)).all()
+                return render_template('newitem.html', categories=categories,
+                                       imageList=getImages(), form=form)
             try:
-                item = CatalogItem(name=request.form['name'].strip(), desc=request.form['desc'].strip(), image=request.form['image'],
-                            category_id=request.form['category'], user_id=login_session['user_id'])
+                item = CatalogItem(name=request.form['name'].strip(),
+                                   desc=request.form['desc'].strip(),
+                                   image=request.form['image'],
+                                   category_id=request.form['category'],
+                                   user_id=login_session['user_id'])
                 session.add(item)
                 session.commit()
                 logTrans("Add", item)
@@ -358,191 +396,261 @@ def newItem():
                 return redirect(url_for('showCategories'))
             except IntegrityError:
                 session.rollback()
-                flash('Error! "%s" Already Exists in this Category...Item not changed.' % request.form['name'])
-                categories = session.query(Category).order_by(asc(Category.name)).all()
-                return render_template('newitem.html', categories=categories, imageList=getImages(), form=form)
+                flash('''Error! "%s" Already Exists in this Category
+                      ...unable to add item.''' % request.form['name'])
+                categories = session.query(
+                    Category).order_by(asc(Category.name)).all()
+                return render_template('newitem.html', categories=categories,
+                                       imageList=getImages(), form=form)
         else:
             return redirect(url_for('showCategories'))
     else:
         form['name'] = ""
         form['desc'] = ""
         form['image'] = "default.jpg"
-        form['category'] = 1
-        categories = session.query(Category).order_by(asc(Category.name)).all()
-        return render_template('newitem.html', categories=categories, imageList=getImages(), form=form)
+        form['category'] = 0
+        categories = session.query(
+            Category).order_by(asc(Category.name)).all()
+        return render_template('newitem.html', categories=categories,
+                               imageList=getImages(), form=form)
 
-# Edit a specific item. Example: http://localhost:8000/catalog/Snowboarding/Snowboard/edit
-@app.route('/catalog/<string:category_name>/<string:item_name>/edit/', methods=['GET', 'POST'])
+
+# Edit a specific item.
+# Example: http://localhost:8000/catalog/Snowboarding/Snowboard/edit
+@app.route('/catalog/<string:category_name>/<string:item_name>/edit/',
+           methods=['GET', 'POST'])
 def editItem(category_name, item_name):
-      if 'username' not in login_session:
-          return redirect('/login')
-      category = session.query(Category).filter_by(name=category_name).one()
-      item = session.query(CatalogItem).filter_by(name=item_name, category_id=category.id).one()
-      categories = session.query(Category).order_by(asc(Category.name)).all()
-      if request.method == 'POST':
-         if request.form.get('save') == 'save':
+    if 'username' not in login_session:
+        return redirect('/login')
+    category = session.query(Category).filter_by(name=category_name).one()
+    item = session.query(
+        CatalogItem).filter_by(name=item_name, category_id=category.id).one()
+    categories = session.query(Category).order_by(asc(Category.name)).all()
+    if request.method == 'POST':
+        if request.form.get('save') == 'save':
             form = {}
             form['name'] = str(request.form['name'])
             form['desc'] = str(request.form['desc'])
             form['image'] = str(request.form['image'])
             form['category'] = int(request.form['category'])
             if len(request.form['name'].strip()) == 0:
-               flash('Error! Item Name can not be blank') 
-               return render_template('edititem.html', category_name=category_name, item_name=item_name, form=form, categories=categories, imageList=getImages())
+                flash('Error! Item Name can not be blank')
+                return render_template('edititem.html',
+                                       category_name=category_name,
+                                       item_name=item_name, form=form,
+                                       categories=categories,
+                                       imageList=getImages())
             if len(request.form['name'].strip()) > 30:
-               flash('Error! Item Name must be bwtween 1 and 30 characters') 
-               return render_template('edititem.html', category_name=category_name, item_name=item_name, form=form, categories=categories, imageList=getImages())
+                flash('''Error! Item Name must be between
+                       1 and 30 characters''')
+                return render_template('edititem.html',
+                                       category_name=category_name,
+                                       item_name=item_name, form=form,
+                                       categories=categories,
+                                       imageList=getImages())
             if len(request.form['desc'].strip()) > 250:
-               flash('Error! Item Description must be bwtween 1 and 250 characters') 
-               return render_template('edititem.html', category_name=category_name, item_name=item_name, form=form, categories=categories, imageList=getImages())
+                flash(
+                    '''Error! Item Description must be bwtween 1
+                        and 250 characters''')
+                return render_template('edititem.html',
+                                       category_name=category_name,
+                                       item_name=item_name, form=form,
+                                       categories=categories,
+                                       imageList=getImages())
             try:
                 item.name = request.form['name'].strip()
                 item.desc = request.form['desc'].strip()
-                item.image = image=request.form['image']
+                item.image = request.form['image']
                 item.category_id = request.form['category']
-                item.user_id=login_session['user_id']
+                item.user_id = login_session['user_id']
                 session.commit()
                 logTrans("Change", item)
                 flash('Catalog Item Successfully Edited %s' % item.name)
                 return redirect(url_for('showCategories'))
             except IntegrityError:
                 session.rollback()
-                flash('Error! "%s" Already Exists in this Category...Item not changed.' % request.form['name'])
-                return render_template('edititem.html', category_name=category_name, item_name=item_name, form=form, categories=categories, imageList=getImages())
-         else:
-             return redirect(url_for('showItem', category_name=category_name, item_name=item_name))
-      else:
-          form = {}
-          form['name'] = item.name
-          form['desc'] = item.desc
-          form['image'] = item.image
-          form['category'] = item.category_id
-          return render_template('edititem.html', category_name=category_name, item_name=item_name, form=form, categories=categories, imageList=getImages())
+                flash('''Error! "%s" Already Exists in this Category
+                      ...Item not changed.''' % request.form['name'])
+                return render_template('edititem.html',
+                                       category_name=category_name,
+                                       item_name=item_name, form=form,
+                                       categories=categories,
+                                       imageList=getImages())
+        else:
+            return redirect(url_for('showItem', category_name=category_name,
+                                    item_name=item_name))
+    else:
+        form = {}
+        form['name'] = item.name
+        form['desc'] = item.desc
+        form['image'] = item.image
+        form['category'] = item.category_id
+        return render_template('edititem.html', category_name=category_name,
+                               item_name=item_name, form=form,
+                               categories=categories, imageList=getImages())
 
-# Delete a specific item. Example: http://localhost:8000/catalog/Snowboarding/Snowboard/delete
-@app.route('/catalog/<string:category_name>/<string:item_name>/delete/', methods=['GET', 'POST'])
+
+# Delete a specific item.
+# Example: http://localhost:8000/catalog/Snowboarding/Snowboard/delete
+@app.route('/catalog/<string:category_name>/<string:item_name>/delete/',
+           methods=['GET', 'POST'])
 def deleteItem(category_name, item_name):
     if 'username' not in login_session:
         return redirect('/login')
     category = session.query(Category).filter_by(name=category_name).one()
-    item = session.query(CatalogItem).filter_by(name=item_name, category_id=category.id).one()
+    item = session.query(
+        CatalogItem).filter_by(name=item_name, category_id=category.id).one()
     session.delete(item)
     session.commit()
     logTrans("Delete", item)
     flash('Catalog Item Successfully Deleted')
     return redirect(url_for('showCategories'))
 
-# Delete Category. Example: http://localhost:8000/catalog/category/<string:category_name>/delete/
-@app.route('/catalog/category/<string:category_name>/delete/', methods=['GET', 'POST'])
+
+# Delete Category.
+# Example:
+# http://localhost:8000/catalog/category/Snowboarding/delete/
+@app.route('/catalog/category/<string:category_name>/delete/',
+           methods=['GET', 'POST'])
 def deleteCategory(category_name):
     if 'username' not in login_session:
         return redirect('/login')
-    category = session.query(Category).filter_by(name=category_name).one()
+    category = session.query(
+        Category).filter_by(name=category_name).one()
     session.delete(category)
     session.commit()
     # # logTrans("Delete", item)
     flash('Category Successfully Deleted')
     return redirect(url_for('showCategories'))
 
-# Edit Category. Example: http://localhost:8000/catalog/category/<string:category_name>/edit/
-@app.route('/catalog/category/<string:category_name>/edit/', methods=['GET', 'POST'])
+
+# Edit Category.
+# Example:
+# http://localhost:8000/catalog/category/Snowboarding/edit/
+@app.route('/catalog/category/<string:category_name>/edit/',
+           methods=['GET', 'POST'])
 def editCategory(category_name):
     if 'username' not in login_session:
         return redirect('/login')
     if request.method == 'POST':
         if request.form.get('save') == 'save':
-           form = request.form
-           if len(request.form['name'].strip()) == 0:
-              flash('Error! Category name can not be blank') 
-              return render_template('editcategory.html', category_name=category_name, form=form)
-           if len(request.form['name'].strip()) > 30:
-              flash('Error! Category name must be between 1 to 30 characters') 
-              return render_template('editcategory.html', category_name=category_name, form=form)
-           try:
-               category = session.query(Category).filter_by(name=category_name).one()
-               if category.name != request.form['name'].strip():
-                   category.name = request.form['name'].strip()
-                   session.commit()
-                   flash('Category Successfully Editted')
-               else:
-                   flash('No change made to category')
-               return redirect(url_for('showCategories'))
-           except IntegrityError:
-                   session.rollback()
-                   flash('Error! "%s" Already Exists...Category name not changed.' % request.form['name'])
-                   return render_template('editcategory.html', category_name=category_name, form=form)
-        else:         
+            form = request.form
+            if len(request.form['name'].strip()) == 0:
+                flash('Error! Category name can not be blank')
+                return render_template('editcategory.html',
+                                       category_name=category_name, form=form)
+            if len(request.form['name'].strip()) > 30:
+                flash('''Error! Category name must be between
+                       1 to 30 characters''')
+                return render_template('editcategory.html',
+                                       category_name=category_name, form=form)
+            try:
+                category = session.query(
+                    Category).filter_by(name=category_name).one()
+                if category.name != request.form['name'].strip():
+                    category.name = request.form['name'].strip()
+                    session.commit()
+                    flash('Category Successfully Editted')
+                else:
+                    flash('No change made to category')
+                return redirect(url_for('showCategories'))
+            except IntegrityError:
+                    session.rollback()
+                    flash(
+                       '''Error! "%s" Already Exists
+                       ...Category name not changed.''' %
+                       request.form['name'])
+                    return render_template('editcategory.html',
+                                           category_name=category_name,
+                                           form=form)
+        else:
             return redirect(url_for('showCategories'))
     else:
         form = {}
         form['name'] = category_name
-        return render_template('editcategory.html', category_name=category_name, form=form)
+        return render_template('editcategory.html',
+                               category_name=category_name, form=form)
 
-# Add New Category. Example: http://localhost:8000/catalog/category/new/
+
+# Add New Category.
+# Example: http://localhost:8000/catalog/category/new/
 @app.route('/catalog/category/new/', methods=['GET', 'POST'])
 def newCategory():
     if 'username' not in login_session:
         return redirect('/login')
     if request.method == 'POST':
-       if request.form.get('save') == 'save':
-          form = request.form
-          if len(request.form['name'].strip()) == 0:
-             flash('Error! Category name can not be blank') 
-             return render_template('newcategory.html', form=form)
-          if len(request.form['name'].strip()) > 30:
-             flash('Error! Category name must be between 1 to 30 characters') 
-             return render_template('newcategory.html', form=form)
-          try:
-             category = Category(name=request.form['name'].strip())
-             session.add(category)
-             session.commit()
-             # logTrans("Add", item)
-             flash('New Category %s Successfully Created' % (category.name))
-             return redirect(url_for('showCategories'))
-          except IntegrityError:
-             session.rollback()
-             flash('Error! "%s" Already Exists...Category not added.' % request.form['name'])
-             return render_template('newcategory.html', form=form)
-       else:
-           return redirect(url_for('showCategories'))
+        if request.form.get('save') == 'save':
+            form = request.form
+            if len(request.form['name'].strip()) == 0:
+                flash('Error! Category name can not be blank')
+                return render_template('newcategory.html', form=form)
+            if len(request.form['name'].strip()) > 30:
+                flash(
+                    '''Error! Category name must be between
+                        1 to 30 characters''')
+                return render_template('newcategory.html', form=form)
+            try:
+                category = Category(
+                    name=request.form['name'].strip(),
+                    user_id = login_session['user_id'])  
+                session.add(category)
+                session.commit()
+                # logTrans("Add", item)
+                flash('New Category %s Successfully Created' % (category.name))
+                return redirect(url_for('showCategories'))
+            except IntegrityError:
+                session.rollback()
+                flash(
+                 'Error! "%s" Already Exists...Category not added.' %
+                 request.form['name'])
+                return render_template('newcategory.html', form=form)
+        else:
+            return redirect(url_for('showCategories'))
     else:
         form = {}
         form['name'] = ""
         return render_template('newcategory.html', form=form)
 
-# Enable the application to read images from image folder rather than the static folder.
+
+# Enable the application to read images from image folder rather
+# than the static folder.
 @app.route('/upload/<filename>')
 def send_image(filename):
     return send_from_directory("images", filename)
 
-# Read the available item images from images folder on server and load into a list.
+
+# Read the available item images from images folder on server and
+# load into a list.
 def getImages():
     folder = 'images'
     return os.listdir(folder)
+
 
 # Log new item information on add
 # Log new item information on an update
 # Log item being deleted on a delete
 def logTrans(trans, item):
-    now = datetime.datetime.now() # Use Greenwich Mean Time (GMT)
+    now = datetime.datetime.now()  # Use Greenwich Mean Time (GMT)
     ts = now.strftime("%Y-%m-%d %H:%M:%S")
     category = session.query(Category).filter_by(id=item.category_id).one()
-    log = ItemLog(timestamp=ts, 
-          trans=trans,
-          username=login_session['username'],
-          email=login_session['email'],
-          user_id = login_session['user_id'],
-          item_id=item.id,
-          itemname=item.name,
-          itemdesc=item.desc,
-          itemimage=item.image,
-          itemcategory_id=item.category_id,
-          itemcategory=category.name)
+    log = ItemLog(timestamp=ts,
+                  trans=trans,
+                  username=login_session['username'],
+                  email=login_session['email'],
+                  user_id=login_session['user_id'],
+                  item_id=item.id,
+                  itemname=item.name,
+                  itemdesc=item.desc,
+                  itemimage=item.image,
+                  itemcategory_id=item.category_id,
+                  itemcategory=category.name)
     session.add(log)
     session.commit()
     return
 
-# Display entire Transaction Log. Example: http://localhost:8000/catalog/showlog
+
+# Display entire Transaction Log.
+# Example: http://localhost:8000/catalog/showlog
 @app.route('/catalog/showlog/')
 def showLogTrans():
     if 'username' not in login_session:
@@ -550,15 +658,21 @@ def showLogTrans():
     itemlog = session.query(ItemLog).order_by(desc(ItemLog.timestamp)).all()
     return render_template('logview.html', itemlog=itemlog)
 
-# Display Transaction Log for a specific item. Example: http://localhost:8000/catalog/showItemlogTrans/Baseball/Bat
-@app.route('/catalog/showItemLogTrans/<string:category_name>/<string:item_name>/')
+
+# Display Transaction Log for a specific item.
+# Example: http://localhost:8000/catalog/showItemlogTrans/Baseball/Bat
+@app.route(
+    '/catalog/showItemLogTrans/<string:category_name>/<string:item_name>/')
 def showItemLogTrans(category_name, item_name):
     if 'username' not in login_session:
-        return redirect('/login')    
+        return redirect('/login')
     category = session.query(Category).filter_by(name=category_name).one()
-    item = session.query(CatalogItem).filter_by(name=item_name, category_id=category.id).one()
+    item = session.query(
+        CatalogItem).filter_by(name=item_name, category_id=category.id).one()
     try:
-        itemlog = session.query(ItemLog).filter_by(item_id=item.id, itemcategory_id=category.id).order_by(desc(ItemLog.timestamp)).all()
+        itemlog = session.query(ItemLog).filter_by(
+            item_id=item.id, itemcategory_id=category.id).order_by(desc(
+                ItemLog.timestamp)).all()
     except:
         pass
     return render_template('logview.html', itemlog=itemlog)
@@ -585,7 +699,6 @@ def disconnect():
     else:
         flash("You were not logged in")
         return redirect(url_for('showCategories'))
-  
 
 
 if __name__ == '__main__':
