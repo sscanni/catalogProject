@@ -9,6 +9,7 @@ from models import Base, Category, CatalogItem, User, ItemLog
 from flask import session as login_session
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
+from functools import wraps
 import random
 import string
 import httplib2
@@ -32,6 +33,14 @@ session = DBSession()
 app.secret_key = '''\x0b8\xdf\x7f\x147\x1c\xe4\xdb5\xf1\
 x1f\xe3\x05\x7f_(8\xbd\x8bY'''
 
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'username' not in login_session:
+            return redirect(url_for('showLogin'))
+          # return redirect(url_for('login', next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
 
 # Create anti-forgery state token
 @app.route('/login')
@@ -298,7 +307,7 @@ def showCategories():
 
 # Display all items for a Category.
 # Example: http://localhost:8000/catalog/Snowboarding/items
-@app.route('/catalog/<string:name>/items/')
+@app.route('/catalog/<path:name>/items/')
 def showCategoryItems(name):
     category = session.query(Category).filter_by(name=name).one()
     items = session.query(
@@ -336,7 +345,7 @@ def showCategoryItems(name):
 
 # Display a specific item.
 # Example: http://localhost:8000/catalog/Snowboarding/Snowboard
-@app.route('/catalog/<string:category_name>/<string:item_name>/')
+@app.route('/catalog/<path:category_name>/<path:item_name>/')
 def showItem(category_name, item_name):
     category = session.query(Category).filter_by(name=category_name).one()
     item = session.query(
@@ -351,10 +360,9 @@ def showItem(category_name, item_name):
 
 # Add new item.
 # Example: http://localhost:8000/catalog/item/new
+@login_required
 @app.route('/catalog/item/new/', methods=['GET', 'POST'])
 def newItem():
-    if 'username' not in login_session:
-        return redirect('/login')
     form = {}
     if request.method == 'POST':
         if request.form.get('save') == 'save':
@@ -417,11 +425,10 @@ def newItem():
 
 # Edit a specific item.
 # Example: http://localhost:8000/catalog/Snowboarding/Snowboard/edit
-@app.route('/catalog/<string:category_name>/<string:item_name>/edit/',
+@login_required
+@app.route('/catalog/<path:category_name>/<path:item_name>/edit/',
            methods=['GET', 'POST'])
 def editItem(category_name, item_name):
-    if 'username' not in login_session:
-        return redirect('/login')
     category = session.query(Category).filter_by(name=category_name).one()
     item = session.query(
         CatalogItem).filter_by(name=item_name, category_id=category.id).one()
@@ -492,14 +499,17 @@ def editItem(category_name, item_name):
 
 # Delete a specific item.
 # Example: http://localhost:8000/catalog/Snowboarding/Snowboard/delete
-@app.route('/catalog/<string:category_name>/<string:item_name>/delete/',
+@login_required
+@app.route('/catalog/<path:category_name>/<path:item_name>/delete/',
            methods=['GET', 'POST'])
 def deleteItem(category_name, item_name):
-    if 'username' not in login_session:
-        return redirect('/login')
     category = session.query(Category).filter_by(name=category_name).one()
     item = session.query(
         CatalogItem).filter_by(name=item_name, category_id=category.id).one()
+    if item.user_id != login_session['user_id']:
+        return '''<script>function myFunction() 
+        {alert('You are not authorized to delete this item.');}
+        </script><body onload='myFunction()'>'''
     session.delete(item)
     session.commit()
     logTrans("Delete", item)
@@ -510,13 +520,22 @@ def deleteItem(category_name, item_name):
 # Delete Category.
 # Example:
 # http://localhost:8000/catalog/category/Snowboarding/delete/
-@app.route('/catalog/category/<string:category_name>/delete/',
+@login_required
+@app.route('/catalog/category/<path:category_name>/delete/',
            methods=['GET', 'POST'])
 def deleteCategory(category_name):
-    if 'username' not in login_session:
-        return redirect('/login')
     category = session.query(
         Category).filter_by(name=category_name).one()
+    if category.user_id != login_session['user_id']:
+        return '''<script>function myFunction() 
+        {alert('You are not authorized to delete this category.');}
+        </script><body onload='myFunction()'>'''
+    itemcount = session.query(
+        CatalogItem).filter_by(category_id=category.id).count()
+    if itemcount > 0:
+        return '''<script>function myFunction() {alert(
+        'Category can not be deleted! Items still exist with this category!');}
+        </script><body onload='myFunction()'>'''
     session.delete(category)
     session.commit()
     # # logTrans("Delete", item)
@@ -527,11 +546,10 @@ def deleteCategory(category_name):
 # Edit Category.
 # Example:
 # http://localhost:8000/catalog/category/Snowboarding/edit/
-@app.route('/catalog/category/<string:category_name>/edit/',
+@login_required
+@app.route('/catalog/category/<path:category_name>/edit/',
            methods=['GET', 'POST'])
 def editCategory(category_name):
-    if 'username' not in login_session:
-        return redirect('/login')
     if request.method == 'POST':
         if request.form.get('save') == 'save':
             form = request.form
@@ -574,10 +592,9 @@ def editCategory(category_name):
 
 # Add New Category.
 # Example: http://localhost:8000/catalog/category/new/
+@login_required
 @app.route('/catalog/category/new/', methods=['GET', 'POST'])
 def newCategory():
-    if 'username' not in login_session:
-        return redirect('/login')
     if request.method == 'POST':
         if request.form.get('save') == 'save':
             form = request.form
@@ -651,6 +668,7 @@ def logTrans(trans, item):
 
 # Display entire Transaction Log.
 # Example: http://localhost:8000/catalog/showlog
+@login_required
 @app.route('/catalog/showlog/')
 def showLogTrans():
     if 'username' not in login_session:
@@ -661,8 +679,9 @@ def showLogTrans():
 
 # Display Transaction Log for a specific item.
 # Example: http://localhost:8000/catalog/showItemlogTrans/Baseball/Bat
+@login_required
 @app.route(
-    '/catalog/showItemLogTrans/<string:category_name>/<string:item_name>/')
+    '/catalog/showItemLogTrans/<path:category_name>/<path:item_name>/')
 def showItemLogTrans(category_name, item_name):
     if 'username' not in login_session:
         return redirect('/login')

@@ -33,6 +33,7 @@ class Category(Base):
     name = Column(String(250), nullable=False, unique=True)
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, nullable=False)
+    catalogitem = relationship("CatalogItem", cascade="delete")
 
     @property
     def serialize(self):
